@@ -1,7 +1,17 @@
+"use client"
 import Image from "next/image"
 import React from "react"
 
 const Login = () => {
+  // handle login
+  const handleLogin = async () => {
+    try {
+      location.href = "/portal"
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <div className="w-[500px] flex flex-col">
       <div className="flex flex-col items-center">
@@ -24,7 +34,10 @@ const Login = () => {
             placeholder="Password"
           />
         </div>
-        <button className="bg-[#f39136] text-white p-2 rounded-md mt-7">
+        <button
+          className="bg-[#f39136] text-white p-2 rounded-md mt-7"
+          onClick={() => handleLogin()}
+        >
           Login
         </button>
 

@@ -5,7 +5,13 @@ const Login = () => {
   return (
     <div className="w-[500px] flex flex-col">
       <div className="flex flex-col items-center">
-        <Image src="/images/logo.png" width={100} height={100} alt="logo" />
+        <Image
+          src="/images/logo.png"
+          width={60}
+          height={60}
+          alt="logo"
+          className="mb-4"
+        />
         <h2 className="font-bold text-2xl">Admin Login</h2>
         <p className="text-[#818181]">Enter your credentials to continue</p>
       </div>

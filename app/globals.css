@@ -27,3 +27,19 @@ html {
   border-radius: 10px;
   outline-color: var(--brand-orange);
 }
+
+/* .sidenav div {
+  transition: 1s;
+} */
+
+.sidenav .active {
+  margin-left: 15px;
+  transition: 0.5s;
+  background-color: #fff7f0;
+  color: var(--brand-orange);
+}
+
+.sidenav div:hover {
+  margin-left: 15px;
+  transition: 0.5s;
+}

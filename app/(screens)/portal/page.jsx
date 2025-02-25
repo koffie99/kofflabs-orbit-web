@@ -1,7 +1,6 @@
-import Sidenav from "@/app/components/Sidenav"
-import navItems from "@/app/utils/navItems"
+"use client"
 import Image from "next/image"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { LuLayoutDashboard } from "react-icons/lu"
 import { LiaProjectDiagramSolid } from "react-icons/lia"
 import { GoPeople } from "react-icons/go"
@@ -12,11 +11,71 @@ import { IoDocumentTextOutline } from "react-icons/io5"
 import { PiShieldCheck } from "react-icons/pi"
 import { BiLogOutCircle } from "react-icons/bi"
 import { AiOutlineNotification } from "react-icons/ai"
-import { IoAnalytics } from "react-icons/io5"
 import { FiActivity } from "react-icons/fi"
 import { TbUsersGroup } from "react-icons/tb"
+import Dashboard from "@/app/components/Dashboard"
+import Employees from "@/app/components/Employees"
+import Projects from "@/app/components/Projects"
+import Clients from "@/app/components/Clients"
+import Finance from "@/app/components/Finance"
+import Document from "@/app/components/Document"
+import Security from "@/app/components/Security"
+import Announcement from "@/app/components/Annoucement"
+import Activities from "@/app/components/Activities"
+import Administrators from "@/app/components/Administrators"
 
-const page = () => {
+const Page = () => {
+  // Load the last visited page from sessionStorage
+  const [currentPage, setCurrentPage] = useState(() => {
+    if (typeof window !== "undefined") {
+      return sessionStorage.getItem("myCurrentPage") || "dashboard"
+    }
+    return "dashboard" // Default value for SSR
+  })
+
+  // Save currentPage to sessionStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("myCurrentPage", currentPage)
+    }
+  }, [currentPage])
+
+  // Handle logout
+  const handleLogout = () => {
+    const res = confirm("Are you sure you want to log out?")
+    if (res) {
+      location.href = "/"
+    }
+  }
+
+  // Render the correct component based on currentPage
+  const customRender = () => {
+    switch (currentPage) {
+      case "dashboard":
+        return <Dashboard />
+      case "employees":
+        return <Employees />
+      case "projects":
+        return <Projects />
+      case "clients":
+        return <Clients />
+      case "finance":
+        return <Finance />
+      case "documents":
+        return <Document />
+      case "security":
+        return <Security />
+      case "announcements":
+        return <Announcement />
+      case "activities":
+        return <Activities />
+      case "administrators":
+        return <Administrators />
+      default:
+        return <Dashboard />
+    }
+  }
+
   return (
     <div className="flex bg-[#f9fafd] min-h-screen w-full">
       {/* sidenav */}
@@ -30,68 +89,116 @@ const page = () => {
         />
 
         {/* nav items */}
-        <div className="flex flex-col gap-1 mt-4">
-          <div className="bg-[#fff7f0] p-2 rounded-md flex items-center gap-3 text-[#f39236] cursor-pointer ml-7">
+        <div className="flex flex-col gap-1 mt-4 sidenav">
+          <div
+            className={`${
+              currentPage === "dashboard" ? "active" : ""
+            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            onClick={() => setCurrentPage("dashboard")}
+          >
             <LuLayoutDashboard />
             <p>Dashboard</p>
           </div>
-          <div className="p-2 rounded-md flex items-center gap-3 cursor-pointer">
+          <div
+            className={`${
+              currentPage === "employees" ? "active" : ""
+            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            onClick={() => setCurrentPage("employees")}
+          >
             <GoPeople />
             <p>Employees</p>
           </div>
-          <div className="p-2 rounded-md flex items-center gap-3 cursor-pointer">
+          <div
+            className={`${
+              currentPage === "projects" ? "active" : ""
+            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            onClick={() => setCurrentPage("projects")}
+          >
             <LiaProjectDiagramSolid />
             <p>Projects & Tasks</p>
           </div>
-          <div className="p-2 rounded-md flex items-center gap-3 cursor-pointer">
+          <div
+            className={`${
+              currentPage === "clients" ? "active" : ""
+            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            onClick={() => setCurrentPage("clients")}
+          >
             <BsPeople />
             <p>Clients</p>
           </div>
-          <div className="p-2 rounded-md flex items-center gap-3 cursor-pointer">
-            <TbAnalyze />
-            <p>Marketing</p>
-          </div>
-          <div className="p-2 rounded-md flex items-center gap-3 cursor-pointer">
+          <div
+            className={`${
+              currentPage === "finance" ? "active" : ""
+            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            onClick={() => setCurrentPage("finance")}
+          >
             <GrMoney />
             <p>Finance & Accounting</p>
           </div>
-          <div className="p-2 rounded-md flex items-center gap-3 cursor-pointer">
+          <div
+            className={`${
+              currentPage === "documents" ? "active" : ""
+            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            onClick={() => setCurrentPage("documents")}
+          >
             <IoDocumentTextOutline />
-            <p>Documents</p>
+            <p>Letters</p>
           </div>
-          <div className="p-2 rounded-md flex items-center gap-3 cursor-pointer">
-            <LiaProjectDiagramSolid />
-            <p>Assets & Liablities</p>
-          </div>
-          <div className="p-2 rounded-md flex items-center gap-3 cursor-pointer">
+          <div
+            className={`${
+              currentPage === "security" ? "active" : ""
+            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            onClick={() => setCurrentPage("security")}
+          >
             <PiShieldCheck />
             <p>System & Security</p>
           </div>
-          <div className="p-2 rounded-md flex items-center gap-3 cursor-pointer">
-            <IoAnalytics />
-            <p>Analytics & Insights</p>
-          </div>
-          <div className="p-2 rounded-md flex items-center gap-3 cursor-pointer">
+          <div
+            className={`${
+              currentPage === "announcements" ? "active" : ""
+            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            onClick={() => setCurrentPage("announcements")}
+          >
             <AiOutlineNotification />
             <p>Announcements</p>
           </div>
-          <div className="p-2 rounded-md flex items-center gap-3 cursor-pointer">
+          <div
+            className={`${
+              currentPage === "activities" ? "active" : ""
+            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            onClick={() => setCurrentPage("activities")}
+          >
             <FiActivity />
             <p>Activities</p>
           </div>
-          <div className="p-2 rounded-md flex items-center gap-3 cursor-pointer">
+          <div
+            className={`${
+              currentPage === "administrators" ? "active" : ""
+            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            onClick={() => setCurrentPage("administrators")}
+          >
             <TbUsersGroup />
             <p>Administrators</p>
           </div>
-          <div className="p-2 rounded-md flex items-center gap-3 text-[tomato] cursor-pointer">
+          <div
+            className="p-2 rounded-md flex items-center gap-3 text-[#ff5555] cursor-pointer w-fit"
+            onClick={handleLogout}
+          >
             <BiLogOutCircle />
             <p>Logout</p>
           </div>
         </div>
       </div>
-      <div className="flex-[0.7]"></div>
+      <div className="flex-[0.8] w-full">
+        {/* nav */}
+        <div className="bg-white w-full shadow h-[10vh] flex items-center justify-between px-7">
+          <p></p>
+          <p>Joshua</p>
+        </div>
+        <div className="p-6">{customRender()}</div>
+      </div>
     </div>
   )
 }
 
-export default page
+export default Page

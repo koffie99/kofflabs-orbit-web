@@ -70,7 +70,7 @@ const Login = () => {
           <input
             type="text"
             className="login-inputs"
-            placeholder="User ID"
+            placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
           />
           <input

@@ -5,7 +5,6 @@ import { LuLayoutDashboard } from "react-icons/lu"
 import { LiaProjectDiagramSolid } from "react-icons/lia"
 import { GoPeople } from "react-icons/go"
 import { BsPeople } from "react-icons/bs"
-import { TbAnalyze } from "react-icons/tb"
 import { GrMoney } from "react-icons/gr"
 import { IoDocumentTextOutline } from "react-icons/io5"
 import { PiShieldCheck } from "react-icons/pi"
@@ -18,7 +17,7 @@ import Employees from "@/app/components/Employees"
 import Projects from "@/app/components/Projects"
 import Clients from "@/app/components/Clients"
 import Finance from "@/app/components/Finance"
-import Document from "@/app/components/Document"
+import Letters from "@/app/components/Letters"
 import Security from "@/app/components/Security"
 import Announcement from "@/app/components/Annoucement"
 import Activities from "@/app/components/Activities"
@@ -62,7 +61,7 @@ const Page = () => {
       case "finance":
         return <Finance />
       case "documents":
-        return <Document />
+        return <Letters />
       case "security":
         return <Security />
       case "announcements":

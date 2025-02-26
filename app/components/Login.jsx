@@ -1,14 +1,54 @@
 "use client"
 import Image from "next/image"
 import React from "react"
+import { useState } from "react"
+import { ToastContainer, toast } from "react-toastify"
 
 const Login = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
+
   // handle login
   const handleLogin = async () => {
     try {
-      location.href = "/portal"
+      setLoading(true)
+
+      // validate email and password
+      const myHeaders = new Headers()
+      myHeaders.append("Content-Type", "application/json")
+
+      const raw = JSON.stringify({
+        email: email.trim().toLowerCase(),
+        password: password.trim(),
+      })
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      }
+
+      await fetch(
+        "https://api.kofflabs.com/api/v1/admins/login",
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          if (result.msg === "login successful") {
+            setLoading(false)
+            toast.success("Login successful")
+          } else {
+            setLoading(false)
+            toast.error(result.msg)
+          }
+        })
+        .catch((error) => console.error(error))
     } catch (err) {
+      setLoading(false)
       console.log(err)
+      toast.error(err)
     }
   }
 
@@ -27,24 +67,44 @@ const Login = () => {
       </div>
       <div className="bg-white p-8 rounded-lg shadow flex flex-col mt-4">
         <div className="login-box">
-          <input type="text" className="login-inputs" placeholder="User ID" />
+          <input
+            type="text"
+            className="login-inputs"
+            placeholder="User ID"
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <input
             type="password"
             className="login-inputs"
             placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <button
-          className="bg-[#f39136] text-white p-2 rounded-md mt-7"
+          className="bg-[#f39136] text-white p-2 rounded-md mt-7 w-full"
           onClick={() => handleLogin()}
         >
-          Login
+          {loading ? (
+            <div className="flex items-center justify-center">
+              <Image
+                width={20}
+                height={20}
+                src="/gifs/whiteloading.gif"
+                alt="loading gif"
+                className="text-center flex items-center justify-center"
+              />
+            </div>
+          ) : (
+            "Login"
+          )}
         </button>
 
         <p className="text-[14px] text-[#818181] mt-6 text-center">
           Powered by <span className="font-semibold">Kofflabs</span>
         </p>
       </div>
+
+      <ToastContainer />
     </div>
   )
 }

@@ -39,6 +39,7 @@ const Login = () => {
           if (result.msg === "login successful") {
             setLoading(false)
             toast.success("Login successful")
+            location.href = "/portal"
           } else {
             setLoading(false)
             toast.error(result.msg)

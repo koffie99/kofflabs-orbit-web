@@ -1,3 +1,4 @@
+import { Table } from "antd"
 import React from "react"
 
 const Letters = () => {
@@ -10,6 +11,9 @@ const Letters = () => {
           + Add letter
         </button>
       </div>
+
+      {/* body */}
+      <Table />
     </div>
   )
 }

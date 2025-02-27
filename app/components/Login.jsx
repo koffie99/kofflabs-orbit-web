@@ -39,6 +39,9 @@ const Login = () => {
           if (result.msg === "login successful") {
             setLoading(false)
             toast.success("Login successful")
+            if (typeof sessionStorage !== "undefined") {
+              sessionStorage.setItem("adminUser", JSON.stringify(result?.admin))
+            }
             location.href = "/portal"
           } else {
             setLoading(false)

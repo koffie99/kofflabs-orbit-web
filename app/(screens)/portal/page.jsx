@@ -32,6 +32,14 @@ const Page = () => {
     return "dashboard" // Default value for SSR
   })
 
+  let currentAdmin
+
+  if (typeof sessionStorage !== "undefined") {
+    currentAdmin = JSON.parse(sessionStorage.getItem("adminUser"))
+  }
+
+  // const [adminUser, setAdminUser] = useState(currentAdmin || [])
+
   // Save currentPage to sessionStorage whenever it changes
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -192,7 +200,12 @@ const Page = () => {
         {/* nav */}
         <div className="bg-white w-full shadow h-[10vh] flex items-center justify-between px-7">
           <p></p>
-          <p>Joshua</p>
+          <div className="flex flex-col items-end">
+            <p className="capitalize">
+              {currentAdmin?.firstName} {currentAdmin?.lastName}
+            </p>
+            <p className="text-[#818181] text-sm">{currentAdmin?.email}</p>
+          </div>
         </div>
         <div className="p-6">{customRender()}</div>
       </div>

@@ -8,12 +8,12 @@ const Letters = () => {
       <div className="flex items-center justify-between">
         <h2 className="font-semibold text-xl">Letters</h2>
         <button className="bg-[#f29235] text-white py-2 px-3 rounded-md text-sm">
-          + Add letter
+          + Add Letter
         </button>
       </div>
 
-      {/* body */}
-      <Table />
+      {/* content */}
+      <Table className="mt-5" />
     </div>
   )
 }

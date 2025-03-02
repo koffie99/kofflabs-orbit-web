@@ -22,6 +22,7 @@ import Security from "@/app/components/Security"
 import Announcement from "@/app/components/Annoucement"
 import Activities from "@/app/components/Activities"
 import Administrators from "@/app/components/Administrators"
+import Departments from "@/app/components/Departments"
 
 const Page = () => {
   // Load the last visited page from sessionStorage
@@ -62,6 +63,8 @@ const Page = () => {
         return <Dashboard />
       case "employees":
         return <Employees />
+      case "departments":
+        return <Departments />
       case "projects":
         return <Projects />
       case "clients":
@@ -114,6 +117,15 @@ const Page = () => {
           >
             <GoPeople />
             <p>Employees</p>
+          </div>
+          <div
+            className={`${
+              currentPage === "departments" ? "active" : ""
+            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            onClick={() => setCurrentPage("departments")}
+          >
+            <GoPeople />
+            <p>Departments</p>
           </div>
           <div
             className={`${

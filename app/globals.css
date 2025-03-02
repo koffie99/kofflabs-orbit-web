@@ -37,6 +37,7 @@ html {
   transition: 0.5s;
   background-color: var(--brand-orange);
   color: white;
+  cursor: pointer;
   pointer-events: none;
 }
 

@@ -101,6 +101,19 @@ const Departments = () => {
       ),
     },
     {
+      title: "No. of employees",
+      dataIndex: "numEmployees",
+      key: "numEmployees",
+    },
+    {
+      title: "Date Created",
+      dataIndex: "dateCreated",
+      key: "dateCreated",
+      render: (_, record) => (
+        <p>{new Date(record.dateCreated).toLocaleString()}</p>
+      ),
+    },
+    {
       title: "Actions",
       key: "actions",
       render: (text, record) => (

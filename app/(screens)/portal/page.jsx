@@ -14,6 +14,7 @@ import { FiActivity } from "react-icons/fi"
 import { TbUsersGroup } from "react-icons/tb"
 import Dashboard from "@/app/components/Dashboard"
 import Employees from "@/app/components/Employees"
+import { FaRegBuilding } from "react-icons/fa6"
 import Projects from "@/app/components/Projects"
 import Clients from "@/app/components/Clients"
 import Finance from "@/app/components/Finance"
@@ -124,7 +125,7 @@ const Page = () => {
             } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
             onClick={() => setCurrentPage("departments")}
           >
-            <GoPeople />
+            <FaRegBuilding />
             <p>Departments</p>
           </div>
           <div

@@ -1,11 +1,15 @@
 "use client"
-import { Table } from "antd"
+import { Modal, Select, Table } from "antd"
 import Image from "next/image"
 import React, { useEffect, useState } from "react"
 
 const Projects = () => {
   const [projects, setProjects] = useState([])
   const [isClient, setIsClient] = useState(false)
+  const [openAddModal, setOpenAddModal] = useState(false)
+  const [assignMembers, setAssignMembers] = useState(false)
+
+  console.log("Assigned Members: ", assignMembers)
 
   // Ensure client-side rendering only
   useEffect(() => {
@@ -23,6 +27,14 @@ const Projects = () => {
       setProjects(result?.projects || [])
     } catch (err) {
       console.error(err)
+    }
+  }
+
+  // delete project
+  const deleteProject = async (projectId) => {
+    try {
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -80,8 +92,19 @@ const Projects = () => {
       ),
     },
     {
-      title: "Action",
-      render: () => <p>Actions go here...</p>,
+      title: "Assignees",
+      key: "assignees",
+      dataIndex: "assignees",
+      render: (_, record) => <p>{(record?.assignees).length}</p>,
+    },
+    {
+      title: "Actions",
+      render: (_, record) => (
+        <div className="flex items-center gap-3">
+          <button>Edit</button>
+          <button>Delete</button>
+        </div>
+      ),
     },
   ]
 
@@ -90,7 +113,10 @@ const Projects = () => {
       {/* header */}
       <div className="flex items-center justify-between">
         <h2 className="font-semibold text-xl">Projects</h2>
-        <button className="bg-[#f29235] text-white py-2 px-3 rounded-md text-sm">
+        <button
+          className="bg-[#f29235] text-white py-2 px-3 rounded-md text-sm"
+          onClick={() => setOpenAddModal(true)}
+        >
           + Add Project
         </button>
       </div>
@@ -99,6 +125,52 @@ const Projects = () => {
       {isClient && (
         <Table className="mt-5" columns={columns} dataSource={projects} />
       )}
+
+      {/* add project modal */}
+      <Modal
+        open={openAddModal}
+        onCancel={() => setOpenAddModal(false)}
+        footer={false}
+        title="Add Project"
+      >
+        <div className="flex flex-col gap-3">
+          <input type="file" className="ring-1 ring-[#ccc] p-2 rounded-md" />
+          <input
+            type="text"
+            className="ring-1 ring-[#ccc] p-2 rounded-md"
+            placeholder="Project name"
+          />
+          <input
+            type="date"
+            className="ring-1 ring-[#ccc] p-2 rounded-md"
+            placeholder="Start Date"
+          />
+          <input
+            type="date"
+            className="ring-1 ring-[#ccc] p-2 rounded-md"
+            placeholder="End Date"
+          />
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              onChange={(e) => setAssignMembers(e.target.checked)}
+            />
+            <p>Assign project members</p>
+          </div>
+          {assignMembers && (
+            <div>
+              <Select mode="multiple" className="w-full">
+                <option value="">Select Member</option>
+                {/* fetch members */}
+              </Select>
+            </div>
+          )}
+          <input type="text" className="ring-1 ring-[#ccc] p-2 rounded-md" />
+          <button className="p-2 bg-[#f29235] rounded-sm text-white">
+            Add Project
+          </button>
+        </div>
+      </Modal>
     </div>
   )
 }

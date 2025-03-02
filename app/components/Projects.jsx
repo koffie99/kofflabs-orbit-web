@@ -2,12 +2,21 @@
 import { Modal, Select, Table } from "antd"
 import Image from "next/image"
 import React, { useEffect, useState } from "react"
+import { Toaster, toast } from "react-hot-toast"
 
 const Projects = () => {
   const [projects, setProjects] = useState([])
   const [isClient, setIsClient] = useState(false)
   const [openAddModal, setOpenAddModal] = useState(false)
   const [assignMembers, setAssignMembers] = useState(false)
+  const [adding, setAdding] = useState(false)
+
+  // project details
+  const [projectPhoto, setProjectPhoto] = useState("")
+  const [projectName, setProjectName] = useState("")
+  const [projectStartDate, setProjectStartDate] = useState("")
+  const [projectEndDate, setProjectEndDate] = useState("")
+  const [projectAssignees, setProjectAssignees] = useState([])
 
   console.log("Assigned Members: ", assignMembers)
 
@@ -108,6 +117,48 @@ const Projects = () => {
     },
   ]
 
+  // add a project
+  const addProject = async () => {
+    try {
+      setAdding(true)
+      const formdata = new FormData()
+      formdata.append("photo", fileInput.files[0], projectPhoto)
+      formdata.append("name", projectName.trim().toLowerCase())
+      formdata.append("startDate", projectStartDate.trim())
+      formdata.append("endDate", projectEndDate.trim())
+      formdata.append("assignees", projectAssignees)
+      formdata.append("status", "in progress")
+      formdata.append("isComplete", "false")
+
+      const requestOptions = {
+        method: "POST",
+        body: formdata,
+        redirect: "follow",
+      }
+
+      await fetch(
+        "https://api.kofflabs.com/api/v1/projects/create",
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          if (result.msg === "project added successfully") {
+            getAllProjects()
+            setAdding(false)
+            toast.success("Project added successfully")
+            setOpenAddModal(false)
+          } else {
+            toast.error(result.msg)
+            setAdding(false)
+          }
+        })
+        .catch((error) => console.error(error))
+    } catch (err) {
+      console.log(err)
+      toast.error(err)
+    }
+  }
+
   return (
     <div className="bg-white w-full p-5 rounded-lg shadow">
       {/* header */}
@@ -134,21 +185,28 @@ const Projects = () => {
         title="Add Project"
       >
         <div className="flex flex-col gap-3">
-          <input type="file" className="ring-1 ring-[#ccc] p-2 rounded-md" />
+          <input
+            type="file"
+            className="ring-1 ring-[#ccc] p-2 rounded-md"
+            onChange={(e) => setProjectPhoto(e.target.files[0])}
+          />
           <input
             type="text"
             className="ring-1 ring-[#ccc] p-2 rounded-md"
             placeholder="Project name"
+            onChange={(e) => setProjectName(e.target.value)}
           />
           <input
             type="date"
             className="ring-1 ring-[#ccc] p-2 rounded-md"
             placeholder="Start Date"
+            onChange={(e) => setProjectStartDate(e.target.value)}
           />
           <input
             type="date"
             className="ring-1 ring-[#ccc] p-2 rounded-md"
             placeholder="End Date"
+            onChange={(e) => setProjectEndDate(e.target.value)}
           />
           <div className="flex items-center gap-2">
             <input
@@ -159,18 +217,28 @@ const Projects = () => {
           </div>
           {assignMembers && (
             <div>
-              <Select mode="multiple" className="w-full">
-                <option value="">Select Member</option>
+              <Select
+                mode="multiple"
+                className="w-full"
+                onChange={(values) => setProjectAssignees(values)}
+              >
+                <option value="" selected disabled>
+                  Select Members
+                </option>
                 {/* fetch members */}
               </Select>
             </div>
           )}
-          <input type="text" className="ring-1 ring-[#ccc] p-2 rounded-md" />
-          <button className="p-2 bg-[#f29235] rounded-sm text-white">
-            Add Project
+          <button
+            className="p-2 bg-[#f29235] rounded-lg text-white"
+            onClick={() => addProject()}
+          >
+            {adding ? "Adding Project...." : "Add Project"}
           </button>
         </div>
       </Modal>
+
+      <Toaster />
     </div>
   )
 }

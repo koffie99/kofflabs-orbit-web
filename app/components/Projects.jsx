@@ -128,7 +128,7 @@ const Projects = () => {
       formdata.append("endDate", projectEndDate.trim())
       formdata.append("assignees", projectAssignees)
       formdata.append("status", "in progress")
-      formdata.append("isComplete", "false")
+      formdata.append("isComplete", false)
 
       const requestOptions = {
         method: "POST",

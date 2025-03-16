@@ -66,7 +66,7 @@ const Login = () => {
           alt="logo"
           className="mb-4"
         />
-        <h2 className="font-bold text-2xl">Admin Login</h2>
+        <h2 className="font-bold text-2xl">Kofflabs Orbit</h2>
         <p className="text-[#818181]">Enter your credentials to continue</p>
       </div>
       <div className="bg-white p-8 rounded-lg shadow flex flex-col mt-4">

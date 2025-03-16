@@ -2,7 +2,7 @@
 import Image from "next/image"
 import React from "react"
 import { useState } from "react"
-import { ToastContainer, toast } from "react-toastify"
+import toast, { Toaster } from "react-hot-toast"
 
 const Login = () => {
   const [email, setEmail] = useState("")
@@ -42,7 +42,7 @@ const Login = () => {
             if (typeof sessionStorage !== "undefined") {
               sessionStorage.setItem("adminUser", JSON.stringify(result?.admin))
             }
-            location.href = "/portal"
+            location.href = "/phoneVerification"
           } else {
             setLoading(false)
             toast.error(result.msg)
@@ -108,7 +108,7 @@ const Login = () => {
         </p>
       </div>
 
-      <ToastContainer />
+      <Toaster />
     </div>
   )
 }

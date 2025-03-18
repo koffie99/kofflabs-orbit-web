@@ -90,7 +90,7 @@ const Page = () => {
   return (
     <div className="flex bg-[#f9fafd] min-h-screen w-full">
       {/* sidenav */}
-      <div className="flex-[0.2] py-2 px-8 bg-white shadow">
+      <div className="flex-[0.2] py-2 px-8 bg-white shadow h-[100vh] overflow-y-scroll">
         <Image
           width={150}
           height={120}

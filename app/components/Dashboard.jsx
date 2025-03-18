@@ -1,45 +1,34 @@
 "use client"
 import React, { useEffect, useState } from "react"
 import DashCard from "../uibits/DashCard"
-import { Chart } from "primereact/chart"
+import { GoPeople } from "react-icons/go"
+import baseUrl from "../utils/baseUrl"
 
 const Dashboard = () => {
-  const [chartData, setChartData] = useState({})
-  const [chartOptions, setChartOptions] = useState({})
+  const [dashboardStat, setDashboardStat] = useState({})
 
+  // get dashbaord stats
+  const getDashboardStats = async () => {
+    try {
+      const requestOptions = {
+        method: "GET",
+        redirect: "follow",
+      }
+
+      await fetch(`${baseUrl}/api/v1/dashboard/stats`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          setDashboardStat(result)
+        })
+        .catch((error) => console.error(error))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  // init
   useEffect(() => {
-    const data = {
-      labels: ["Q1", "Q2", "Q3", "Q4"],
-      datasets: [
-        {
-          label: "Sales",
-          data: [540, 325, 702, 620],
-          backgroundColor: [
-            "rgba(255, 159, 64, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(153, 102, 255, 0.2)",
-          ],
-          borderColor: [
-            "rgb(255, 159, 64)",
-            "rgb(75, 192, 192)",
-            "rgb(54, 162, 235)",
-            "rgb(153, 102, 255)",
-          ],
-          borderWidth: 1,
-        },
-      ],
-    }
-    const options = {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    }
-
-    setChartData(data)
-    setChartOptions(options)
+    getDashboardStats()
   }, [])
 
   return (
@@ -51,18 +40,24 @@ const Dashboard = () => {
       {/* stats */}
       <div className="mt-5">
         {/* basic stats */}
-        <div className="grid grid-cols-4 gap-4">
-          <DashCard desc="Revenue" value={`GHS ${30000}`} />
-          <DashCard desc="Employees" value={3} />
-          <DashCard desc="Projects" value={1} />
-          <DashCard desc="Clients" value={1} />
+        <div className="grid grid-cols-3 gap-4">
+          <DashCard
+            Icon={GoPeople}
+            desc="Revenue"
+            value={`GHS ${dashboardStat?.revenue || 0.0}`}
+          />
+          <DashCard desc="Projects" value={dashboardStat?.project_count || 0} />
+          <DashCard
+            desc="Employees"
+            value={dashboardStat?.employee_count || 0}
+          />
         </div>
 
         {/* financial growth stats */}
         <div className="mt-6">
-          <h2>Financial Growth</h2>
+          {/* <h2>Financial Growth</h2> */}
           <div className="h-full">
-            <Chart type="bar" data={chartData} options={chartOptions} />
+            {/* <Chart type="bar" data={chartData} options={chartOptions} /> */}
           </div>
         </div>
       </div>

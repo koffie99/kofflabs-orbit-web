@@ -3,6 +3,7 @@ import { Table } from "antd"
 import React, { useEffect, useState } from "react"
 import { CiEdit } from "react-icons/ci"
 import { GoTrash } from "react-icons/go"
+import baseUrl from "../utils/baseUrl"
 
 const Employees = () => {
   const [employees, setEmployees] = useState("")
@@ -15,10 +16,7 @@ const Employees = () => {
         redirect: "follow",
       }
 
-      await fetch(
-        "https://api.kofflabs.com/api/v1/employees/all",
-        requestOptions
-      )
+      await fetch(`${baseUrl}/api/v1/employees/all`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           setEmployees(result?.employees)

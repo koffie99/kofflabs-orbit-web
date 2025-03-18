@@ -3,6 +3,7 @@ import Image from "next/image"
 import React from "react"
 import { useState } from "react"
 import toast, { Toaster } from "react-hot-toast"
+import baseUrl from "../utils/baseUrl"
 
 const Login = () => {
   const [email, setEmail] = useState("")
@@ -14,12 +15,11 @@ const Login = () => {
     try {
       setLoading(true)
 
-      // validate email and password
       const myHeaders = new Headers()
       myHeaders.append("Content-Type", "application/json")
 
       const raw = JSON.stringify({
-        email: email.trim().toLowerCase(),
+        email: email.toLowerCase().trim(),
         password: password.trim(),
       })
 
@@ -31,21 +31,18 @@ const Login = () => {
       }
 
       await fetch(
-        "https://api.kofflabs.com/api/v1/admins/login",
+        "http://localhost:2025/api/v1/logins/megaLogin",
         requestOptions
       )
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "login successful") {
+            toast.success("Login Successful")
             setLoading(false)
-            toast.success("Login successful")
-            if (typeof sessionStorage !== "undefined") {
-              sessionStorage.setItem("adminUser", JSON.stringify(result?.admin))
-            }
             location.href = "/phoneVerification"
           } else {
+            toast.error("Unable to login, please try again")
             setLoading(false)
-            toast.error(result.msg)
           }
         })
         .catch((error) => console.error(error))

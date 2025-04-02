@@ -101,7 +101,7 @@ const Login = () => {
         </button>
 
         <p className="text-[14px] text-[#818181] mt-6 text-center">
-          Powered by <span className="font-semibold">Kofflabs</span>
+          Powered by <span className="font-semibold">Kofflabs Systems</span>
         </p>
       </div>
 

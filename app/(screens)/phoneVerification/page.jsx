@@ -1,4 +1,5 @@
 "use client"
+import baseUrl from "@/app/utils/baseUrl"
 import Image from "next/image"
 import React, { useState } from "react"
 import toast, { Toaster } from "react-hot-toast"
@@ -19,27 +20,25 @@ const PhoneVerification = () => {
     try {
       setLoading(true)
 
-      const myHeaders = new Headers()
-      myHeaders.append("Content-Type", "application/json")
-
       const raw = JSON.stringify({
+        userId: currentAdmin?._id,
         otp: code.trim(),
       })
 
       const requestOptions = {
         method: "POST",
-        headers: myHeaders,
         body: raw,
+        headers: { "Content-Type": "application/json" },
         redirect: "follow",
       }
 
       await fetch(
-        `https://api.kofflabs.com/api/v1/admins/verifyOTP/${currentAdmin?._id}`,
+        `${baseUrl}/api/v1/verifications/megaOTPVerification`,
         requestOptions
       )
         .then((response) => response.json())
         .then((result) => {
-          if (result.msg === "OTP verification successful") {
+          if (result.msg === "otp verified successfully") {
             toast.success("OTP Verification Successful")
             setLoading(false)
             location.href = "/portal"
@@ -48,10 +47,14 @@ const PhoneVerification = () => {
             setLoading(false)
           }
         })
-        .catch((error) => console.error(error))
+        .catch((error) => {
+          console.error(error)
+          toast.error("Something went wrong, please try again.")
+          setLoading(false)
+        })
     } catch (err) {
       console.log(err)
-      toast.error(err.message)
+      toast.error("An error occurred")
       setLoading(false)
     }
   }
@@ -79,7 +82,8 @@ const PhoneVerification = () => {
           />
           <button
             className="bg-[#f39136] text-white p-2 rounded-md w-full"
-            onClick={() => verifyCode()}
+            onClick={verifyCode}
+            disabled={loading}
           >
             {loading ? (
               <div className="flex items-center justify-center">

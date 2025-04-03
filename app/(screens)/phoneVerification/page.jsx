@@ -10,9 +10,11 @@ const PhoneVerification = () => {
 
   // get current admin id
   let userId
+  let userType
 
   if (typeof sessionStorage !== "undefined") {
     userId = sessionStorage.getItem("userId")
+    userType = sessionStorage.getItem("userType")
   }
 
   // handle code verification
@@ -41,7 +43,11 @@ const PhoneVerification = () => {
           if (result.msg === "otp verified successfully") {
             toast.success("OTP Verification Successful")
             setLoading(false)
-            location.href = "/portal"
+            if (userType === "admin") {
+              location.href = "/portal"
+            } else if (userType === "finance") {
+              location.href = "/financePortal"
+            }
           } else {
             toast.error("Invalid OTP, Please retry")
             setLoading(false)

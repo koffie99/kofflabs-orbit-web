@@ -37,6 +37,8 @@ const Login = () => {
             toast.success("Login Successful")
             sessionStorage.setItem("userId", result.user._id)
             sessionStorage.setItem("userType", result.role)
+            sessionStorage.setItem("userFirstName", result.user.firstName)
+            sessionStorage.setItem("userLastName", result.user.lastName)
             setLoading(false)
             location.href = "/phoneVerification"
           } else {

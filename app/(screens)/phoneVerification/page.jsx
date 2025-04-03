@@ -9,10 +9,10 @@ const PhoneVerification = () => {
   const [loading, setLoading] = useState(false)
 
   // get current admin id
-  let currentAdmin
+  let userId
 
   if (typeof sessionStorage !== "undefined") {
-    currentAdmin = JSON.parse(sessionStorage.getItem("adminUser"))
+    userId = sessionStorage.getItem("userId")
   }
 
   // handle code verification
@@ -21,7 +21,7 @@ const PhoneVerification = () => {
       setLoading(true)
 
       const raw = JSON.stringify({
-        userId: currentAdmin?._id,
+        userId: userId,
         otp: code.trim(),
       })
 

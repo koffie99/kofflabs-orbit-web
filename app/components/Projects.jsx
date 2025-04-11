@@ -3,6 +3,8 @@ import { Modal, Select, Table } from "antd"
 import Image from "next/image"
 import React, { useEffect, useState } from "react"
 import { Toaster, toast } from "react-hot-toast"
+import baseUrl from "../utils/baseUrl"
+import EntityLength from "../uibits/EntityLength"
 
 const Projects = () => {
   const [projects, setProjects] = useState([])
@@ -17,6 +19,7 @@ const Projects = () => {
   const [projectStartDate, setProjectStartDate] = useState("")
   const [projectEndDate, setProjectEndDate] = useState("")
   const [projectAssignees, setProjectAssignees] = useState([])
+  const [projectLoading, setProjectLoading] = useState(false)
 
   console.log("Assigned Members: ", assignMembers)
 
@@ -29,13 +32,14 @@ const Projects = () => {
   // get all projects
   const getAllProjects = async () => {
     try {
-      const response = await fetch(
-        "https://api.kofflabs.com/api/v1/projects/all"
-      )
+      setProjectLoading(true)
+      const response = await fetch(`${baseUrl}/api/v1/projects/all`)
       const result = await response.json()
       setProjects(result?.projects || [])
+      setProjectLoading(false)
     } catch (err) {
       console.error(err)
+      setProjectLoading(false)
     }
   }
 
@@ -163,7 +167,9 @@ const Projects = () => {
     <div className="bg-white w-full p-5 rounded-lg shadow">
       {/* header */}
       <div className="flex items-center justify-between">
-        <h2 className="font-semibold text-xl">Projects</h2>
+        <div>
+          <EntityLength entityCount={projects?.length} entityName="Projects" />
+        </div>
         <button
           className="bg-[#f29235] text-white py-2 px-3 rounded-md text-sm"
           onClick={() => setOpenAddModal(true)}

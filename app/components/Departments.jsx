@@ -6,6 +6,8 @@ import React, { useEffect, useState } from "react"
 import { Toaster, toast } from "react-hot-toast"
 import { CiEdit } from "react-icons/ci"
 import { GoTrash } from "react-icons/go"
+import EntityLength from "../uibits/EntityLength"
+import baseUrl from "../utils/baseUrl"
 
 const Departments = () => {
   const [departments, setDepartments] = useState([])
@@ -46,7 +48,7 @@ const Departments = () => {
         }
 
         await fetch(
-          "https://api.kofflabs.com/api/v1/departments/create",
+          `${baseUrl}/api/v1/departments/create`,
           requestOptions
         )
           .then((response) => response.json())
@@ -230,7 +232,12 @@ const Departments = () => {
     <div className="bg-white w-full p-5 rounded-lg shadow">
       {/* header */}
       <div className="flex items-center justify-between">
-        <h2 className="font-semibold text-xl">Departments</h2>
+        <div>
+          <EntityLength
+            entityCount={departments?.length}
+            entityName="Departments"
+          />
+        </div>
         <button
           className="bg-[#f29235] text-white py-2 px-3 rounded-md text-sm"
           onClick={() => setOpenAddModal(true)}

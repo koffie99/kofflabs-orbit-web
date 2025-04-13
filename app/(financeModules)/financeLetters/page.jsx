@@ -1,3 +1,4 @@
+"use client"
 import { Modal, Table } from "antd"
 import React, { useEffect, useState } from "react"
 import { Toaster, toast } from "react-hot-toast"

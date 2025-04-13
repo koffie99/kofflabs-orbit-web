@@ -1,8 +1,11 @@
-import {format} from 'date-fns'
+import { format } from "date-fns"
 
 const formatDate = (date) => {
-    const formattedDate = format(new Date(date), 'do MMM, yyyy')
-    return formattedDate
+  if (!date || isNaN(new Date(date).getTime())) {
+    return "Invalid date" // or return an empty string ""
+  }
+
+  return format(new Date(date), "do MMM, yyyy")
 }
 
 export default formatDate

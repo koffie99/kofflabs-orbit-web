@@ -1,5 +1,6 @@
 "use client"
 import Image from "next/image"
+import dynamic from "next/dynamic"
 import React, { useEffect, useState } from "react"
 import { LuLayoutDashboard } from "react-icons/lu"
 import { LiaProjectDiagramSolid } from "react-icons/lia"
@@ -16,7 +17,10 @@ import Dashboard from "@/app/components/Dashboard"
 import Employees from "@/app/components/Employees"
 import { FaRegBuilding } from "react-icons/fa6"
 import Projects from "@/app/components/Projects"
-import Clients from "@/app/components/Clients"
+// import Clients from "@/app/components/Clients"
+const Clients = dynamic(() => import("@/app/components/Clients"), {
+  ssr: false,
+})
 import Finance from "@/app/components/Finance"
 import Letters from "@/app/components/Letters"
 import Security from "@/app/components/Security"
@@ -27,12 +31,12 @@ import Departments from "@/app/components/Departments"
 
 const Page = () => {
   // Load the last visited page from sessionStorage
-  const [currentPage, setCurrentPage] = useState(() => {
-    if (typeof window !== "undefined") {
-      return sessionStorage.getItem("myCurrentPage") || "dashboard"
-    }
-    return "dashboard" // Default value for SSR
-  })
+  const [currentPage, setCurrentPage] = useState(null)
+
+  useEffect(() => {
+    const storedPage = sessionStorage.getItem("myCurrentPage") || "dashboard"
+    setCurrentPage(storedPage)
+  }, [])
 
   let currentAdmin
 

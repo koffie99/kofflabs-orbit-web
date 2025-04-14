@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import EntityLength from "../uibits/EntityLength"
-import { Table, Popconfirm, Modal, Divider } from "antd"
+import { Table, Popconfirm, Modal, Divider, Skeleton } from "antd"
 import baseUrl from "../utils/baseUrl"
 import formatDate from "../utils/formatDate"
 
@@ -15,6 +15,7 @@ import { GoPerson } from "react-icons/go"
 const Employees = () => {
   const [employees, setEmployees] = useState([])
   const [openEmployeeDetailModal, setOpenEmployeeDetailModal] = useState(false)
+  const [loadingEmployees, setLoadingEmployees] = useState(false)
   const [openAddEmployeeModal, setOpenAddEmployeeModal] = useState(false)
   const [openUpdateEmployeeModal, setOpenUpdateEmployeeModal] = useState(false)
 
@@ -77,6 +78,7 @@ const Employees = () => {
   // get all employees
   const getAllEmployees = async () => {
     try {
+      setLoadingEmployees(true)
       const requestOptions = {
         method: "GET",
         redirect: "follow",
@@ -86,10 +88,12 @@ const Employees = () => {
         .then((response) => response.json())
         .then((result) => {
           setEmployees(result.employees || [])
+          setLoadingEmployees(false)
         })
         .catch((error) => console.error(error))
     } catch (err) {
       console.log(err)
+      setLoadingEmployees(false)
     }
   }
 
@@ -180,11 +184,14 @@ const Employees = () => {
 
       {/* table */}
       <div className="p-3 pb-6">
-        <Table
-          dataSource={employees}
-          columns={columns}
-          rowKey={(record) => record._id}
-        />
+        {
+          loadingEmployees ? <Skeleton active /> : ( <Table
+            dataSource={employees}
+            columns={columns}
+            rowKey={(record) => record._id}
+          />)
+        }
+       
       </div>
 
       {/* details modal */}
@@ -246,9 +253,9 @@ const Employees = () => {
           />
           <Divider className="my-4" />
           <div className="flex items-center justify-stretch w-full gap-2">
-            <button className="ring-1 ring-[#ccc] p-2 rounded-md w-full">Send Message</button>
-            <button className="ring-1 ring-[#ccc] p-2 rounded-md w-full">Send Money</button>
-            <button className="ring-1 ring-[#ccc] p-2 rounded-md w-full">Assign Task</button>
+            <button className="ring-1 ring-[#ccc] p-2 rounded-md w-full hover:bg-[#F39136] hover:ring-0 hover:text-white employee-action-btn">Send Message</button>
+            <button className="ring-1 ring-[#ccc] p-2 rounded-md w-full  hover:bg-[#F39136] hover:ring-0 hover:text-white employee-action-btn">Send Money</button>
+            <button className="ring-1 ring-[#ccc] p-2 rounded-md w-full  hover:bg-[#F39136] hover:ring-0 hover:text-white employee-action-btn">Assign Task</button>
           </div>
         </div>
       </Modal>

@@ -49,3 +49,8 @@ html {
 .sidenav .active :hover {
   margin-left: 0;
 }
+
+.employee-action-btn:hover{
+  transition: 0.3s;
+  translate: scale(0.2);
+}

@@ -184,6 +184,46 @@ const Employees = () => {
     getAllEmployees()
   }, [])
 
+  // update employee
+  const updateEmployee = async () => {
+    try {
+      const formdata = new FormData()
+      if (fileInputPhoto.current?.files[0]) {
+        formdata.append("photo", fileInputPhoto.current.files[0])
+      }
+      if (fileInputCV.current?.files[0]) {
+        formdata.append("cv", fileInputCV.current.files[0])
+      }
+
+      for (const key in formData) {
+        formdata.append(key, formData[key])
+      }
+
+      const requestOptions = {
+        method: "PUT",
+        body: formdata,
+        redirect: "follow",
+      }
+
+      const response = await fetch(
+        `https://api.kofflabs.com/api/v1/employees/update/${selectedEmployeeEmployeeId}`,
+        requestOptions
+      )
+      const result = await response.json()
+
+      if (result.msg === "employee updated successfully") {
+        toast.success("Employee updated successfully")
+        setOpenUpdateEmployeeModal(false)
+        getAllEmployees()
+      } else {
+        toast.error("unable to update employee")
+      }
+    } catch (err) {
+      console.error(err)
+      toast.error("an error occurred")
+    }
+  }
+
   // add an employee
   const addEmployee = async () => {
     try {
@@ -270,7 +310,32 @@ const Employees = () => {
           >
             <MdOutlineVisibility className="text-md" />
           </div>
-          <div className="p-2 rounded-full hover:ring-1 hover:ring-[#ccc] cursor-pointer">
+          <div
+            className="p-2 rounded-full hover:ring-1 hover:ring-[#ccc] cursor-pointer"
+            onClick={() => {
+              setFormData({
+                firstName: record.firstName,
+                lastName: record.lastName,
+                email: record.email,
+                phone: record.phone,
+                gender: record.gender,
+                address: record.address,
+                nationality: record.nationality,
+                employmentDate: record.employmentDate,
+                role: record.role,
+                salary: record.salary,
+                status: record.status,
+                isFired: record.isFired,
+                promotedTo: record.promotedTo,
+                bankName: record.bankName,
+                bankBranch: record.bankBranch,
+                accountName: record.accountName,
+                accountNumber: record.accountNumber,
+              })
+              setSelectedEmployeeEmployeeId(record._id)
+              setOpenUpdateEmployeeModal(true)
+            }}
+          >
             <CiEdit className="text-md" />
           </div>
           <Popconfirm
@@ -467,6 +532,84 @@ const Employees = () => {
               Assign Task
             </button>
           </div>
+        </div>
+      </Modal>
+
+      {/* update employee modal */}
+      <Modal
+        title="Update Employee"
+        open={openUpdateEmployeeModal}
+        onCancel={() => setOpenUpdateEmployeeModal(false)}
+        onOk={updateEmployee}
+        okText="Update Employee"
+        okButtonProps={{
+          style: { backgroundColor: "#F29235", color: "white" },
+        }}
+        cancelText="Cancel"
+        width={800}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[70vh] overflow-y-auto">
+          <input
+            type="text"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            placeholder="First Name"
+            className="border p-2 rounded"
+          />
+          <input
+            type="text"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            placeholder="Last Name"
+            className="border p-2 rounded"
+          />
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email"
+            className="border p-2 rounded"
+          />
+          <input
+            type="text"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="Phone"
+            className="border p-2 rounded"
+          />
+          <input
+            type="text"
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            placeholder="Role"
+            className="border p-2 rounded"
+          />
+          <input
+            type="text"
+            name="salary"
+            value={formData.salary}
+            onChange={handleChange}
+            placeholder="Salary"
+            className="border p-2 rounded"
+          />
+          {/* Add more inputs as needed */}
+          <input
+            type="file"
+            name="photo"
+            ref={fileInputPhoto}
+            className="border p-2 rounded"
+          />
+          <input
+            type="file"
+            name="cv"
+            ref={fileInputCV}
+            className="border p-2 rounded"
+          />
         </div>
       </Modal>
 

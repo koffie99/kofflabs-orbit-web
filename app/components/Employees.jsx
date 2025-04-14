@@ -127,6 +127,32 @@ const Employees = () => {
   }
 
   // delete employee
+  // const deleteEmployee = async (employeeId) => {
+  //   try {
+  //     const requestOptions = {
+  //       method: "DELETE",
+  //       redirect: "follow",
+  //     }
+
+  //     await fetch(
+  //       `https://api.kofflabs.com/api/v1/employees/delete/${employeeId}`,
+  //       requestOptions
+  //     )
+  //       .then((response) => response.json())
+  //       .then((result) => {
+  //         if (result.msg === "employee deleted successfully") {
+  //           toast.success("Employee deleted successfully")
+  //           getAllEmployees()
+  //         } else {
+  //           toast.error("Unable to delete employee")
+  //         }
+  //       })
+  //       .catch((error) => console.error(error))
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
+
   const deleteEmployee = async (employeeId) => {
     try {
       const requestOptions = {
@@ -134,22 +160,21 @@ const Employees = () => {
         redirect: "follow",
       }
 
-      await fetch(
+      const res = await fetch(
         `https://api.kofflabs.com/api/v1/employees/delete/${employeeId}`,
         requestOptions
       )
-        .then((response) => response.json())
-        .then((result) => {
-          if (result.msg === "employee deleted successfully") {
-            toast.success("Employee deleted successfully")
-            getAllEmployees()
-          } else {
-            toast.error("Unable to delete employee")
-          }
-        })
-        .catch((error) => console.error(error))
+      const result = await res.json()
+
+      if (result.msg === "employee deleted successfully") {
+        toast.success("Employee deleted successfully")
+        getAllEmployees()
+      } else {
+        toast.error("unable to delete employee")
+      }
     } catch (err) {
-      console.log(err)
+      console.error(err)
+      toast.error("an error occurred")
     }
   }
 
@@ -181,7 +206,8 @@ const Employees = () => {
       const result = await response.json()
       if (result.msg === "employee added successfully") {
         toast.success("Employee added successfully")
-        onClose()
+        setOpenAddEmployeeModal(false)
+        getAllEmployees()
       } else {
         toast.error("Unable to add employee")
       }
@@ -423,9 +449,9 @@ const Employees = () => {
             </button>
           </div>
         </div>
-
-        <Toaster />
       </Modal>
+
+      <Toaster />
     </div>
   )
 }

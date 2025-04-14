@@ -285,6 +285,8 @@ const Clients = () => {
           <SweetList Icon={MdOutlineMailOutline} name={selectedClientEmail} />
           <SweetList Icon={MdOutlineCall} name={selectedClientPhone} />
           <SweetList Icon={HiOutlineLocationMarker} name={selectedClientAddress} />
+          
+          <button className="mt-5 ring-1 ring-[#ccc] text-[#313131] p-2 rounded">Send Message</button>
         </div>
       </Modal>
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import EntityLength from "../uibits/EntityLength"
-import { Table, Popconfirm, Modal } from "antd"
+import { Table, Popconfirm, Modal, Divider } from "antd"
 import baseUrl from "../utils/baseUrl"
 import formatDate from "../utils/formatDate"
 
@@ -60,7 +60,7 @@ const Employees = () => {
     setSelectedEmployeePhone(employee.phone)
     setSelectedEmployeeAddress(employee.address)
     setSelectedEmployeeNationality(employee.nationality)
-    setSelectedEmployeeEmployementStartDate(employee.employmentStartDate)
+    setSelectedEmployeeEmployementStartDate(employee.employmentDate)
     setSelectedEmployeeRole(employee.role)
     setSelectedEmployeeSalary(employee.salary)
     setSelectedEmployeeStatus(employee.status)
@@ -140,7 +140,7 @@ const Employees = () => {
     {
       title: "Actions",
       render: (_, record) => (
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1">
           <div
             className="p-2 rounded-full hover:ring-1 hover:ring-[#ccc] cursor-pointer"
             onClick={() => handleOpenEmployeeDetailsModal(record)}
@@ -208,12 +208,48 @@ const Employees = () => {
             className="h-[80vh] w-full object-cover rounded-lg"
           />
         </div>
-        <div className="mt-3">
+        <div className="mt-5 flex flex-col gap-3">
           <PersonaList
-            name={selectedEmployeeFirstName}
-            icon={GoPerson}
+            name={`${selectedEmployeeFirstName} ${selectedEmployeeLastName}`}
+            Icon={GoPerson}
             desc="Full Name"
           />
+          <PersonaList
+            name={selectedEmployeeEmail}
+            Icon={GoPerson}
+            desc="Email"
+          />
+          <PersonaList
+            name={selectedEmployeePhone}
+            Icon={GoPerson}
+            desc="Phone"
+          />
+          <PersonaList
+            name={selectedEmployeeAddress}
+            Icon={GoPerson}
+            desc="Address"
+          />
+          <PersonaList
+            name={selectedEmployeeRole}
+            Icon={GoPerson}
+            desc="Role"
+          />
+          <PersonaList
+            name={`GHS ${selectedEmployeeSalary || 0.0}`}
+            Icon={GoPerson}
+            desc="Salary"
+          />
+          <PersonaList
+            name={formatDate(selectedEmployeeEmployementStartDate)}
+            Icon={GoPerson}
+            desc="Employment Date"
+          />
+          <Divider className="my-4" />
+          <div className="flex items-center justify-stretch w-full gap-2">
+            <button className="ring-1 ring-[#ccc] p-2 rounded-md w-full">Send Message</button>
+            <button className="ring-1 ring-[#ccc] p-2 rounded-md w-full">Send Money</button>
+            <button className="ring-1 ring-[#ccc] p-2 rounded-md w-full">Assign Task</button>
+          </div>
         </div>
       </Modal>
     </div>

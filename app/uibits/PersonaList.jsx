@@ -7,7 +7,7 @@ const PersonaList = ({ Icon, name, desc }) => {
         {Icon && <Icon />}
       </div>
       <div className="flex flex-col">
-        <p>{name}</p>
+        <p className="font-semibold">{name}</p>
         <p className="text-sm text-[#818181] font-normal">{desc}</p>
       </div>
     </div>

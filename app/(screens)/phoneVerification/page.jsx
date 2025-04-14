@@ -18,7 +18,9 @@ const PhoneVerification = () => {
   }
 
   // handle code verification
-  const verifyCode = async () => {
+  const verifyCode = async (e) => {
+    e.preventDefault()
+
     try {
       setLoading(true)
 
@@ -79,7 +81,10 @@ const PhoneVerification = () => {
           <h2 className="font-bold text-2xl">Phone Verification</h2>
           <p>Enter verification code sent to your phone</p>
         </div>
-        <div className="w-full p-7 rounded-lg shadow bg-white flex flex-col gap-3">
+        <form
+          onSubmit={verifyCode}
+          className="w-full p-7 rounded-lg shadow bg-white flex flex-col gap-3"
+        >
           <input
             type="text"
             placeholder="Enter verification code"
@@ -88,7 +93,8 @@ const PhoneVerification = () => {
           />
           <button
             className="bg-[#f39136] text-white p-2 rounded-md w-full"
-            onClick={verifyCode}
+            // onClick={verifyCode}
+            type="submit"
             disabled={loading}
           >
             {loading ? (
@@ -105,7 +111,7 @@ const PhoneVerification = () => {
               "Verify"
             )}
           </button>
-        </div>
+        </form>
       </div>
 
       <Toaster />

@@ -11,7 +11,9 @@ const Login = () => {
   const [loading, setLoading] = useState(false)
 
   // handle login
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault()
+
     try {
       setLoading(true)
 
@@ -67,7 +69,10 @@ const Login = () => {
         <h2 className="font-bold text-2xl">Kofflabs Orbit</h2>
         <p className="text-[#818181]">Enter your credentials to continue</p>
       </div>
-      <div className="bg-white p-8 rounded-lg shadow flex flex-col mt-4">
+      <form
+        onSubmit={handleLogin}
+        className="bg-white p-8 rounded-lg shadow flex flex-col mt-4"
+      >
         <div className="login-box">
           <input
             type="text"
@@ -84,7 +89,8 @@ const Login = () => {
         </div>
         <button
           className="bg-[#f39136] text-white p-2 rounded-md mt-7 w-full"
-          onClick={() => handleLogin()}
+          type="submit"
+          // onClick={() => handleLogin()}
         >
           {loading ? (
             <div className="flex items-center justify-center">
@@ -104,7 +110,7 @@ const Login = () => {
         <p className="text-[14px] text-[#818181] mt-6 text-center">
           Powered by <span className="font-semibold">Kofflabs Systems</span>
         </p>
-      </div>
+      </form>
 
       <Toaster />
     </div>

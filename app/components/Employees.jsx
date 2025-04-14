@@ -20,6 +20,7 @@ const Employees = () => {
   const [openAddEmployeeModal, setOpenAddEmployeeModal] = useState(false)
   const [openUpdateEmployeeModal, setOpenUpdateEmployeeModal] = useState(false)
   const [addingEmployee, setAddingEmployee] = useState(false)
+  const [updatingEmployee, setUpdatingEmployee] = useState(false)
 
   // selected employee
   const [selectedEmployeeFirstName, setSelectedEmployeeFirstName] = useState("")
@@ -67,8 +68,8 @@ const Employees = () => {
     employmentTerminationDate: "",
     role: "",
     salary: "",
-    status: "active",
-    isFired: "false",
+    status: "",
+    isFired: "",
     promotedTo: "",
     bankName: "",
     bankBranch: "",
@@ -187,6 +188,7 @@ const Employees = () => {
   // update employee
   const updateEmployee = async () => {
     try {
+      setUpdatingEmployee(true)
       const formdata = new FormData()
       if (fileInputPhoto.current?.files[0]) {
         formdata.append("photo", fileInputPhoto.current.files[0])
@@ -214,13 +216,16 @@ const Employees = () => {
       if (result.msg === "employee updated successfully") {
         toast.success("Employee updated successfully")
         setOpenUpdateEmployeeModal(false)
+        setUpdatingEmployee(false)
         getAllEmployees()
       } else {
         toast.error("unable to update employee")
+        setUpdatingEmployee(false)
       }
     } catch (err) {
       console.error(err)
       toast.error("an error occurred")
+      setUpdatingEmployee(false)
     }
   }
 
@@ -541,7 +546,18 @@ const Employees = () => {
         open={openUpdateEmployeeModal}
         onCancel={() => setOpenUpdateEmployeeModal(false)}
         onOk={updateEmployee}
-        okText="Update Employee"
+        okText={
+          updatingEmployee ? (
+            <Image
+              width={10}
+              height={10}
+              alt="loading anim"
+              src="/gifs/whiteloading.gif"
+            />
+          ) : (
+            "Update Employee"
+          )
+        }
         okButtonProps={{
           style: { backgroundColor: "#F29235", color: "white" },
         }}
@@ -550,7 +566,6 @@ const Employees = () => {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[70vh] overflow-y-auto">
           <input
-            type="text"
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
@@ -558,7 +573,6 @@ const Employees = () => {
             className="border p-2 rounded"
           />
           <input
-            type="text"
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
@@ -566,15 +580,14 @@ const Employees = () => {
             className="border p-2 rounded"
           />
           <input
-            type="email"
             name="email"
+            type="email"
             value={formData.email}
             onChange={handleChange}
             placeholder="Email"
             className="border p-2 rounded"
           />
           <input
-            type="text"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
@@ -582,7 +595,34 @@ const Employees = () => {
             className="border p-2 rounded"
           />
           <input
-            type="text"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            placeholder="Address"
+            className="border p-2 rounded"
+          />
+          <input
+            name="nationality"
+            value={formData.nationality}
+            onChange={handleChange}
+            placeholder="Nationality"
+            className="border p-2 rounded"
+          />
+          <input
+            name="employmentDate"
+            type="date"
+            value={formData.employmentDate}
+            onChange={handleChange}
+            className="border p-2 rounded"
+          />
+          <input
+            name="employmentTerminationDate"
+            type="date"
+            value={formData.employmentTerminationDate}
+            onChange={handleChange}
+            className="border p-2 rounded"
+          />
+          <input
             name="role"
             value={formData.role}
             onChange={handleChange}
@@ -590,29 +630,84 @@ const Employees = () => {
             className="border p-2 rounded"
           />
           <input
-            type="text"
+            name="promotedTo"
+            value={formData.promotedTo}
+            onChange={handleChange}
+            placeholder="Promoted To"
+            className="border p-2 rounded"
+          />
+          <input
             name="salary"
             value={formData.salary}
             onChange={handleChange}
             placeholder="Salary"
             className="border p-2 rounded"
           />
-          {/* Add more inputs as needed */}
+          <select
+            name="status"
+            value={formData.status}
+            onChange={handleChange}
+            className="border p-2 rounded"
+          >
+            <option value="">Select Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+          <select
+            name="isFired"
+            value={formData.isFired}
+            onChange={handleChange}
+            className="border p-2 rounded"
+          >
+            <option value="false">Not Fired</option>
+            <option value="true">Fired</option>
+          </select>
+          <input
+            name="bankName"
+            value={formData.bankName}
+            onChange={handleChange}
+            placeholder="Bank Name"
+            className="border p-2 rounded"
+          />
+          <input
+            name="bankBranch"
+            value={formData.bankBranch}
+            onChange={handleChange}
+            placeholder="Bank Branch"
+            className="border p-2 rounded"
+          />
+          <input
+            name="accountName"
+            value={formData.accountName}
+            onChange={handleChange}
+            placeholder="Account Name"
+            className="border p-2 rounded"
+          />
+          <input
+            name="accountNumber"
+            value={formData.accountNumber}
+            onChange={handleChange}
+            placeholder="Account Number"
+            className="border p-2 rounded"
+          />
           <input
             type="file"
             name="photo"
-            ref={fileInputPhoto}
+            onChange={(e) =>
+              setFileData((prev) => ({ ...prev, photo: e.target.files[0] }))
+            }
             className="border p-2 rounded"
           />
           <input
             type="file"
             name="cv"
-            ref={fileInputCV}
+            onChange={(e) =>
+              setFileData((prev) => ({ ...prev, cv: e.target.files[0] }))
+            }
             className="border p-2 rounded"
           />
         </div>
       </Modal>
-
       <Toaster />
     </div>
   )

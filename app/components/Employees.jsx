@@ -19,6 +19,7 @@ const Employees = () => {
   const [loadingEmployees, setLoadingEmployees] = useState(false)
   const [openAddEmployeeModal, setOpenAddEmployeeModal] = useState(false)
   const [openUpdateEmployeeModal, setOpenUpdateEmployeeModal] = useState(false)
+  const [addingEmployee, setAddingEmployee] = useState(false)
 
   // selected employee
   const [selectedEmployeeFirstName, setSelectedEmployeeFirstName] = useState("")
@@ -59,7 +60,7 @@ const Employees = () => {
     lastName: "",
     email: "",
     phone: "",
-    gender: "male",
+    gender: "",
     address: "",
     nationality: "",
     employmentDate: "",
@@ -186,6 +187,7 @@ const Employees = () => {
   // add an employee
   const addEmployee = async () => {
     try {
+      setAddingEmployee(true)
       const formdata = new FormData()
       formdata.append("photo", fileInputPhoto.current.files[0])
       formdata.append("cv", fileInputCV.current.files[0])
@@ -207,12 +209,15 @@ const Employees = () => {
       if (result.msg === "employee added successfully") {
         toast.success("Employee added successfully")
         setOpenAddEmployeeModal(false)
+        setAddingEmployee(false)
         getAllEmployees()
       } else {
         toast.error("Unable to add employee")
+        setAddingEmployee(false)
       }
     } catch (err) {
       console.error(err)
+      setAddingEmployee(false)
     }
   }
 
@@ -316,7 +321,21 @@ const Employees = () => {
         open={openAddEmployeeModal}
         onCancel={() => setOpenAddEmployeeModal(false)}
         onOk={addEmployee}
-        okText="Submit"
+        okText={
+          addingEmployee ? (
+            <Image
+              width={10}
+              height={10}
+              alt="loading anim"
+              src="/gifs/whiteloading.gif"
+            />
+          ) : (
+            "Add Employee"
+          )
+        }
+        okButtonProps={{
+          style: { backgroundColor: "#F29235", color: "white" },
+        }}
         cancelText="Cancel"
         width={800}
       >

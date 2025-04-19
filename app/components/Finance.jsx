@@ -302,7 +302,10 @@ const Finance = () => {
       <Modal
         open={openLinkModal}
         title="Payment Link"
-        onCancel={() => setOpenLinkModal(false)}
+        onCancel={() => {
+          getPayments()
+          setOpenLinkModal(false)
+        }}
         footer={false}
       >
         <p>

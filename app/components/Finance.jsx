@@ -10,6 +10,7 @@ const { Option } = Select
 import { IoCopyOutline } from "react-icons/io5"
 import { FiExternalLink } from "react-icons/fi"
 import copyText from "../utils/copyText"
+import formatDate from "../utils/formatDate"
 
 const Finance = () => {
   const [openPaymentLinkModal, setOpenPaymentLinkModal] = useState(false)
@@ -104,6 +105,7 @@ const Finance = () => {
             setPaymentDescription(result.paymentData.description)
             setProjectName(result.paymentData.projectName)
             toast.success("Payment link created successfully")
+            get
             setGenerating(false)
             setOpenPaymentLinkModal(false)
             setOpenLinkModal(true)
@@ -157,6 +159,11 @@ const Finance = () => {
       dataIndex: "clientName",
     },
     {
+      title: "Client Email",
+      key: "clientEmail",
+      dataIndex: "clientEmail",
+    },
+    {
       title: "Amount (GHS)",
       key: "amount",
       dataIndex: "amount",
@@ -191,13 +198,22 @@ const Finance = () => {
       dataIndex: "projectName",
       render: (_, record) => <p>{record.project[0].name || "Other"}</p>,
     },
+    {
+      title: "Date Created",
+      key: "dateCreated",
+      dataIndex: "dateCreated",
+      render: (_, record) => <p>{formatDate(record.dateCreated)}</p>,
+    },
   ]
 
   return (
     <div className="">
       <div className="flex items-center justify-between bg-white w-full p-5 rounded-lg shadow">
         <h2 className="font-semibold text-xl">Finance</h2>
-        <div className="#f29235">
+        <div className="#f29235 flex items-center gap-2">
+          <button className="ring-1 ring-[#ccc] text-sm rounded-lg px-4 py-2 mr-0">
+            + Add Expense
+          </button>
           <button
             className="bg-[#f39136] text-white text-sm rounded-lg px-4 py-2"
             onClick={() => setOpenPaymentLinkModal(true)}
@@ -276,7 +292,7 @@ const Finance = () => {
                 src="/gifs/whiteloading.gif"
               />
             ) : (
-              "Add Department"
+              "Create payment link"
             )}
           </button>
         </form>

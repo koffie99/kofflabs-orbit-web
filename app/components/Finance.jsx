@@ -234,6 +234,7 @@ const Finance = () => {
         <Table
           columns={columns}
           dataSource={payments}
+          pagination={{pageSize: 5}}
           rowKey={(record) => record._id}
         />
       </div>

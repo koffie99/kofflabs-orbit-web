@@ -248,7 +248,7 @@ const Finance = () => {
           <Select
             showSearch
             className="w-full"
-            placeholder="Select a project"
+            placeholder="Select a division"
             onChange={(value) => setProjectId(value)}
           >
             {projects.map((project) => (

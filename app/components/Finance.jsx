@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import MoneyCard from "../uibits/MoneyCard"
-import { Modal, Select } from "antd"
+import { Modal, Select, Table } from "antd"
 import { toast, Toaster } from "react-hot-toast"
 import baseUrl from "../utils/baseUrl"
 import Image from "next/image"
@@ -26,6 +26,7 @@ const Finance = () => {
   const [clientAmount, setClientAmount] = useState(0)
   const [paymentDescription, setPaymentDescription] = useState("")
   const [projectName, setProjectName] = useState("")
+  const [payments, setPayments] = useState([])
 
   // get all projects
   const getProjects = async () => {
@@ -119,11 +120,78 @@ const Finance = () => {
     }
   }
 
+  // get all payments
+  const getPayments = async () => {
+    try {
+      const requestOptions = {
+        method: "GET",
+        redirect: "follow",
+      }
+
+      await fetch(
+        "https://api.kofflabs.com/api/v1/payments/all",
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          setPayments(result.payments)
+        })
+        .catch((error) => console.error(error))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   // init
   useEffect(() => {
     getClients()
     getProjects()
+    getPayments()
   }, [])
+
+  // table columns
+  const columns = [
+    {
+      title: "Client Name",
+      key: "clientName",
+      dataIndex: "clientName",
+    },
+    {
+      title: "Amount (GHS)",
+      key: "amount",
+      dataIndex: "amount",
+    },
+    {
+      title: "Purpose",
+      key: "description",
+      dataIndex: "description",
+      render: (_, record) => <p>{record.description || "Other"}</p>,
+    },
+    {
+      title: "Status",
+      key: "status",
+      dataIndex: "status",
+      render: (_, record) => (
+        <p
+          className={`${
+            record.status === "success"
+              ? "bg-green"
+              : record.status === "pending"
+              ? "bg-orange"
+              : "bg-red"
+          }`}
+        >
+          {record.status}
+        </p>
+      ),
+    },
+    {
+      title: "Division",
+      key: "projectName",
+      dataIndex: "projectName",
+      render: (_, record) => <p>{record.project[0].name || "Other"}</p>,
+    },
+  ]
 
   return (
     <div className="">
@@ -144,6 +212,14 @@ const Finance = () => {
         <MoneyCard title="Total Sales (2025)" amount={100000} type="gross" />
         <MoneyCard title="Sales This Month" amount={30000} type="monthly" />
         <MoneyCard title="Sales Today" amount={20000} type="today" />
+      </div>
+
+      <div className="bg-white p-4 rounded-lg shadow mt-5">
+        <Table
+          columns={columns}
+          dataSource={payments}
+          rowKey={(record) => record._id}
+        />
       </div>
 
       <Modal

@@ -271,6 +271,7 @@ const Finance = () => {
           </Select>
           <input
             type="number"
+            step="any"
             placeholder="Amount"
             className="w-full rounded-md p-[6px] ring-1 ring-[#ccc]"
             onChange={(e) => setAmount(e.target.value)}

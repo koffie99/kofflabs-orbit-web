@@ -8,6 +8,7 @@ import { CiEdit } from "react-icons/ci"
 import { GoTrash } from "react-icons/go"
 import EntityLength from "../uibits/EntityLength"
 import baseUrl from "../utils/baseUrl"
+import formatDate from "../utils/formatDate"
 
 const Departments = () => {
   const [departments, setDepartments] = useState([])
@@ -47,10 +48,7 @@ const Departments = () => {
           redirect: "follow",
         }
 
-        await fetch(
-          `${baseUrl}/api/v1/departments/create`,
-          requestOptions
-        )
+        await fetch(`${baseUrl}/api/v1/departments/create`, requestOptions)
           .then((response) => response.json())
           .then((result) => {
             if (result.msg === "department created successfully") {
@@ -192,9 +190,7 @@ const Departments = () => {
       title: "Date Created",
       dataIndex: "dateCreated",
       key: "dateCreated",
-      render: (_, record) => (
-        <p>{new Date(record.dateCreated).toLocaleString()}</p>
-      ),
+      render: (_, record) => <p>{formatDate(record?.dateCreated)}</p>,
     },
     {
       title: "Actions",
@@ -202,7 +198,7 @@ const Departments = () => {
       render: (text, record) => (
         <div className="flex gap-x-2">
           <button
-            className="bg-[#b5eaff] text-[#2587ad] py-2 px-3 rounded-md text-sm"
+            className="py-2 px-3 rounded-md text-sm"
             onClick={() => {
               setSelectedDeptName(record.name)
               setSelectedDeptId(record._id)
@@ -219,7 +215,7 @@ const Departments = () => {
             }}
             onConfirm={() => deleteDepartment(record._id)}
           >
-            <button className="bg-[#ffcfc8] text-[#d45139] py-1 px-3 rounded-md text-sm">
+            <button className="py-1 px-3 rounded-md text-sm">
               <GoTrash />
             </button>
           </Popconfirm>

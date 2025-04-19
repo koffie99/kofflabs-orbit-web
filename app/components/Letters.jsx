@@ -151,8 +151,6 @@ const Letters = () => {
       {/* content */}
       <Table className="mt-5" columns={columns} dataSource={letters} />
 
-      <h1>BASE URL: {baseUrl}</h1>
-
       {/* write letter modal */}
       <Modal
         title="Write a letter"

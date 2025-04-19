@@ -157,7 +157,7 @@ const Page = () => {
             onClick={() => setCurrentPage("finance")}
           >
             <GrMoney />
-            <p>Finance & Accounting</p>
+            <p>Finance</p>
           </div>
           <div
             className={`${

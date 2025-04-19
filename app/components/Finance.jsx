@@ -105,7 +105,7 @@ const Finance = () => {
             setPaymentDescription(result.paymentData.description)
             setProjectName(result.paymentData.projectName)
             toast.success("Payment link created successfully")
-            get
+            getPayments()
             setGenerating(false)
             setOpenPaymentLinkModal(false)
             setOpenLinkModal(true)

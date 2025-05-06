@@ -51,7 +51,7 @@ const Clients = () => {
   const getAllClients = async () => {
     try {
       setLoadingClients(true)
-      const res = await fetch("https://api.kofflabs.com/api/v1/clients/all")
+      const res = await fetch(`${baseUrl}/api/v1/clients/all`)
       const result = await res.json()
       setClients(result.clients || [])
       setLoadingClients(false)

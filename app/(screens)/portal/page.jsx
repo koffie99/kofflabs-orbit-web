@@ -12,6 +12,7 @@ import { PiShieldCheck } from "react-icons/pi"
 import { BiLogOutCircle } from "react-icons/bi"
 import { AiOutlineNotification } from "react-icons/ai"
 import { FiActivity } from "react-icons/fi"
+import { IoSettingsOutline } from "react-icons/io5"
 import { TbUsersGroup } from "react-icons/tb"
 import Dashboard from "@/app/components/Dashboard"
 import Employees from "@/app/components/Employees"
@@ -28,6 +29,7 @@ import Announcement from "@/app/components/Annoucement"
 import Activities from "@/app/components/Activities"
 import Administrators from "@/app/components/Administrators"
 import Departments from "@/app/components/Departments"
+import Settings from "@/app/components/Settings"
 
 const Page = () => {
   // Load the last visited page from sessionStorage
@@ -86,6 +88,8 @@ const Page = () => {
         return <Activities />
       case "administrators":
         return <Administrators />
+      case "settings":
+        return <Settings />
       default:
         return <Dashboard />
     }
@@ -168,15 +172,7 @@ const Page = () => {
             <IoDocumentTextOutline />
             <p>Letters</p>
           </div>
-          <div
-            className={`${
-              currentPage === "security" ? "active" : ""
-            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
-            onClick={() => setCurrentPage("security")}
-          >
-            <PiShieldCheck />
-            <p>System & Security</p>
-          </div>
+
           <div
             className={`${
               currentPage === "announcements" ? "active" : ""
@@ -203,6 +199,15 @@ const Page = () => {
           >
             <TbUsersGroup />
             <p>Administrators</p>
+          </div>
+          <div
+            className={`${
+              currentPage === "settings" ? "active" : ""
+            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            onClick={() => setCurrentPage("settings")}
+          >
+            <IoSettingsOutline />
+            <p>Settings</p>
           </div>
           <div
             className="p-2 rounded-md flex items-center gap-3 text-[#ff5555] cursor-pointer w-fit"

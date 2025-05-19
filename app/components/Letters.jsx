@@ -1,4 +1,4 @@
-import { Modal, Table } from "antd"
+import { Modal, Table, Popconfirm } from "antd"
 import React, { useEffect, useState } from "react"
 import { Toaster, toast } from "react-hot-toast"
 import { TfiWrite } from "react-icons/tfi"
@@ -96,6 +96,33 @@ const Letters = () => {
     setOpenAddLetterModal(true)
   }
 
+  // delete a letter
+  const deleteLetter = async (letter_id) => {
+    try {
+      const requestOptions = {
+        method: "DELETE",
+        redirect: "follow",
+      }
+
+      await fetch(
+        `${baseUrl}/api/v1/letters/delete/67bc51bcefb2bae24e3c4ce0`,
+        requestOptions
+      )
+        .then((response) => (<response className="json"></response>)())
+        .then((result) => {
+          if (result.msg === "letter deleted successfully") {
+            getAllLetters()
+            toast.success("Letter deleted successfully")
+          } else {
+            toast.error("Unable to delete letter")
+          }
+        })
+        .catch((error) => console.error(error))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   // init
   useEffect(() => {
     getAllLetters()
@@ -128,7 +155,17 @@ const Letters = () => {
         <div className="flex items-center gap-3">
           <FiEye />
           <FiEdit3 />
-          <GoTrash />
+          <Popconfirm
+            description="Delete this letter?"
+            className="cursor-pointer"
+            okText="Delete"
+            okButtonProps={{
+              style: { backgroundColor: "tomato", color: "white" },
+            }}
+            onConfirm={() => deleteLetter(record._id)}
+          >
+            <GoTrash />
+          </Popconfirm>
         </div>
       ),
     },
@@ -149,7 +186,12 @@ const Letters = () => {
       </div>
 
       {/* content */}
-      <Table className="mt-5" columns={columns} dataSource={letters} />
+      <Table
+        className="mt-5"
+        columns={columns}
+        dataSource={letters}
+        pagination={{ pageSize: 5 }}
+      />
 
       {/* write letter modal */}
       <Modal

@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect } from "react"
 import MoneyCard from "../uibits/MoneyCard"
 import { Modal, Select, Table } from "antd"

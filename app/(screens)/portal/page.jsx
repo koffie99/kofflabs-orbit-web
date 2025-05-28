@@ -115,7 +115,7 @@ const Page = () => {
           <div
             className={`${
               currentPage === "dashboard" ? "active" : ""
-            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            } p-2 rounded-full text-neutral-400 pl-5 flex items-center gap-3 cursor-pointer`}
             onClick={() => setCurrentPage("dashboard")}
           >
             <LuLayoutDashboard />
@@ -124,7 +124,7 @@ const Page = () => {
           <div
             className={`${
               currentPage === "employees" ? "active" : ""
-            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            } p-2 rounded-full text-neutral-400 pl-5 flex items-center gap-3 cursor-pointer`}
             onClick={() => setCurrentPage("employees")}
           >
             <GoPeople />
@@ -133,7 +133,7 @@ const Page = () => {
           <div
             className={`${
               currentPage === "departments" ? "active" : ""
-            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            } p-2 rounded-full text-neutral-400  pl-5 flex items-center gap-3 cursor-pointer`}
             onClick={() => setCurrentPage("departments")}
           >
             <FaRegBuilding />
@@ -142,7 +142,7 @@ const Page = () => {
           <div
             className={`${
               currentPage === "projects" ? "active" : ""
-            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            } p-2 rounded-full pl-5 text-neutral-400 flex items-center gap-3 cursor-pointer`}
             onClick={() => setCurrentPage("projects")}
           >
             <LiaProjectDiagramSolid />
@@ -151,7 +151,7 @@ const Page = () => {
           <div
             className={`${
               currentPage === "clients" ? "active" : ""
-            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            } p-2 rounded-full pl-5 flex text-neutral-400 items-center gap-3 cursor-pointer`}
             onClick={() => setCurrentPage("clients")}
           >
             <BsPeople />
@@ -160,7 +160,7 @@ const Page = () => {
           <div
             className={`${
               currentPage === "finance" ? "active" : ""
-            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            } p-2 rounded-full pl-5 flex text-neutral-400 items-center gap-3 cursor-pointer`}
             onClick={() => setCurrentPage("finance")}
           >
             <GrMoney />
@@ -169,7 +169,7 @@ const Page = () => {
           <div
             className={`${
               currentPage === "documents" ? "active" : ""
-            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            } p-2 rounded-full pl-5 flex text-neutral-400 items-center gap-3 cursor-pointer`}
             onClick={() => setCurrentPage("documents")}
           >
             <IoDocumentTextOutline />
@@ -179,7 +179,7 @@ const Page = () => {
           <div
             className={`${
               currentPage === "announcements" ? "active" : ""
-            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            } p-2 rounded-full pl-5 flex text-neutral-400 items-center gap-3 cursor-pointer`}
             onClick={() => setCurrentPage("announcements")}
           >
             <AiOutlineNotification />
@@ -197,7 +197,7 @@ const Page = () => {
           <div
             className={`${
               currentPage === "administrators" ? "active" : ""
-            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            } p-2 rounded-full pl-5 flex text-neutral-400 items-center gap-3 cursor-pointer`}
             onClick={() => setCurrentPage("administrators")}
           >
             <TbUsersGroup />
@@ -206,7 +206,7 @@ const Page = () => {
           <div
             className={`${
               currentPage === "settings" ? "active" : ""
-            } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
+            } p-2 rounded-full pl-5 text-neutral-400 flex items-center gap-3 cursor-pointer`}
             onClick={() => setCurrentPage("settings")}
           >
             <IoSettingsOutline />
@@ -223,7 +223,7 @@ const Page = () => {
       </div>
       <div className="flex-[0.8] w-full">
         {/* nav */}
-        <div className="bg-white w-full shadow h-[10vh] flex items-center justify-between px-7">
+        <div className="bg-[#131313] shadow-xl w-full h-[10vh] flex items-center justify-between px-7">
           <p></p>
           <div className="flex flex-col items-end">
             <p className="capitalize">

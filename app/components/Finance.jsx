@@ -197,7 +197,7 @@ const Finance = () => {
       title: "Division",
       key: "projectName",
       dataIndex: "projectName",
-      render: (_, record) => <p>{record.project[0].name || "Other"}</p>,
+      render: (_, record) => <p>{record.project[0]?.name || "Other"}</p>,
     },
     {
       title: "Date Created",

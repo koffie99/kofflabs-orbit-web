@@ -4,7 +4,11 @@ import Login from "./components/Login"
 
 export default function Home() {
   const router = useRouter()
-  const userId = sessionStorage.getItem("userId")
+  let userId
+
+  if(typeof sessionStorage !== "undefined") {
+    userId = sessionStorage.getItem("userId")
+  }
 
   // Redirect to portal if user is logged in
   if (userId) {

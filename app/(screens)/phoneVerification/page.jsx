@@ -3,6 +3,7 @@ import baseUrl from "@/app/utils/baseUrl"
 import Image from "next/image"
 import React, { useState } from "react"
 import toast, { Toaster } from "react-hot-toast"
+import {motion} from 'motion/react'
 
 const PhoneVerification = () => {
   const [code, setCode] = useState("")
@@ -67,10 +68,44 @@ const PhoneVerification = () => {
     }
   }
 
+  // handle resend code
+  const resendCode = async(e) => {
+    e.preventDefault()
+    try{
+      const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+const raw = JSON.stringify({
+  "userId": userId.trim()
+});
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow"
+};
+
+await fetch(`${baseUrl}/api/v1/verifications/resendOTP`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    if (result.msg === "otp resent successfully") {
+      toast.success("OTP Sent Successfully")
+    }else{
+      toast.error("Unable to send OTP, please try again")
+    }
+  })
+  .catch((error) => console.error(error));
+    }catch(err){
+      console.log(err)
+    }
+  }
+
   return (
-    <div className="bg-[#f9fafd] min-h-screen w-full flex items-center justify-center">
+    <div className="bg-neutral-900 min-h-screen w-full flex items-center justify-center" style={{backgroundImage: `radial-gradient(circle at 0.5px 0.5px, rgba(255,255,255,0.1) 0.5px, transparent 0)`, backgroundSize: "8px 8px", backgroundRepeat: "repeat"}}>
       <div className="w-[400px] flex flex-col gap-5 items-center">
         <div className="flex items-center flex-col">
+          <motion.div initial={{opacity: 0, y: 10}} animate={{opacity: 1, y: 0}} transition={{duration: 0.2}}>
           <Image
             height={60}
             width={60}
@@ -78,22 +113,24 @@ const PhoneVerification = () => {
             alt="logo"
             className="mb-5"
           />
-          <h2 className="font-bold text-2xl">Phone Verification</h2>
-          <p>Enter verification code sent to your phone</p>
+          </motion.div>
+          <motion.h2 initial={{opacity: 0, y: 10}} animate={{opacity: 1, y: 0}} transition={{duration: 0.3}} className="font-bold text-2xl text-neutral-300">Phone Verification</motion.h2>
+          <motion.p initial={{opacity: 0, y: 10}} animate={{opacity: 1, y: 0}} transition={{duration: 0.5}} className="text-neutral-500">Enter verification code sent to your phone</motion.p>
         </div>
-        <form
+        <motion.form
+          initial={{opacity: 0, y: 10}} animate={{opacity: 1, y: 0}} transition={{duration: 0.5}}
           onSubmit={verifyCode}
-          className="w-full p-7 rounded-lg shadow bg-white flex flex-col gap-3"
+          className="w-full p-7 rounded-lg shadow bg-[#131313] flex flex-col gap-3"
         >
           <input
             type="text"
             placeholder="Enter verification code"
-            className="ring-1 ring-[#ccc] p-2 rounded-md"
+            className="bg-neutral-800 p-3 rounded-md text-neutral-300"
             onChange={(e) => setCode(e.target.value)}
           />
-          <button
-            className="bg-[#f39136] text-white p-2 rounded-md w-full"
-            // onClick={verifyCode}
+          <motion.button
+            whileTap={{scale: 0.9}}
+            className="bg-[#f39136] mt-3 text-white p-2 rounded-md w-full"
             type="submit"
             disabled={loading}
           >
@@ -110,8 +147,12 @@ const PhoneVerification = () => {
             ) : (
               "Verify"
             )}
-          </button>
-        </form>
+          </motion.button>
+        </motion.form>
+        <motion.button initial={{opacity: 0, y: 10}} animate={{opacity: 1, y: 0}} transition={{duration: 0.6}} whileTap={{scale: 0.8, transition: {duration: 0.5}}} whileHover={{scale: [1, 1.05, 1]}} onClick={(e) => {
+          e.preventDefault();
+          resendCode(e);
+        }} className="text-neutral-400 text-sm mt-[0px]">Resend Code</motion.button>
       </div>
 
       <Toaster />

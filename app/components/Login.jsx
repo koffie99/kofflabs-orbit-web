@@ -66,29 +66,29 @@ const Login = () => {
           alt="logo"
           className="mb-4"
         />
-        <h2 className="font-bold text-2xl">Kofflabs Orbit</h2>
-        <p className="text-[#818181]">Enter your credentials to continue</p>
+        <h2 className="font-bold text-2xl text-neutral-300">Kofflabs Orbit</h2>
+        <p className="text-neutral-500">Enter your credentials to continue</p>
       </div>
       <form
         onSubmit={handleLogin}
-        className="bg-white p-8 rounded-lg shadow flex flex-col mt-4"
+        className="bg-[#131313] p-8 rounded-lg shadow flex flex-col mt-4"
       >
-        <div className="login-box">
+        <div className="flex flex-col gap-3">
           <input
             type="text"
-            className="login-inputs"
+            className="bg-neutral-800 p-3 px-4 rounded text-neutral-300"
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
-            className="login-inputs"
+            className="bg-neutral-800 p-3 px-4 rounded text-neutral-300"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <button
-          className="bg-[#f39136] text-white p-2 rounded-md mt-7 w-full"
+          className="bg-[#f39136] text-white p-3 rounded-md mt-7 w-full"
           type="submit"
           // onClick={() => handleLogin()}
         >

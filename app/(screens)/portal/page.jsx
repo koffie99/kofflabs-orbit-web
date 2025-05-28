@@ -201,7 +201,7 @@ const Page = () => {
             onClick={() => setCurrentPage("administrators")}
           >
             <TbUsersGroup />
-            <p>Administrators</p>
+            <p>Managing Staff</p>
           </div>
           <div
             className={`${

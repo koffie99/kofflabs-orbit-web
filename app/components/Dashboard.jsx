@@ -1,9 +1,10 @@
 "use client"
 import React, { useEffect, useState } from "react"
 import DashCard from "../uibits/DashCard"
-import { GoPeople } from "react-icons/go"
 import baseUrl from "../utils/baseUrl"
 import truncateToTwoDecimals from "../utils/truncateToTwoDecimals"
+import { LiaProjectDiagramSolid } from "react-icons/lia"
+import { GoPeople } from "react-icons/go"
 
 const Dashboard = () => {
   const [dashboardStat, setDashboardStat] = useState({})
@@ -47,8 +48,9 @@ const Dashboard = () => {
             desc="Revenue"
             value={`GHS ${truncateToTwoDecimals(dashboardStat?.revenue) || 0.0}`}
           />
-          <DashCard desc="Projects" value={dashboardStat?.project_count || 0} />
+          <DashCard Icon={LiaProjectDiagramSolid} desc="Projects" value={dashboardStat?.project_count || 0} />
           <DashCard
+          Icon={GoPeople}
             desc="Employees"
             value={dashboardStat?.employee_count || 0}
           />

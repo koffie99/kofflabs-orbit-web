@@ -91,7 +91,8 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button
+        <motion.button
+          whileTap={{scale: 0.9}}
           className="bg-[#f39136] text-white p-3 rounded-md mt-7 w-full"
           type="submit"
           // onClick={() => handleLogin()}
@@ -109,7 +110,7 @@ const Login = () => {
           ) : (
             "Login"
           )}
-        </button>
+        </motion.button>
 
         <p className="text-[14px] text-[#818181] mt-6 text-center">
           Powered by <span className="font-semibold">Kofflabs Systems</span>

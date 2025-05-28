@@ -123,14 +123,14 @@ await fetch(`${baseUrl}/api/v1/verifications/resendOTP`, requestOptions)
           className="w-full p-7 rounded-lg shadow bg-[#131313] flex flex-col gap-3"
         >
           <input
-            type="text"
+            type="password"
             placeholder="Enter verification code"
             className="bg-neutral-800 p-3 rounded-md text-neutral-300"
             onChange={(e) => setCode(e.target.value)}
           />
           <motion.button
             whileTap={{scale: 0.9}}
-            className="bg-[#f39136] mt-3 text-white p-2 rounded-md w-full"
+            className="bg-[#f39136] mt-3 text-white p-3 rounded-md w-full"
             type="submit"
             disabled={loading}
           >

@@ -96,16 +96,19 @@ const Page = () => {
   }
 
   return (
-    <div className="flex bg-[#f9fafd] min-h-screen w-full">
+    <div className="flex bg-neutral-900 min-h-screen w-full" style={{backgroundImage: `radial-gradient(circle at 0.5px 0.5px, rgba(255,255,255,0.1) 0.5px, transparent 0)`, backgroundSize: "8px 8px", backgroundRepeat: "repeat"}}>
       {/* sidenav */}
-      <div className="flex-[0.2] py-2 px-8 bg-white shadow h-[100vh] overflow-y-scroll">
+      <div className="flex-[0.2] py-2 px-8 bg-[#131313] shadow h-[100vh]">
+        <div className="flex items-center gap-3 mt-4">
         <Image
-          width={150}
-          height={120}
-          src="/images/complogo.png"
+          width={30}
+          height={30}
+          src="/images/logo.png"
           quality={100}
           alt="logo"
         />
+        <h2 className="font-bold text-neutral-300 text-xl">Kofflabs <span className="text-neutral-300">Orbit</span></h2>
+        </div>
 
         {/* nav items */}
         <div className="flex flex-col gap-2 mt-4 sidenav">
@@ -182,7 +185,7 @@ const Page = () => {
             <AiOutlineNotification />
             <p>Announcements</p>
           </div>
-          <div
+          {/* <div
             className={`${
               currentPage === "activities" ? "active" : ""
             } p-2 rounded-md flex items-center gap-3 cursor-pointer`}
@@ -190,7 +193,7 @@ const Page = () => {
           >
             <FiActivity />
             <p>Activities</p>
-          </div>
+          </div> */}
           <div
             className={`${
               currentPage === "administrators" ? "active" : ""

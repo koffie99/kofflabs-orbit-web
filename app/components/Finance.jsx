@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect } from "react"
 import MoneyCard from "../uibits/MoneyCard"
-import { Modal, Select, Table } from "antd"
+import { Modal, Select, Table, ConfigProvider, theme } from "antd"
 import { toast, Toaster } from "react-hot-toast"
 import baseUrl from "../utils/baseUrl"
 import Image from "next/image"
@@ -209,10 +209,10 @@ const Finance = () => {
 
   return (
     <div className="">
-      <div className="flex items-center justify-between bg-white w-full p-5 rounded-lg shadow">
-        <h2 className="font-semibold text-xl">Finance</h2>
+      <div className="flex items-center justify-between bg-[#131313] w-full p-5 rounded-lg shadow">
+        <h2 className="font-semibold text-xl text-neutral-300">Finance</h2>
         <div className="#f29235 flex items-center gap-2">
-          <button className="ring-1 ring-[#ccc] text-sm rounded-lg px-4 py-2 mr-0">
+          <button className="ring-1 ring-neutral-300 text-neutral-300 text-sm rounded-lg px-4 py-2 mr-0">
             + Add Expense
           </button>
           <button
@@ -225,19 +225,61 @@ const Finance = () => {
       </div>
 
       {/* payment stats */}
-      <div className="grid grid-cols-3 gap-4 mt-6">
+      {/* <div className="grid grid-cols-3 gap-4 mt-6">
         <MoneyCard title="Total Sales (2025)" amount={100000} type="gross" />
         <MoneyCard title="Sales This Month" amount={30000} type="monthly" />
         <MoneyCard title="Sales Today" amount={20000} type="today" />
-      </div>
+      </div> */}
 
-      <div className="bg-white p-4 rounded-lg shadow mt-5">
+      <div className="bg-[#131313] p-4 rounded-lg shadow mt-5">
+        <ConfigProvider
+                                                theme={{
+                                                  algorithm: theme.darkAlgorithm,
+                                                  token: {
+                                                    colorPrimary: '#08807a',
+                                                    colorBgContainer: '#181818',
+                                                    colorBgElevated: '#181818',
+                                                    colorBgLayout: '#181818',
+                                                    colorBgSpotlight: '#181818',
+                                                    colorBgFloating: '#181818',
+                                                    colorBgSecondary: '#181818',
+                                                    colorBgSecondaryHover: '#181818',
+                                                    colorBgSecondaryActive: '#181818',
+                                                    colorBorder: '#2d2d2d',
+                                                    colorBorderSecondary: '#2d2d2d',
+                                                    colorBorderTertiary: '#2d2d2d',
+                                                    colorBorderQuaternary: '#2d2d2d',
+                                                    colorBorderHover: '#2d2d2d',
+                                                    colorBorderActive: '#2d2d2d',
+                                                    colorBorderSelected: '#2d2d2d',
+                                                    colorBorderSelectedHover: '#2d2d2d',
+                                                    colorBorderSelectedActive: '#2d2d2d',
+                                                    colorBorderDisabled: '#2d2d2d',
+                                                    colorBorderDisabledHover: '#2d2d2d',
+                                                    colorBorderDisabledActive: '#2d2d2d',
+                                                    colorText: '#ffffff',
+                                                    colorTextSecondary: '#ffffff',
+                                                    colorTextTertiary: '#ffffff',
+                                                    colorTextQuaternary: '#ffffff',
+                                                    colorTextPlaceholder: '#ffffff',
+                                                    colorTextDisabled: '#ffffff',
+                                                    colorTextHeading: '#ffffff',
+                                                    colorTextTitle: '#ffffff',
+                                                    colorTextDescription: '#ffffff',
+                                                    colorTextLightSolid: '#ffffff',
+                                                    colorTextLight: '#ffffff',
+                                                    colorTextMuted: '#ffffff',
+                                                    colorTextLighter: '#ffffff'
+                                                  }
+                                                }}
+                                              >
         <Table
           columns={columns}
           dataSource={payments}
           pagination={{pageSize: 5}}
           rowKey={(record) => record._id}
         />
+        </ConfigProvider>
       </div>
 
       <Modal

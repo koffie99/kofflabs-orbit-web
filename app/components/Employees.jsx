@@ -428,10 +428,52 @@ const Employees = () => {
       </div>
 
       {/* add employee modal */}
+      <ConfigProvider
+                theme={{
+                  algorithm: theme.darkAlgorithm,
+                  token: {
+                    colorPrimary: '#08807a',
+                    colorBgContainer: '#181818',
+                    colorBgElevated: '#181818',
+                    colorBgLayout: '#181818',
+                    colorBgSpotlight: '#181818',
+                    colorBgFloating: '#181818',
+                    colorBgSecondary: '#181818',
+                    colorBgSecondaryHover: '#181818',
+                    colorBgSecondaryActive: '#181818',
+                    colorBorder: '#2d2d2d',
+                    colorBorderSecondary: '#2d2d2d',
+                    colorBorderTertiary: '#2d2d2d',
+                    colorBorderQuaternary: '#2d2d2d',
+                    colorBorderHover: '#2d2d2d',
+                    colorBorderActive: '#2d2d2d',
+                    colorBorderSelected: '#2d2d2d',
+                    colorBorderSelectedHover: '#2d2d2d',
+                    colorBorderSelectedActive: '#2d2d2d',
+                    colorBorderDisabled: '#2d2d2d',
+                    colorBorderDisabledHover: '#2d2d2d',
+                    colorBorderDisabledActive: '#2d2d2d',
+                    colorText: '#ffffff',
+                    colorTextSecondary: '#ffffff',
+                    colorTextTertiary: '#ffffff',
+                    colorTextQuaternary: '#ffffff',
+                    colorTextPlaceholder: '#ffffff',
+                    colorTextDisabled: '#ffffff',
+                    colorTextHeading: '#ffffff',
+                    colorTextTitle: '#ffffff',
+                    colorTextDescription: '#ffffff',
+                    colorTextLightSolid: '#ffffff',
+                    colorTextLight: '#ffffff',
+                    colorTextMuted: '#ffffff',
+                    colorTextLighter: '#ffffff'
+                  }
+                }}
+              >
       <Modal
         title="Add New Employee"
         open={openAddEmployeeModal}
         onCancel={() => setOpenAddEmployeeModal(false)}
+        style={{backgroundColor: "#131313"}}
         onOk={addEmployee}
         okText={
           addingEmployee ? (
@@ -451,7 +493,7 @@ const Employees = () => {
         cancelText="Cancel"
         width={800}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[70vh] overflow-y-auto pr-2">
+        <div className="grid mt-3 grid-cols-1 md:grid-cols-2 gap-4 max-h-[70vh] overflow-y-auto pr-2 p-4 border-none">
           {[
             { name: "firstName", label: "First Name" },
             { name: "lastName", label: "Last Name" },
@@ -483,7 +525,7 @@ const Employees = () => {
                 name={name}
                 value={formData[name]}
                 onChange={handleChange}
-                className="w-full ring-1 ring-[#ccc] p-2 rounded-md"
+                className="w-full bg-neutral-800 border-none text-neutral-300 mt-1 p-2 rounded-md outline-[#f39136]"
               />
             </div>
           ))}
@@ -494,7 +536,7 @@ const Employees = () => {
               type="file"
               ref={fileInputPhoto}
               accept="image/*"
-              className="w-full ring-1 ring-[#ccc] p-2 rounded-md"
+              className="w-full mt-1 bg-neutral-800 text-neutral-300 p-2 rounded-md"
             />
           </div>
 
@@ -504,11 +546,12 @@ const Employees = () => {
               type="file"
               ref={fileInputCV}
               accept="application/pdf"
-              className="w-full ring-1 ring-[#ccc] p-2 rounded-md"
+              className="w-full mt-1 bg-neutral-800 text-neutral-300 p-2 rounded-md"
             />
           </div>
         </div>
       </Modal>
+      </ConfigProvider>
 
       {/* details modal */}
       <Modal
@@ -583,10 +626,53 @@ const Employees = () => {
       </Modal>
 
       {/* update employee modal */}
+      
+      <ConfigProvider
+                theme={{
+                  algorithm: theme.darkAlgorithm,
+                  token: {
+                    colorPrimary: '#08807a',
+                    colorBgContainer: '#181818',
+                    colorBgElevated: '#181818',
+                    colorBgLayout: '#181818',
+                    colorBgSpotlight: '#181818',
+                    colorBgFloating: '#181818',
+                    colorBgSecondary: '#181818',
+                    colorBgSecondaryHover: '#181818',
+                    colorBgSecondaryActive: '#181818',
+                    colorBorder: '#2d2d2d',
+                    colorBorderSecondary: '#2d2d2d',
+                    colorBorderTertiary: '#2d2d2d',
+                    colorBorderQuaternary: '#2d2d2d',
+                    colorBorderHover: '#2d2d2d',
+                    colorBorderActive: '#2d2d2d',
+                    colorBorderSelected: '#2d2d2d',
+                    colorBorderSelectedHover: '#2d2d2d',
+                    colorBorderSelectedActive: '#2d2d2d',
+                    colorBorderDisabled: '#2d2d2d',
+                    colorBorderDisabledHover: '#2d2d2d',
+                    colorBorderDisabledActive: '#2d2d2d',
+                    colorText: '#ffffff',
+                    colorTextSecondary: '#ffffff',
+                    colorTextTertiary: '#ffffff',
+                    colorTextQuaternary: '#ffffff',
+                    colorTextPlaceholder: '#ffffff',
+                    colorTextDisabled: '#ffffff',
+                    colorTextHeading: '#ffffff',
+                    colorTextTitle: '#ffffff',
+                    colorTextDescription: '#ffffff',
+                    colorTextLightSolid: '#ffffff',
+                    colorTextLight: '#ffffff',
+                    colorTextMuted: '#ffffff',
+                    colorTextLighter: '#ffffff'
+                  }
+                }}
+              >
       <Modal
         title="Update Employee"
         open={openUpdateEmployeeModal}
         onCancel={() => setOpenUpdateEmployeeModal(false)}
+        style={{backgroundColor: "#131313"}}
         onOk={updateEmployee}
         okText={
           updatingEmployee ? (
@@ -606,20 +692,20 @@ const Employees = () => {
         cancelText="Cancel"
         width={800}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[70vh] overflow-y-auto">
+        <div className="grid mt-4 p-4 grid-cols-1 md:grid-cols-2 gap-4 max-h-[70vh] overflow-y-auto">
           <input
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
             placeholder="First Name"
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <input
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
             placeholder="Last Name"
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <input
             name="email"
@@ -627,69 +713,69 @@ const Employees = () => {
             value={formData.email}
             onChange={handleChange}
             placeholder="Email"
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <input
             name="phone"
             value={formData.phone}
             onChange={handleChange}
             placeholder="Phone"
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <input
             name="address"
             value={formData.address}
             onChange={handleChange}
             placeholder="Address"
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <input
             name="nationality"
             value={formData.nationality}
             onChange={handleChange}
             placeholder="Nationality"
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <input
             name="employmentDate"
             type="date"
             value={formData.employmentDate}
             onChange={handleChange}
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <input
             name="employmentTerminationDate"
             type="date"
             value={formData.employmentTerminationDate}
             onChange={handleChange}
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <input
             name="role"
             value={formData.role}
             onChange={handleChange}
             placeholder="Role"
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <input
             name="promotedTo"
             value={formData.promotedTo}
             onChange={handleChange}
             placeholder="Promoted To"
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <input
             name="salary"
             value={formData.salary}
             onChange={handleChange}
             placeholder="Salary"
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <select
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           >
             <option value="">Select Status</option>
             <option value="active">Active</option>
@@ -699,7 +785,7 @@ const Employees = () => {
             name="isFired"
             value={formData.isFired}
             onChange={handleChange}
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           >
             <option value="false">Not Fired</option>
             <option value="true">Fired</option>
@@ -709,28 +795,28 @@ const Employees = () => {
             value={formData.bankName}
             onChange={handleChange}
             placeholder="Bank Name"
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <input
             name="bankBranch"
             value={formData.bankBranch}
             onChange={handleChange}
             placeholder="Bank Branch"
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <input
             name="accountName"
             value={formData.accountName}
             onChange={handleChange}
             placeholder="Account Name"
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <input
             name="accountNumber"
             value={formData.accountNumber}
             onChange={handleChange}
             placeholder="Account Number"
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <input
             type="file"
@@ -738,7 +824,7 @@ const Employees = () => {
             onChange={(e) =>
               setFileData((prev) => ({ ...prev, photo: e.target.files[0] }))
             }
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
           <input
             type="file"
@@ -746,10 +832,11 @@ const Employees = () => {
             onChange={(e) =>
               setFileData((prev) => ({ ...prev, cv: e.target.files[0] }))
             }
-            className="border p-2 rounded"
+            className="bg-neutral-800 text-neutral-300 p-2 rounded"
           />
         </div>
       </Modal>
+      </ConfigProvider>
       <Toaster />
     </div>
   )

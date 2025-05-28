@@ -288,6 +288,47 @@ const Departments = () => {
       </ConfigProvider>
 
       {/* add department modal */}
+      <ConfigProvider
+                      theme={{
+                        algorithm: theme.darkAlgorithm,
+                        token: {
+                          colorPrimary: '#08807a',
+                          colorBgContainer: '#181818',
+                          colorBgElevated: '#181818',
+                          colorBgLayout: '#181818',
+                          colorBgSpotlight: '#181818',
+                          colorBgFloating: '#181818',
+                          colorBgSecondary: '#181818',
+                          colorBgSecondaryHover: '#181818',
+                          colorBgSecondaryActive: '#181818',
+                          colorBorder: '#2d2d2d',
+                          colorBorderSecondary: '#2d2d2d',
+                          colorBorderTertiary: '#2d2d2d',
+                          colorBorderQuaternary: '#2d2d2d',
+                          colorBorderHover: '#2d2d2d',
+                          colorBorderActive: '#2d2d2d',
+                          colorBorderSelected: '#2d2d2d',
+                          colorBorderSelectedHover: '#2d2d2d',
+                          colorBorderSelectedActive: '#2d2d2d',
+                          colorBorderDisabled: '#2d2d2d',
+                          colorBorderDisabledHover: '#2d2d2d',
+                          colorBorderDisabledActive: '#2d2d2d',
+                          colorText: '#ffffff',
+                          colorTextSecondary: '#ffffff',
+                          colorTextTertiary: '#ffffff',
+                          colorTextQuaternary: '#ffffff',
+                          colorTextPlaceholder: '#ffffff',
+                          colorTextDisabled: '#ffffff',
+                          colorTextHeading: '#ffffff',
+                          colorTextTitle: '#ffffff',
+                          colorTextDescription: '#ffffff',
+                          colorTextLightSolid: '#ffffff',
+                          colorTextLight: '#ffffff',
+                          colorTextMuted: '#ffffff',
+                          colorTextLighter: '#ffffff'
+                        }
+                      }}
+                    >
       <Modal
         open={openAddModal}
         footer={false}
@@ -297,7 +338,7 @@ const Departments = () => {
         <div className="flex flex-col gap-3">
           <input
             type="text"
-            className="bg-[#f9fafd] rounded-lg p-2 border-[1px] border-[#ccc]"
+            className="bg-[#131313] rounded-lg p-2 text-neutral-300 border-none outline-none"
             placeholder="Department Name"
             onChange={(e) => setDeptName(e.target.value)}
           />
@@ -318,8 +359,51 @@ const Departments = () => {
           </button>
         </div>
       </Modal>
+      </ConfigProvider>
+
 
       {/* update model */}
+      <ConfigProvider
+                      theme={{
+                        algorithm: theme.darkAlgorithm,
+                        token: {
+                          colorPrimary: '#08807a',
+                          colorBgContainer: '#181818',
+                          colorBgElevated: '#181818',
+                          colorBgLayout: '#181818',
+                          colorBgSpotlight: '#181818',
+                          colorBgFloating: '#181818',
+                          colorBgSecondary: '#181818',
+                          colorBgSecondaryHover: '#181818',
+                          colorBgSecondaryActive: '#181818',
+                          colorBorder: '#2d2d2d',
+                          colorBorderSecondary: '#2d2d2d',
+                          colorBorderTertiary: '#2d2d2d',
+                          colorBorderQuaternary: '#2d2d2d',
+                          colorBorderHover: '#2d2d2d',
+                          colorBorderActive: '#2d2d2d',
+                          colorBorderSelected: '#2d2d2d',
+                          colorBorderSelectedHover: '#2d2d2d',
+                          colorBorderSelectedActive: '#2d2d2d',
+                          colorBorderDisabled: '#2d2d2d',
+                          colorBorderDisabledHover: '#2d2d2d',
+                          colorBorderDisabledActive: '#2d2d2d',
+                          colorText: '#ffffff',
+                          colorTextSecondary: '#ffffff',
+                          colorTextTertiary: '#ffffff',
+                          colorTextQuaternary: '#ffffff',
+                          colorTextPlaceholder: '#ffffff',
+                          colorTextDisabled: '#ffffff',
+                          colorTextHeading: '#ffffff',
+                          colorTextTitle: '#ffffff',
+                          colorTextDescription: '#ffffff',
+                          colorTextLightSolid: '#ffffff',
+                          colorTextLight: '#ffffff',
+                          colorTextMuted: '#ffffff',
+                          colorTextLighter: '#ffffff'
+                        }
+                      }}
+                    >
       <Modal
         open={openUpdateModal}
         title="Update Department"
@@ -350,6 +434,7 @@ const Departments = () => {
           </button>
         </div>
       </Modal>
+      </ConfigProvider>
 
       <Toaster />
     </div>

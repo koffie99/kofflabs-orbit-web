@@ -360,7 +360,7 @@ const Employees = () => {
   ]
 
   return (
-    <div className="bg-white rounded-lg shadow">
+    <div className="bg-[#131313] rounded-lg shadow">
       {/* heading */}
       <div className="p-5 flex items-center justify-between">
         <EntityLength entityName="Employees" entityCount={employees.length} />

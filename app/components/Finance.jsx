@@ -209,7 +209,7 @@ const Finance = () => {
 
   return (
     <div className="">
-      <div className="flex items-center justify-between bg-[#131313] w-full p-5 rounded-lg shadow">
+      <div className="flex items-center justify-between bg-[#131313] w-full p-5 rounded-lg shadow-2xl">
         <h2 className="font-semibold text-xl text-neutral-300">Finance</h2>
         <div className="#f29235 flex items-center gap-2">
           <button className="ring-1 ring-neutral-300 text-neutral-300 text-sm rounded-lg px-4 py-2 mr-0">

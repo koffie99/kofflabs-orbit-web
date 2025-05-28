@@ -32,8 +32,20 @@ import Departments from "@/app/components/Departments"
 import Settings from "@/app/components/Settings"
 
 const Page = () => {
+
+  let myCurrentPage
+
+  if(typeof sessionStorage !== "undefined") {
+    myCurrentPage = sessionStorage.getItem("myCurrentPage") || "dashboard"
+  }
+
   // Load the last visited page from sessionStorage
-  const [currentPage, setCurrentPage] = useState(null)
+  const [currentPage, setCurrentPage] = useState(myCurrentPage || "dashboard")
+
+  const setPage = (page) => {
+    setCurrentPage(page)
+    sessionStorage.setItem("myCurrentPage", page)
+  }
 
   useEffect(() => {
     const storedPage = sessionStorage.getItem("myCurrentPage") || "dashboard"
@@ -59,6 +71,7 @@ const Page = () => {
   const handleLogout = () => {
     const res = confirm("Are you sure you want to log out?")
     if (res) {
+      sessionStorage.removeItem("userId")
       location.href = "/"
     }
   }
@@ -116,7 +129,7 @@ const Page = () => {
             className={`${
               currentPage === "dashboard" ? "active" : ""
             } p-2 rounded-full text-neutral-400 pl-5 flex items-center gap-3 cursor-pointer`}
-            onClick={() => setCurrentPage("dashboard")}
+            onClick={() => setPage("dashboard")}
           >
             <LuLayoutDashboard />
             <p>Dashboard</p>
@@ -125,7 +138,7 @@ const Page = () => {
             className={`${
               currentPage === "employees" ? "active" : ""
             } p-2 rounded-full text-neutral-400 pl-5 flex items-center gap-3 cursor-pointer`}
-            onClick={() => setCurrentPage("employees")}
+            onClick={() => setPage("employees")}
           >
             <GoPeople />
             <p>Employees</p>
@@ -134,7 +147,7 @@ const Page = () => {
             className={`${
               currentPage === "departments" ? "active" : ""
             } p-2 rounded-full text-neutral-400  pl-5 flex items-center gap-3 cursor-pointer`}
-            onClick={() => setCurrentPage("departments")}
+            onClick={() => setPage("departments")}
           >
             <FaRegBuilding />
             <p>Departments</p>
@@ -143,7 +156,7 @@ const Page = () => {
             className={`${
               currentPage === "projects" ? "active" : ""
             } p-2 rounded-full pl-5 text-neutral-400 flex items-center gap-3 cursor-pointer`}
-            onClick={() => setCurrentPage("projects")}
+            onClick={() => setPage("projects")}
           >
             <LiaProjectDiagramSolid />
             <p>Projects & Tasks</p>
@@ -152,7 +165,7 @@ const Page = () => {
             className={`${
               currentPage === "clients" ? "active" : ""
             } p-2 rounded-full pl-5 flex text-neutral-400 items-center gap-3 cursor-pointer`}
-            onClick={() => setCurrentPage("clients")}
+            onClick={() => setPage("clients")}
           >
             <BsPeople />
             <p>Clients</p>
@@ -161,7 +174,7 @@ const Page = () => {
             className={`${
               currentPage === "finance" ? "active" : ""
             } p-2 rounded-full pl-5 flex text-neutral-400 items-center gap-3 cursor-pointer`}
-            onClick={() => setCurrentPage("finance")}
+            onClick={() => setPage("finance")}
           >
             <GrMoney />
             <p>Finance</p>
@@ -170,7 +183,7 @@ const Page = () => {
             className={`${
               currentPage === "documents" ? "active" : ""
             } p-2 rounded-full pl-5 flex text-neutral-400 items-center gap-3 cursor-pointer`}
-            onClick={() => setCurrentPage("documents")}
+            onClick={() => setPage("documents")}
           >
             <IoDocumentTextOutline />
             <p>Letters</p>
@@ -180,7 +193,7 @@ const Page = () => {
             className={`${
               currentPage === "announcements" ? "active" : ""
             } p-2 rounded-full pl-5 flex text-neutral-400 items-center gap-3 cursor-pointer`}
-            onClick={() => setCurrentPage("announcements")}
+            onClick={() => setPage("announcements")}
           >
             <AiOutlineNotification />
             <p>Announcements</p>
@@ -198,7 +211,7 @@ const Page = () => {
             className={`${
               currentPage === "administrators" ? "active" : ""
             } p-2 rounded-full pl-5 flex text-neutral-400 items-center gap-3 cursor-pointer`}
-            onClick={() => setCurrentPage("administrators")}
+            onClick={() => setPage("administrators")}
           >
             <TbUsersGroup />
             <p>Managing Staff</p>
@@ -207,7 +220,7 @@ const Page = () => {
             className={`${
               currentPage === "settings" ? "active" : ""
             } p-2 rounded-full pl-5 text-neutral-400 flex items-center gap-3 cursor-pointer`}
-            onClick={() => setCurrentPage("settings")}
+            onClick={() => setPage("settings")}
           >
             <IoSettingsOutline />
             <p>Settings</p>

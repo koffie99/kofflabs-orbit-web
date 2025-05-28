@@ -410,10 +410,10 @@ const Departments = () => {
         onCancel={() => setOpenUpdateModal(false)}
         footer={false}
       >
-        <div>
+        <div className="mt-2">
           <input
             type="text"
-            className="ring-1 ring-[#ccc] py-2 px-2 rounded-lg w-full capitalize"
+            className="bg-neutral-800 text-neutral-300 py-2 px-2 rounded-lg w-full capitalize"
             onChange={(e) => setNewDeptName(e.target.value)}
             value={newDeptName}
           />

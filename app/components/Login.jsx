@@ -4,6 +4,7 @@ import React from "react"
 import { useState } from "react"
 import toast, { Toaster } from "react-hot-toast"
 import baseUrl from "../utils/baseUrl"
+import {motion} from 'motion/react'
 
 const Login = () => {
   const [email, setEmail] = useState("")
@@ -59,6 +60,7 @@ const Login = () => {
   return (
     <div className="w-[500px] flex flex-col">
       <div className="flex flex-col items-center">
+        <motion.div initial={{opacity: 0, y: 10}} animate={{opacity: 1, y: 0}} transition={{duration: 0.2}}>
         <Image
           src="/images/logo.png"
           width={60}
@@ -66,10 +68,12 @@ const Login = () => {
           alt="logo"
           className="mb-4"
         />
-        <h2 className="font-bold text-2xl text-neutral-300">Kofflabs Orbit</h2>
-        <p className="text-neutral-500">Enter your credentials to continue</p>
+        </motion.div>
+        <motion.h2 initial={{opacity: 0, y: 10}} animate={{opacity: 1, y: 0}} transition={{duration: 0.3}} className="font-bold text-2xl text-neutral-300">Kofflabs Orbit</motion.h2>
+        <motion.p initial={{opacity: 0, y: 10}} animate={{opacity: 1, y: 0}} transition={{duration: 0.5}} className="text-neutral-500">Enter your credentials to continue</motion.p>
       </div>
-      <form
+      <motion.form
+        initial={{opacity: 0, y: 10}} animate={{opacity: 1, y: 0}} transition={{duration: 0.5}}
         onSubmit={handleLogin}
         className="bg-[#131313] p-8 rounded-lg shadow flex flex-col mt-4"
       >
@@ -110,7 +114,7 @@ const Login = () => {
         <p className="text-[14px] text-[#818181] mt-6 text-center">
           Powered by <span className="font-semibold">Kofflabs Systems</span>
         </p>
-      </form>
+      </motion.form>
 
       <Toaster />
     </div>

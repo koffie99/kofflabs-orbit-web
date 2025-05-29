@@ -41,3 +41,8 @@ html {
   transition: 0.3s;
   translate: scale(0.2);
 }
+
+.person-action-btn:hover{
+  background-color: rgba(243, 145, 54, 0.2);
+  color: #f39136;
+}

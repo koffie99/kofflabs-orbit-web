@@ -1,9 +1,10 @@
-import React from "react"
+import React from "react";
+import dynamic from "next/dynamic";
 
 const PersonaList = ({ Icon, name, desc }) => {
   return (
     <div className="flex items-center gap-3">
-      <div className="flex items-center justify-center p-3 rounded bg-[#ffecda] text-[#F39136]">
+      <div className="flex items-center justify-center p-3 rounded bg-[#131313] text-[#F39136] shadow-2xl">
         {Icon && <Icon />}
       </div>
       <div className="flex flex-col">
@@ -11,7 +12,7 @@ const PersonaList = ({ Icon, name, desc }) => {
         <p className="text-sm text-[#818181] font-normal">{desc}</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PersonaList
+export default dynamic(() => Promise.resolve(PersonaList), { ssr: false });

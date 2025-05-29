@@ -200,15 +200,15 @@ const Employees = () => {
       };
 
       await fetch(
-        "https://api.kofflabs.com/api/v1/hubtelPayment/directSendToMomo",
+        `${baseUrl}/api/v1/hubtelPayment/directSendToMomo`,
         requestOptions
       )
         .then((response) => response.json())
         .then((result) => {
-          if (result.message === "money send request initiated successfully") {
-            toast.success(
-              `Money sent to ${selectedEmployeeFirstName} ${selectedEmployeeLastName} successfully`
-            );
+          if (result.status === "success") {
+            // toast.success(
+            //   `Money sent to ${selectedEmployeeFirstName} ${selectedEmployeeLastName} successfully`
+            // );
             setOpenSendMoneyAuthModal(false);
             setOpenMoneyModal(false);
             setOpenEmployeeDetailModal(false);
@@ -974,7 +974,7 @@ const Employees = () => {
           <div className="my-6 flex flex-col items-center gap-3">
             <BsCheck2Circle className="text-5xl text-[#f39136]" />
             <h2 className="text-xl text-neutral-300 font-bold">
-              Money sent successfully
+              Money Sent Successfully
             </h2>
             <p className="capitalize text-neutral-400">
               GHS {amount} Sent To {selectedEmployeeFirstName}{" "}

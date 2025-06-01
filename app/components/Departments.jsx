@@ -77,10 +77,7 @@ const Departments = () => {
         redirect: "follow",
       };
 
-      await fetch(
-        "https://api.kofflabs.com/api/v1/departments/all",
-        requestOptions
-      )
+      await fetch(`${baseUrl}/api/v1/departments/all`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           setDepartments(result?.departments);
@@ -100,7 +97,7 @@ const Departments = () => {
       };
 
       await fetch(
-        `https://api.kofflabs.com/api/v1/departments/delete/${deptId}`,
+        `${baseUrl}/api/v1/departments/delete/${deptId}`,
         requestOptions
       )
         .then((response) => response.json())
@@ -137,7 +134,7 @@ const Departments = () => {
       };
 
       await fetch(
-        `https://api.kofflabs.com/api/v1/departments/update/${selectedDeptId}`,
+        `${baseUrl}/api/v1/departments/update/${selectedDeptId}`,
         requestOptions
       )
         .then((response) => response.json())

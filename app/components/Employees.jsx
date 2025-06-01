@@ -76,6 +76,7 @@ const Employees = () => {
   const [channel, setChannel] = useState("");
   const [amount, setAmount] = useState(0);
   const [description, setDescription] = useState("");
+  const [openSMSModal, setOpenSMSModal] = useState(false);
 
   // adding a new employee details
   const fileInputPhoto = useRef(null);
@@ -160,7 +161,7 @@ const Employees = () => {
       };
 
       const res = await fetch(
-        `https://api.kofflabs.com/api/v1/employees/delete/${employeeId}`,
+        `${baseUrl}/api/v1/employees/delete/${employeeId}`,
         requestOptions
       );
       const result = await res.json();
@@ -252,7 +253,7 @@ const Employees = () => {
       };
 
       const response = await fetch(
-        `https://api.kofflabs.com/api/v1/employees/update/${selectedEmployeeEmployeeId}`,
+        `${baseUrl}/api/v1/employees/update/${selectedEmployeeEmployeeId}`,
         requestOptions
       );
       const result = await response.json();
@@ -291,7 +292,7 @@ const Employees = () => {
       };
 
       const response = await fetch(
-        "https://api.kofflabs.com/api/v1/employees/create",
+        `${baseUrl}/api/v1/employees/create`,
         requestOptions
       );
       const result = await response.json();
@@ -603,6 +604,73 @@ const Employees = () => {
         </Modal>
       </ConfigProvider>
 
+      {/* send sms modal */}
+      <ConfigProvider
+        theme={{
+          algorithm: theme.darkAlgorithm,
+          token: {
+            colorPrimary: "#08807a",
+            colorBgContainer: "#181818",
+            colorBgElevated: "#181818",
+            colorBgLayout: "#181818",
+            colorBgSpotlight: "#181818",
+            colorBgFloating: "#181818",
+            colorBgSecondary: "#181818",
+            colorBgSecondaryHover: "#181818",
+            colorBgSecondaryActive: "#181818",
+            colorBorder: "#2d2d2d",
+            colorBorderSecondary: "#2d2d2d",
+            colorBorderTertiary: "#2d2d2d",
+            colorBorderQuaternary: "#2d2d2d",
+            colorBorderHover: "#2d2d2d",
+            colorBorderActive: "#2d2d2d",
+            colorBorderSelected: "#2d2d2d",
+            colorBorderSelectedHover: "#2d2d2d",
+            colorBorderSelectedActive: "#2d2d2d",
+            colorBorderDisabled: "#2d2d2d",
+            colorBorderDisabledHover: "#2d2d2d",
+            colorBorderDisabledActive: "#2d2d2d",
+            colorText: "#ffffff",
+            colorTextSecondary: "#ffffff",
+            colorTextTertiary: "#ffffff",
+            colorTextQuaternary: "#ffffff",
+            colorTextPlaceholder: "#ffffff",
+            colorTextDisabled: "#ffffff",
+            colorTextHeading: "#ffffff",
+            colorTextTitle: "#ffffff",
+            colorTextDescription: "#ffffff",
+            colorTextLightSolid: "#ffffff",
+            colorTextLight: "#ffffff",
+            colorTextMuted: "#ffffff",
+            colorTextLighter: "#ffffff",
+          },
+        }}
+      >
+        <Modal
+          title="Send SMS Message"
+          open={openSMSModal}
+          onCancel={() => setOpenSMSModal(false)}
+          style={{ backgroundColor: "#131313" }}
+          footer={false}
+        >
+          <div className="w-full flex flex-col gap-3">
+            <textarea
+              name=""
+              id=""
+              placeholder="Enter message..."
+              className="w-full h-[200px] bg-neutral-800 text-neutral-300 p-2 rounded-md"
+            ></textarea>
+            <motion.button
+              whileTap={{ scale: 0.8 }}
+              className="bg-[#f39136] text-white w-full p-2 rounded-lg mt-3"
+              onClick={() => setOpenMoneyModal(true)}
+            >
+              Send
+            </motion.button>
+          </div>
+        </Modal>
+      </ConfigProvider>
+
       {/* details modal */}
 
       <ConfigProvider
@@ -698,6 +766,7 @@ const Employees = () => {
               <motion.button
                 whileTap={{ scale: 0.8 }}
                 className="ring-1 ring-neutral-600 text-neutral-400 p-2 rounded-md w-full  person-action-btn hover:ring-0 employee-action-btn"
+                onClick={() => setOpenSMSModal(true)}
               >
                 Send Message
               </motion.button>
@@ -887,7 +956,7 @@ const Employees = () => {
       >
         <Modal
           open={openMoneyModal}
-          onCance={() => setOpenMoneyModal(false)}
+          onCancel={() => setOpenMoneyModal(false)}
           footer={false}
           title="Send Money"
         >

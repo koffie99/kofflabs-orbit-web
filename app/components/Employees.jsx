@@ -796,7 +796,7 @@ const Employees = () => {
             <PersonaList
               name={selectedEmployeeEmail}
               Icon={MdOutlineMail}
-              desc="Email"
+              desc="Email" 
             />
             <PersonaList
               name={selectedEmployeePhone}

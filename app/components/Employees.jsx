@@ -24,6 +24,14 @@ import { GoTrash } from "react-icons/go";
 import Image from "next/image";
 import PersonaList from "../uibits/PersonaList";
 import { GoPerson } from "react-icons/go";
+import { MdOutlineDateRange } from "react-icons/md";
+import { FaRegBuilding } from "react-icons/fa";
+import { GiTakeMyMoney } from "react-icons/gi";
+import { FaChalkboardUser } from "react-icons/fa6";
+import { FaRegAddressCard } from "react-icons/fa";
+import { MdLocalPhone } from "react-icons/md";
+import { MdOutlineMail } from "react-icons/md";
+import { FiUser } from "react-icons/fi";
 
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
@@ -50,6 +58,8 @@ const Employees = () => {
   const [selectedEmployeeEmail, setSelectedEmployeeEmail] = useState("");
   const [selectedEmployeePhone, setSelectedEmployeePhone] = useState("");
   const [selectedEmployeeAddress, setSelectedEmployeeAddress] = useState("");
+  const [selectedEmployeeDepartment, setSelectedEmployeeDepartment] =
+    useState("");
   const [selectedEmployeeNationality, setSelectedEmployeeNationality] =
     useState("");
   const [
@@ -81,6 +91,9 @@ const Employees = () => {
   // adding a new employee details
   const fileInputPhoto = useRef(null);
   const fileInputCV = useRef(null);
+  const [departments, setDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -100,6 +113,7 @@ const Employees = () => {
     bankBranch: "",
     accountName: "",
     accountNumber: "",
+    department: "",
   });
 
   const handleChange = (e) => {
@@ -128,7 +142,29 @@ const Employees = () => {
     setSelectedEmployeeAccountNumber(employee.accountNumber);
     setSelectedEmployeeEmployeeId(employee.employeeId);
     setSelectedEmployeeDateCreated(employee.dateCreated);
+    setSelectedEmployeeDepartment(employee?.department[0]?.name || "N/A");
     setOpenEmployeeDetailModal(true);
+  };
+
+  // fetch departments
+  const fetchDepartments = async () => {
+    try {
+      const requestOptions = {
+        method: "GET",
+        redirect: "follow",
+      };
+
+      const response = await fetch(
+        `${baseUrl}/api/v1/departments/all`,
+        requestOptions
+      );
+      const result = await response.json();
+      if (result.msg === "success") {
+        setDepartments(result.departments);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // get all employees
@@ -228,6 +264,7 @@ const Employees = () => {
   // init
   useEffect(() => {
     getAllEmployees();
+    fetchDepartments();
   }, []);
 
   // update employee
@@ -552,12 +589,14 @@ const Employees = () => {
                 label: "Employment Date",
                 type: "date",
               },
+              { name: "department", label: "Department", type: "select" },
+              { name: "role", label: "Role" },
               // {
               //   name: "employmentTerminationDate",
               //   label: "Termination Date",
               //   type: "date",
               // },
-              { name: "role", label: "Role" },
+              // { name: "role", label: "Role" },
               { name: "salary", label: "Salary" },
               // { name: "status", label: "Status" },
               // { name: "isFired", label: "Is Fired" },
@@ -566,20 +605,43 @@ const Employees = () => {
               { name: "bankBranch", label: "Bank Branch" },
               { name: "accountName", label: "Account Name" },
               { name: "accountNumber", label: "Account Number" },
-            ].map(({ name, label, type = "text" }) => (
-              <div key={name}>
-                <label className="block mb-1 text-sm font-medium">
-                  {label}
-                </label>
-                <input
-                  type={type}
-                  name={name}
-                  value={formData[name]}
-                  onChange={handleChange}
-                  className="w-full bg-neutral-800 border-none text-neutral-300 mt-1 p-2 rounded-md outline-[#f39136]"
-                />
-              </div>
-            ))}
+            ].map(({ name, label, type = "text" }) =>
+              name === "department" ? (
+                <div key={name}>
+                  <label className="block mb-1 text-sm font-medium">
+                    {label}
+                  </label>
+                  <Select
+                    name={name}
+                    value={formData[name]}
+                    onChange={(value) => {
+                      setSelectedDepartment(value);
+                      setFormData((prev) => ({ ...prev, [name]: value }));
+                    }}
+                    className="w-full bg-neutral-800 border-none text-neutral-300 mt-1 p-2 rounded-md outline-[#f39136]"
+                  >
+                    {departments.map((dept) => (
+                      <Select.Option key={dept._id} value={dept._id}>
+                        {dept.name}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </div>
+              ) : (
+                <div key={name}>
+                  <label className="block mb-1 text-sm font-medium">
+                    {label}
+                  </label>
+                  <input
+                    type={type}
+                    name={name}
+                    value={formData[name]}
+                    onChange={handleChange}
+                    className="w-full bg-neutral-800 border-none text-neutral-300 mt-1 p-2 rounded-md outline-[#f39136]"
+                  />
+                </div>
+              )
+            )}
 
             <div>
               <label className="block mb-1 text-sm font-medium">Photo</label>
@@ -728,38 +790,43 @@ const Employees = () => {
           <div className="mt-5 flex flex-col gap-3">
             <PersonaList
               name={`${selectedEmployeeFirstName} ${selectedEmployeeLastName}`}
-              Icon={GoPerson}
+              Icon={FiUser}
               desc="Full Name"
             />
             <PersonaList
               name={selectedEmployeeEmail}
-              Icon={GoPerson}
+              Icon={MdOutlineMail}
               desc="Email"
             />
             <PersonaList
               name={selectedEmployeePhone}
-              Icon={GoPerson}
+              Icon={MdLocalPhone}
               desc="Phone"
             />
             <PersonaList
               name={selectedEmployeeAddress}
-              Icon={GoPerson}
+              Icon={FaRegAddressCard}
               desc="Address"
             />
             <PersonaList
               name={selectedEmployeeRole}
-              Icon={GoPerson}
+              Icon={FaChalkboardUser}
               desc="Role"
             />
             <PersonaList
               name={`GHS ${selectedEmployeeSalary || 0.0}`}
-              Icon={GoPerson}
+              Icon={GiTakeMyMoney}
               desc="Salary"
             />
             <PersonaList
               name={formatDate(selectedEmployeeEmployementStartDate)}
-              Icon={GoPerson}
+              Icon={MdOutlineDateRange}
               desc="Employment Date"
+            />
+            <PersonaList
+              name={<p className="capitalize">{selectedEmployeeDepartment}</p>}
+              Icon={FaRegBuilding}
+              desc="Department"
             />
             <Divider className="my-4" />
             <div className="flex items-center justify-stretch w-full gap-2">
@@ -1180,6 +1247,22 @@ const Employees = () => {
               onChange={handleChange}
               className="bg-neutral-800 text-neutral-300 p-2 rounded"
             />
+            <Select
+              name="department"
+              value={formData.department}
+              onChange={(value) => {
+                setSelectedDepartment(value);
+                setFormData((prev) => ({ ...prev, department: value }));
+              }}
+              placeholder="Select Department"
+              className="bg-neutral-800 text-neutral-300 p-2 rounded"
+            >
+              {departments.map((dept) => (
+                <Select.Option key={dept._id} value={dept._id}>
+                  {dept.name}
+                </Select.Option>
+              ))}
+            </Select>
             <input
               name="role"
               value={formData.role}

@@ -120,31 +120,81 @@ const Employees = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // open employee details modal
+  // // open employee details modal
+  // const handleOpenEmployeeDetailsModal = (employee) => {
+  //   setSelectedEmployeeFirstName(employee.firstName);
+  //   setSelectedEmployeeLastName(employee.lastName);
+  //   setSelectedEmployeePhoto(employee.photo);
+  //   setSelectedEmployeeCV(employee.cv);
+  //   setSelectedEmployeeGender(employee.gender);
+  //   setSelectedEmployeeEmail(employee.email);
+  //   setSelectedEmployeePhone(employee.phone);
+  //   setSelectedEmployeeAddress(employee.address);
+  //   setSelectedEmployeeNationality(employee.nationality);
+  //   setSelectedEmployeeEmployementStartDate(employee.employmentDate);
+  //   setSelectedEmployeeRole(employee.role);
+  //   setSelectedEmployeeSalary(employee.salary);
+  //   setSelectedEmployeeStatus(employee.status);
+  //   setSelectedEmployeeIsFired(employee.isFired);
+  //   setSelectedEmployeeBankName(employee.bankName);
+  //   setSelectedEmployeeBankBranch(employee.bankBranch);
+  //   setSelectedEmployeeAccountName(employee.accountName);
+  //   setSelectedEmployeeAccountNumber(employee.accountNumber);
+  //   setSelectedEmployeeEmployeeId(employee.employeeId);
+  //   setSelectedEmployeeDateCreated(employee.dateCreated);
+  //   setSelectedEmployeeDepartment(employee?.department[0]?.name || "N/A");
+  //   // setOpenEmployeeDetailModal(true);
+
+  // };
   const handleOpenEmployeeDetailsModal = (employee) => {
-    setSelectedEmployeeFirstName(employee.firstName);
-    setSelectedEmployeeLastName(employee.lastName);
-    setSelectedEmployeePhoto(employee.photo);
-    setSelectedEmployeeCV(employee.cv);
-    setSelectedEmployeeGender(employee.gender);
-    setSelectedEmployeeEmail(employee.email);
-    setSelectedEmployeePhone(employee.phone);
-    setSelectedEmployeeAddress(employee.address);
-    setSelectedEmployeeNationality(employee.nationality);
-    setSelectedEmployeeEmployementStartDate(employee.employmentDate);
-    setSelectedEmployeeRole(employee.role);
-    setSelectedEmployeeSalary(employee.salary);
-    setSelectedEmployeeStatus(employee.status);
-    setSelectedEmployeeIsFired(employee.isFired);
-    setSelectedEmployeeBankName(employee.bankName);
-    setSelectedEmployeeBankBranch(employee.bankBranch);
-    setSelectedEmployeeAccountName(employee.accountName);
-    setSelectedEmployeeAccountNumber(employee.accountNumber);
-    setSelectedEmployeeEmployeeId(employee.employeeId);
-    setSelectedEmployeeDateCreated(employee.dateCreated);
-    setSelectedEmployeeDepartment(employee?.department[0]?.name || "N/A");
+    setSelectedEmployeeFirstName(employee.firstName || "N/A");
+    setSelectedEmployeeLastName(employee.lastName || "N/A");
+    setSelectedEmployeePhoto(employee.photo || "/default-photo.png"); // or null if no default photo
+    setSelectedEmployeeCV(employee.cv || "No CV uploaded");
+    setSelectedEmployeeGender(employee.gender || "Not specified");
+    setSelectedEmployeeEmail(employee.email || "No email");
+    setSelectedEmployeePhone(employee.phone || "No phone");
+    setSelectedEmployeeAddress(employee.address || "No address");
+    setSelectedEmployeeNationality(employee.nationality || "Not specified");
+    setSelectedEmployeeEmployementStartDate(
+      employee.employmentDate || "Not available"
+    );
+    setSelectedEmployeeRole(employee.role || "No role assigned");
+    setSelectedEmployeeSalary(employee.salary ?? "Not disclosed"); // in case salary = 0
+    setSelectedEmployeeStatus(employee.status || "Unknown");
+    setSelectedEmployeeIsFired(employee.isFired ?? false);
+    setSelectedEmployeeBankName(employee.bankName || "Not specified");
+    setSelectedEmployeeBankBranch(employee.bankBranch || "Not specified");
+    setSelectedEmployeeAccountName(employee.accountName || "Not specified");
+    setSelectedEmployeeAccountNumber(employee.accountNumber || "Not specified");
+    setSelectedEmployeeEmployeeId(employee.employeeId || "N/A");
+    setSelectedEmployeeDateCreated(employee.dateCreated || "Unknown");
+    setSelectedEmployeeDepartment(employee?.department?.[0]?.name || "N/A");
+
     // setOpenEmployeeDetailModal(true);
   };
+
+  console.log(selectedEmployeeDepartment);
+  console.log(selectedEmployeeRole);
+  console.log(selectedEmployeeSalary);
+  console.log(selectedEmployeeStatus);
+  console.log(selectedEmployeeIsFired);
+  console.log(selectedEmployeeBankName);
+  console.log(selectedEmployeeBankBranch);
+  console.log(selectedEmployeeAccountName);
+  console.log(selectedEmployeeAccountNumber);
+  console.log(selectedEmployeeEmployeeId);
+  console.log(selectedEmployeeDateCreated);
+  console.log(selectedEmployeePhoto);
+  console.log(selectedEmployeeCV);
+  console.log(selectedEmployeeGender);
+  console.log(selectedEmployeeEmail);
+  console.log(selectedEmployeePhone);
+  console.log(selectedEmployeeAddress);
+  console.log(selectedEmployeeNationality);
+  console.log(selectedEmployeeEmployementStartDate);
+  console.log(selectedEmployeeFirstName);
+  console.log(selectedEmployeeLastName);
 
   // fetch departments
   const fetchDepartments = async () => {

@@ -2,14 +2,18 @@
 import Image from "next/image"
 import React from "react"
 import { useState } from "react"
-import toast, { Toaster } from "react-hot-toast"
 import baseUrl from "../utils/baseUrl"
 import {motion} from 'motion/react'
+import SuccessModal from "../uibits/SuccessModal"
+import ErrorModal from "../uibits/ErrorModal"
 
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
+  const [openSuccessModal, setOpenSuccessModal] = useState(false)
+  const [openErrorModal, setOpenErrorModal] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
 
   // handle login
   const handleLogin = async (e) => {
@@ -37,23 +41,29 @@ const Login = () => {
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "login successful") {
-            toast.success("Login Successful")
+            setOpenSuccessModal(true)
             sessionStorage.setItem("userId", result.user._id)
             sessionStorage.setItem("userType", result.role)
             sessionStorage.setItem("userFirstName", result.user.firstName)
             sessionStorage.setItem("userLastName", result.user.lastName)
             setLoading(false)
-            location.href = "/phoneVerification"
+            // Close success modal after 2 seconds and redirect
+            setTimeout(() => {
+              setOpenSuccessModal(false)
+              location.href = "/phoneVerification"
+            }, 2000)
           } else {
-            toast.error("Unable to login, please try again")
+            setErrorMessage("Unable to login, please try again")
+            setOpenErrorModal(true)
             setLoading(false)
           }
         })
         .catch((error) => console.error(error))
-    } catch (err) {
+    } catch (error) {
       setLoading(false)
-      console.log(err)
-      toast.error(err)
+      console.log(error)
+      setErrorMessage(error.message || "An error occurred. Please try again.")
+      setOpenErrorModal(true)
     }
   }
 
@@ -117,7 +127,17 @@ const Login = () => {
         </p>
       </motion.form>
 
-      <Toaster />
+      <SuccessModal 
+        openSuccessModal={openSuccessModal} 
+        setOpenSuccessModal={setOpenSuccessModal}
+        description="Login Successful"
+      />
+
+      <ErrorModal 
+        openErrorModal={openErrorModal} 
+        setOpenErrorModal={setOpenErrorModal}
+        message={errorMessage}
+      />
     </div>
   )
 }

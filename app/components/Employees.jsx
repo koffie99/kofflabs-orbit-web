@@ -174,27 +174,7 @@ const Employees = () => {
     // setOpenEmployeeDetailModal(true);
   };
 
-  console.log(selectedEmployeeDepartment);
-  console.log(selectedEmployeeRole);
-  console.log(selectedEmployeeSalary);
-  console.log(selectedEmployeeStatus);
-  console.log(selectedEmployeeIsFired);
-  console.log(selectedEmployeeBankName);
-  console.log(selectedEmployeeBankBranch);
-  console.log(selectedEmployeeAccountName);
-  console.log(selectedEmployeeAccountNumber);
-  console.log(selectedEmployeeEmployeeId);
-  console.log(selectedEmployeeDateCreated);
-  console.log(selectedEmployeePhoto);
-  console.log(selectedEmployeeCV);
-  console.log(selectedEmployeeGender);
-  console.log(selectedEmployeeEmail);
-  console.log(selectedEmployeePhone);
-  console.log(selectedEmployeeAddress);
-  console.log(selectedEmployeeNationality);
-  console.log(selectedEmployeeEmployementStartDate);
-  console.log(selectedEmployeeFirstName);
-  console.log(selectedEmployeeLastName);
+  console.log("Employee Department: ", selectedEmployeeDepartment);
 
   // fetch departments
   const fetchDepartments = async () => {

@@ -79,7 +79,6 @@ const Finance = () => {
       const raw = JSON.stringify({
         amount: amount,
         description: description,
-        clientReference: "INV-4550",
       });
 
       const requestOptions = {
@@ -89,10 +88,7 @@ const Finance = () => {
         redirect: "follow",
       };
 
-      await fetch(
-        "https://api.kofflabs.com/api/v1/hubtelPayment/takePayment",
-        requestOptions
-      )
+      await fetch(`${baseUrl}/api/v1/hubtelPayment/takePayment`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           if (result.status === "success") {
@@ -122,10 +118,7 @@ const Finance = () => {
         redirect: "follow",
       };
 
-      await fetch(
-        "https://api.kofflabs.com/api/v1/payments/all",
-        requestOptions
-      )
+      await fetch(`${baseUrl}/api/v1/payments/all`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           setPayments(result.payments);

@@ -14,6 +14,7 @@ const Login = () => {
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
   const [openErrorModal, setOpenErrorModal] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
+  const [successMessage, setSuccessMessage] = useState("")
 
   // handle login
   const handleLogin = async (e) => {
@@ -41,6 +42,7 @@ const Login = () => {
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "login successful") {
+            setSuccessMessage(`Welcome ${result.user.firstName}! Login Successful`)
             setOpenSuccessModal(true)
             sessionStorage.setItem("userId", result.user._id)
             sessionStorage.setItem("userType", result.role)
@@ -130,7 +132,7 @@ const Login = () => {
       <SuccessModal 
         openSuccessModal={openSuccessModal} 
         setOpenSuccessModal={setOpenSuccessModal}
-        description="Login Successful"
+        description={successMessage}
       />
 
       <ErrorModal 

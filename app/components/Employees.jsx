@@ -374,7 +374,7 @@ const Employees = () => {
       await fetch(`${baseUrl}/api/v1/hubtelSMS/sendSMS`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          if (result.msg === "sms sent successfully") {
+          if (result.message === "sms sent successfully") {
             toast.success("SMS sent successfully");
             setOpenSMSModal(false);
           } else {

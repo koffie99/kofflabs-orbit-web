@@ -394,9 +394,7 @@ const Employees = () => {
           <div
             className="p-2 rounded-full hover:ring-1 hover:ring-[#ccc] cursor-pointer"
             // onClick={() => handleOpenEmployeeDetailsModal(record)}
-            onClick={() => {
-              alert("Checking clicking")
-            }}
+            onClick={() => setOpenEmployeeDetailModal(true)}
           >
             <MdOutlineVisibility className="text-md" />
           </div>

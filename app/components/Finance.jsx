@@ -97,7 +97,7 @@ const Finance = () => {
         .then((result) => {
           if (result.status === "success") {
             toast.success("Payment link created successfully");
-            setPaymentLink(result.data.checkoutUrl);
+            setPaymentLink(result.data.data.checkoutUrl);
             setGenerating(false);
             setOpenPaymentLinkModal(false);
             setOpenLinkModal(true);

@@ -143,7 +143,7 @@ const Employees = () => {
     setSelectedEmployeeEmployeeId(employee.employeeId);
     setSelectedEmployeeDateCreated(employee.dateCreated);
     setSelectedEmployeeDepartment(employee?.department[0]?.name || "N/A");
-    setOpenEmployeeDetailModal(true);
+    // setOpenEmployeeDetailModal(true);
   };
 
   // fetch departments
@@ -394,7 +394,10 @@ const Employees = () => {
           <div
             className="p-2 rounded-full hover:ring-1 hover:ring-[#ccc] cursor-pointer"
             // onClick={() => handleOpenEmployeeDetailsModal(record)}
-            onClick={() => setOpenEmployeeDetailModal(true)}
+            onClick={() => {
+              handleOpenEmployeeDetailsModal(record);
+              setOpenEmployeeDetailModal(true);
+            }}
           >
             <MdOutlineVisibility className="text-md" />
           </div>

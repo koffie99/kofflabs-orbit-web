@@ -81,6 +81,7 @@ const Employees = () => {
     useState("");
   const [selectedEmployeeDateCreated, setSelectedEmployeeDateCreated] =
     useState("");
+  const [smsMessage, setSmsMessage] = useState("");
 
   // SEND MONEY VIA MOMO CREDS
   const [channel, setChannel] = useState("");
@@ -120,32 +121,6 @@ const Employees = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // // open employee details modal
-  // const handleOpenEmployeeDetailsModal = (employee) => {
-  //   setSelectedEmployeeFirstName(employee.firstName);
-  //   setSelectedEmployeeLastName(employee.lastName);
-  //   setSelectedEmployeePhoto(employee.photo);
-  //   setSelectedEmployeeCV(employee.cv);
-  //   setSelectedEmployeeGender(employee.gender);
-  //   setSelectedEmployeeEmail(employee.email);
-  //   setSelectedEmployeePhone(employee.phone);
-  //   setSelectedEmployeeAddress(employee.address);
-  //   setSelectedEmployeeNationality(employee.nationality);
-  //   setSelectedEmployeeEmployementStartDate(employee.employmentDate);
-  //   setSelectedEmployeeRole(employee.role);
-  //   setSelectedEmployeeSalary(employee.salary);
-  //   setSelectedEmployeeStatus(employee.status);
-  //   setSelectedEmployeeIsFired(employee.isFired);
-  //   setSelectedEmployeeBankName(employee.bankName);
-  //   setSelectedEmployeeBankBranch(employee.bankBranch);
-  //   setSelectedEmployeeAccountName(employee.accountName);
-  //   setSelectedEmployeeAccountNumber(employee.accountNumber);
-  //   setSelectedEmployeeEmployeeId(employee.employeeId);
-  //   setSelectedEmployeeDateCreated(employee.dateCreated);
-  //   setSelectedEmployeeDepartment(employee?.department[0]?.name || "N/A");
-  //   // setOpenEmployeeDetailModal(true);
-
-  // };
   const handleOpenEmployeeDetailsModal = (employee) => {
     setSelectedEmployeeFirstName(employee.firstName || "N/A");
     setSelectedEmployeeLastName(employee.lastName || "N/A");
@@ -375,6 +350,40 @@ const Employees = () => {
     } catch (err) {
       console.error(err);
       setAddingEmployee(false);
+    }
+  };
+
+  // send sms
+  const sendSMS = async () => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const raw = JSON.stringify({
+        to: selectedEmployeePhone,
+        message: smsMessage,
+      });
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      await fetch(`${baseUrl}/api/v1/hubtelSMS/sendSMS`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          if (result.msg === "sms sent successfully") {
+            toast.success("SMS sent successfully");
+            setOpenSMSModal(false);
+          } else {
+            toast.error("Unable to send SMS");
+          }
+        })
+        .catch((error) => console.error(error));
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -675,11 +684,12 @@ const Employees = () => {
                   id=""
                   placeholder="Enter message..."
                   className="w-full h-[200px] bg-neutral-800 text-neutral-300 p-2 rounded-md"
+                  onChange={(e) => setSmsMessage(e.target.value)}
                 ></textarea>
                 <motion.button
                   whileTap={{ scale: 0.8 }}
                   className="bg-[#f39136] text-white w-full p-2 rounded-lg mt-3"
-                  onClick={() => setOpenMoneyModal(true)}
+                  onClick={() => sendSMS()}
                 >
                   Send
                 </motion.button>

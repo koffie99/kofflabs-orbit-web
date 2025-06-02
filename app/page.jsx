@@ -12,7 +12,7 @@ export default function Home() {
 
   // Redirect to portal if user is logged in
   if (userId) {
-    router.push('/portal')
+    router.push('/portal') 
     return null
   }
 

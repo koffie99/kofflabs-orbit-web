@@ -123,7 +123,7 @@ const Employees = () => {
   // open employee details modal
   const handleOpenEmployeeDetailsModal = (employee) => {
     setSelectedEmployeeFirstName(employee.firstName);
-    setSelectedEmployeeLastName(employee.lastName);
+    setSelectedEmployeeLastName(employee.lastName); 
     setSelectedEmployeePhoto(employee.photo);
     setSelectedEmployeeCV(employee.cv);
     setSelectedEmployeeGender(employee.gender);

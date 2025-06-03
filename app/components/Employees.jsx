@@ -82,6 +82,8 @@ const Employees = () => {
   const [selectedEmployeeDateCreated, setSelectedEmployeeDateCreated] =
     useState("");
   const [smsMessage, setSmsMessage] = useState("");
+  const [sendingMessage, setSendingMessage] = useState(false);
+  const [sendingMoney, setSendingMoney] = useState(false);
 
   // SEND MONEY VIA MOMO CREDS
   const [channel, setChannel] = useState("");
@@ -222,6 +224,7 @@ const Employees = () => {
   // send money
   const sendMoney = async () => {
     try {
+      setSendingMoney(true);
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
@@ -251,6 +254,7 @@ const Employees = () => {
             // toast.success(
             //   `Money sent to ${selectedEmployeeFirstName} ${selectedEmployeeLastName} successfully`
             // );
+            setSendingMoney(false);
             setOpenSendMoneyAuthModal(false);
             setOpenMoneyModal(false);
             setOpenEmployeeDetailModal(false);
@@ -261,6 +265,7 @@ const Employees = () => {
         })
         .catch((error) => console.error(error));
     } catch (err) {
+      setSendingMoney(false);
       console.log(err);
       toast.error("Unable to send money");
     }
@@ -356,6 +361,7 @@ const Employees = () => {
   // send sms
   const sendSMS = async () => {
     try {
+      setSendingMessage(true);
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
@@ -376,13 +382,16 @@ const Employees = () => {
         .then((result) => {
           if (result.message === "sms sent successfully") {
             toast.success("SMS sent successfully");
+            setSendingMessage(false);
             setOpenSMSModal(false);
           } else {
+            setSendingMessage(false);
             toast.error("Unable to send SMS");
           }
         })
         .catch((error) => console.error(error));
     } catch (err) {
+      setSendingMessage(false);
       console.log(err);
     }
   };
@@ -691,7 +700,19 @@ const Employees = () => {
                   className="bg-[#f39136] text-white w-full p-2 rounded-lg mt-3"
                   onClick={() => sendSMS()}
                 >
-                  Send
+                  {sendingMessage ? (
+                    <div className="flex items-center justify-center">
+                      <Image
+                        width={20}
+                        height={20}
+                        src="/gifs/whiteloading.gif"
+                        alt="loading gif"
+                        className="text-center flex items-center justify-center"
+                      />
+                    </div>
+                  ) : (
+                    "Send SMS Message"
+                  )}
                 </motion.button>
               </div>
             </Modal>
@@ -758,7 +779,7 @@ const Employees = () => {
                     className="ring-1 ring-neutral-600 text-neutral-400 p-2 rounded-md w-full  person-action-btn hover:ring-0 employee-action-btn"
                     onClick={() => setOpenSMSModal(true)}
                   >
-                    Send Message
+                    Send SMS Message
                   </motion.button>
                   <motion.button
                     whileTap={{ scale: 0.8 }}
@@ -835,7 +856,19 @@ const Employees = () => {
                 className="bg-[#f39136] text-white w-full p-2 rounded-lg mt-3"
                 onClick={() => sendMoney()}
               >
-                Send
+                {sendingMoney ? (
+                  <div className="flex items-center justify-center">
+                    <Image
+                      width={20}
+                      height={20}
+                      src="/gifs/whiteloading.gif"
+                      alt="loading gif"
+                      className="text-center flex items-center justify-center"
+                    />
+                  </div>
+                ) : (
+                  "Send Money"
+                )}
               </motion.button>
             </Modal>
 

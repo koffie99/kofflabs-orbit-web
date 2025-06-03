@@ -120,7 +120,7 @@ const Finance = () => {
         redirect: "follow",
       };
 
-      await fetch(`${baseUrl}/api/v1/payments/all`, requestOptions)
+      await fetch(`${baseUrl}/api/v1/hubtelPayment/allPayments`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           setPayments(result.payments);
@@ -142,13 +142,11 @@ const Finance = () => {
   const columns = [
     {
       title: "Client Name",
-      key: "clientName",
-      dataIndex: "clientName",
+      render: (_, record) => <p>{record?.client[0]?.name || "N/A"}</p>,
     },
     {
       title: "Client Email",
-      key: "clientEmail",
-      dataIndex: "clientEmail",
+      render: (_, record) => <p>{record?.client[0]?.email || "N/A"}</p>,
     },
     {
       title: "Amount (GHS)",
@@ -196,7 +194,9 @@ const Finance = () => {
   return (
     <div className="">
       <div className="flex items-center justify-between bg-[#131313] w-full p-5 rounded-lg shadow-2xl">
-        <h2 className="font-semibold text-xl text-neutral-300">Finance</h2>
+        <h2 className="font-semibold text-xl text-neutral-300">
+          Finance: {payments?.length}
+        </h2>
         <div className="#f29235 flex items-center gap-2">
           <button className="ring-1 ring-neutral-300 text-neutral-300 text-sm rounded-lg px-4 py-2 mr-0">
             + Add Expense

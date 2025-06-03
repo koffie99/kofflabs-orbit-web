@@ -393,14 +393,14 @@ const Finance = () => {
           </form>
         </Modal>
 
-        <Modal
+        {/* <Modal
           open={openPaymentLinkModal}
           onCancel={() => setOpenPaymentLinkModal(false)}
           footer={false}
           title="Payment Link"
         >
           <p>P LINK</p>
-        </Modal>
+        </Modal> */}
       </ConfigProvider>
 
       {/* payment link modal */}

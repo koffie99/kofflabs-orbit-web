@@ -45,4 +45,5 @@ html {
 .person-action-btn:hover{
   background-color: rgba(243, 145, 54, 0.2);
   color: #f39136;
+  color: rgb(243, 145, 54);
 }

@@ -6,6 +6,8 @@ import { toast, Toaster } from "react-hot-toast";
 import baseUrl from "../utils/baseUrl";
 import Image from "next/image";
 const { Option } = Select;
+import { IoLinkOutline } from "react-icons/io5";
+import { motion } from "motion/react";
 
 // imports
 import { IoCopyOutline } from "react-icons/io5";
@@ -29,6 +31,7 @@ const Finance = () => {
   const [paymentDescription, setPaymentDescription] = useState("");
   const [projectName, setProjectName] = useState("");
   const [payments, setPayments] = useState([]);
+  const [payRecord, setPayRecord] = useState([]);
 
   // get all projects
   const getProjects = async () => {
@@ -94,6 +97,7 @@ const Finance = () => {
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "payment initiated successfully") {
+            getPayments();
             toast.success("Payment link created successfully");
             setPaymentLink(result?.payment_url);
             setGenerating(false);
@@ -189,14 +193,28 @@ const Finance = () => {
       dataIndex: "dateCreated",
       render: (_, record) => <p>{formatDate(record.dateCreated)}</p>,
     },
+    {
+      title: "Action",
+      render: (_, record) => (
+        <motion.button
+          whileTap={{ scale: 0.8 }}
+          className="p-2 bg-[rgba(243,145,54,0.1)] rounded"
+        >
+          <IoLinkOutline />
+        </motion.button>
+      ),
+    },
   ];
+
+  // open payment link modal
+  const handleOpenPayRecord = (pRecord) => {
+    setPayRecord(pRecord);
+  };
 
   return (
     <div className="">
       <div className="flex items-center justify-between bg-[#131313] w-full p-5 rounded-lg shadow-2xl">
-        <h2 className="font-semibold text-xl text-neutral-300">
-          Finance: {payments?.length}
-        </h2>
+        <h2 className="font-semibold text-xl text-neutral-300">Finance</h2>
         <div className="#f29235 flex items-center gap-2">
           <button className="ring-1 ring-neutral-300 text-neutral-300 text-sm rounded-lg px-4 py-2 mr-0">
             + Add Expense
@@ -373,6 +391,15 @@ const Finance = () => {
               )}
             </button>
           </form>
+        </Modal>
+
+        <Modal
+          open={openPaymentLinkModal}
+          onCancel={() => setOpenPaymentLinkModal(false)}
+          footer={false}
+          title="Payment Link"
+        >
+          <p>P LINK</p>
         </Modal>
       </ConfigProvider>
 

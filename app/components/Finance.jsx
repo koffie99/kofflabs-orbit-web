@@ -77,6 +77,8 @@ const Finance = () => {
       myHeaders.append("Content-Type", "application/json");
 
       const raw = JSON.stringify({
+        projectId: projectId,
+        clientId: clientId,
         amount: amount,
         description: description,
       });
@@ -91,9 +93,9 @@ const Finance = () => {
       await fetch(`${baseUrl}/api/v1/hubtelPayment/takePayment`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          if (result.status === "success") {
+          if (result.msg === "payment initiated successfully") {
             toast.success("Payment link created successfully");
-            setPaymentLink(result.data.data.checkoutUrl);
+            setPaymentLink(result?.payment_url);
             setGenerating(false);
             setOpenPaymentLinkModal(false);
             setOpenLinkModal(true);

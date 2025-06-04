@@ -145,7 +145,7 @@ const Projects = () => {
             setOpenEditModal(false);
             setEditing(false);
             toast.success("Project updated successfully");
-          } else {
+          } else { 
             toast.error(result.msg || "Failed to update project");
           }
         })

@@ -100,17 +100,17 @@ const Projects = () => {
         .then((result) => {
           if (result.msg === "project deleted successfully") {
             getAllProjects();
-            message.success("Project deleted successfully");
+            toast.success("Project deleted successfully");
           } else {
-            message.error(result.msg || "Failed to delete project");
+            toast.error(result.msg || "Failed to delete project");
           }
         })
         .catch((error) => {
-          message.error("Failed to delete project");
+          toast.error("Failed to delete project");
           console.error(error);
         });
     } catch (err) {
-      message.error("Failed to delete project");
+      toast.error("Failed to delete project");
       console.error(err);
     }
   };
@@ -144,17 +144,17 @@ const Projects = () => {
             getAllProjects();
             setOpenEditModal(false);
             setEditing(false);
-            message.success("Project updated successfully");
+            toast.success("Project updated successfully");
           } else {
-            message.error(result.msg || "Failed to update project");
+            toast.error(result.msg || "Failed to update project");
           }
         })
         .catch((error) => {
-          message.error("Failed to update project");
+          toast.error("Failed to update project");
           console.error(error);
         });
     } catch (err) {
-      message.error("Failed to update project");
+      toast.error("Failed to update project");
       console.error(err);
     }
   };
@@ -413,21 +413,6 @@ const Projects = () => {
           title="Project Details"
         >
           <div className="flex flex-col gap-6 mt-6">
-            {selectedProject?.photo && (
-              <div className="w-48 h-48 mb-8 relative">
-                <Image
-                  src={selectedProject?.photo || "/placeholder-project.png"}
-                  alt={selectedProject?.name || "Project"}
-                  width={120}
-                  height={120}
-                  className="rounded-lg shadow-lg object-cover"
-                  style={{ objectFit: "cover" }}
-                />
-                {/* {selectedProject?.photo && (
-                  <div className="absolute bottom-2 right-2 bg-green-500 rounded-full w-3 h-3 border-2 border-white"></div>
-                )} */}
-              </div>
-            )}
             <div className="grid grid-cols-2 gap-6">
               <div className="flex items-center gap-3">
                 <CalendarOutlined className="text-neutral-300" />
@@ -453,9 +438,17 @@ const Projects = () => {
                 <UserOutlined className="text-neutral-300" />
                 <div>
                   <span className="text-neutral-300">Assignees</span>
-                  <p className="text-white">
-                    {selectedProject?.assignees?.join(", ")}
-                  </p>
+                  <ul className="text-white space-y-1">
+                    {selectedProject?.assignees?.map((assigneeId) => {
+                      const employee = employees?.find(emp => String(emp._id) === assigneeId);
+                      return employee ? (
+                        <li key={assigneeId} className="flex items-center gap-2">
+                          <span className="text-neutral-300">•</span>
+                          <span>{`${employee.firstName} ${employee.lastName}`}</span>
+                        </li>
+                      ) : null;
+                    })}
+                  </ul>
                 </div>
               </div>
 

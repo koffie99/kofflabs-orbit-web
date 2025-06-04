@@ -1,13 +1,17 @@
-"use client"
-import React, { useEffect, useState } from "react"
-import DashCard from "../uibits/DashCard"
-import baseUrl from "../utils/baseUrl"
-import truncateToTwoDecimals from "../utils/truncateToTwoDecimals"
-import { LiaProjectDiagramSolid } from "react-icons/lia"
-import { GoPeople } from "react-icons/go"
+"use client";
+import React, { useEffect, useState } from "react";
+import DashCard from "../uibits/DashCard";
+import baseUrl from "../utils/baseUrl";
+import truncateToTwoDecimals from "../utils/truncateToTwoDecimals";
+import { LiaProjectDiagramSolid } from "react-icons/lia";
+import { GoPeople } from "react-icons/go";
 
 const Dashboard = () => {
-  const [dashboardStat, setDashboardStat] = useState({})
+  const [dashboardStat, setDashboardStat] = useState({
+    revenue: 0,
+    project_count: 0,
+    employee_count: 0,
+  });
 
   // get dashbaord stats
   const getDashboardStats = async () => {
@@ -15,23 +19,23 @@ const Dashboard = () => {
       const requestOptions = {
         method: "GET",
         redirect: "follow",
-      }
+      };
 
       await fetch(`${baseUrl}/api/v1/dashboard/stats`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          setDashboardStat(result)
+          setDashboardStat(result);
         })
-        .catch((error) => console.error(error))
+        .catch((error) => console.error(error));
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   // init
   useEffect(() => {
-    getDashboardStats()
-  }, [])
+    getDashboardStats();
+  }, []);
 
   return (
     <div className="bg-[#131313] w-full p-5 rounded-lg shadow">
@@ -46,11 +50,19 @@ const Dashboard = () => {
           <DashCard
             Icon={GoPeople}
             desc="Revenue"
-            value={`GHS ${truncateToTwoDecimals(dashboardStat?.revenue) || 0.0}`}
+            type="money"
+            value={`${Number(dashboardStat?.revenue).toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}`}
           />
-          <DashCard Icon={LiaProjectDiagramSolid} desc="Projects" value={dashboardStat?.project_count || 0} />
           <DashCard
-          Icon={GoPeople}
+            Icon={LiaProjectDiagramSolid}
+            desc="Projects"
+            value={dashboardStat?.project_count || 0}
+          />
+          <DashCard
+            Icon={GoPeople}
             desc="Employees"
             value={dashboardStat?.employee_count || 0}
           />
@@ -65,7 +77,7 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

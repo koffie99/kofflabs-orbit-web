@@ -148,10 +148,10 @@ const Finance = () => {
       title: "Client Name",
       render: (_, record) => <p>{record?.client[0]?.name || "N/A"}</p>,
     },
-    {
-      title: "Client Email",
-      render: (_, record) => <p>{record?.client[0]?.email || "N/A"}</p>,
-    },
+    // {
+    //   title: "Client Email",
+    //   render: (_, record) => <p>{record?.client[0]?.email || "N/A"}</p>,
+    // },
     {
       title: "Amount (GHS)",
       key: "amount",
@@ -188,7 +188,7 @@ const Finance = () => {
       render: (_, record) => <p>{record.project[0]?.name || "Other"}</p>,
     },
     {
-      title: "Date Created",
+      title: "Date Initiated",
       key: "dateCreated",
       dataIndex: "dateCreated",
       render: (_, record) => <p>{formatDate(record.dateCreated)}</p>,

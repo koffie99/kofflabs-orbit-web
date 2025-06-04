@@ -1,5 +1,6 @@
 "use client";
-import { Modal, Select, Table, ConfigProvider, theme } from "antd";
+import { Modal, Select, Table, ConfigProvider, theme, Popconfirm, message } from "antd";
+import { EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
@@ -15,6 +16,10 @@ const Projects = () => {
 
   // project details
   const [projectPhoto, setProjectPhoto] = useState("");
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [openDetailsModal, setOpenDetailsModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [editing, setEditing] = useState(false);
   const [projectName, setProjectName] = useState("");
   const [projectStartDate, setProjectStartDate] = useState("");
   const [projectEndDate, setProjectEndDate] = useState("");
@@ -66,10 +71,71 @@ const Projects = () => {
   };
 
   // delete project
-  const deleteProject = async (projectId) => {
+  const handleDelete = async (projectId) => {
     try {
+      const requestOptions = {
+        method: "DELETE",
+        redirect: "follow"
+      };
+
+      await fetch(`${baseUrl}/api/v1/projects/delete/${projectId}`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          if (result.msg === "project deleted successfully") {
+            getAllProjects();
+            message.success("Project deleted successfully");
+          } else {
+            message.error(result.msg || "Failed to delete project");
+          }
+        })
+        .catch((error) => {
+          message.error("Failed to delete project");
+          console.error(error);
+        });
     } catch (err) {
-      console.log(err);
+      message.error("Failed to delete project");
+      console.error(err);
+    }
+  };
+
+  // update project
+  const updateProject = async () => {
+    try {
+      setEditing(true);
+      const formdata = new FormData();
+      formdata.append("photo", projectPhoto);
+      formdata.append("name", projectName.trim().toLowerCase());
+      formdata.append("startDate", projectStartDate.trim());
+      formdata.append("endDate", projectEndDate.trim());
+      formdata.append("assignees", projectAssignees);
+      formdata.append("status", "completed");
+      formdata.append("isComplete", "true");
+
+      const requestOptions = {
+        method: "PUT",
+        body: formdata,
+        redirect: "follow"
+      };
+
+      await fetch(`${baseUrl}/api/v1/projects/update/${selectedProject._id}`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          if (result.msg === "project updated successfully") {
+            getAllProjects();
+            setOpenEditModal(false);
+            setEditing(false);
+            message.success("Project updated successfully");
+          } else {
+            message.error(result.msg || "Failed to update project");
+          }
+        })
+        .catch((error) => {
+          message.error("Failed to update project");
+          console.error(error);
+        });
+    } catch (err) {
+      message.error("Failed to update project");
+      console.error(err);
     }
   };
 
@@ -136,8 +202,38 @@ const Projects = () => {
       title: "Actions",
       render: (_, record) => (
         <div className="flex items-center gap-3">
-          <button>Edit</button>
-          <button>Delete</button>
+              <EyeOutlined
+                onClick={() => {
+                  setSelectedProject(record);
+                  setOpenDetailsModal(true);
+                }}
+                className="text-blue-500 hover:text-blue-700 cursor-pointer"
+              />
+              <EditOutlined
+                onClick={() => {
+                  setSelectedProject(record);
+                  setOpenEditModal(true);
+                  setEditing(true);
+                  setProjectPhoto(record.photo);
+                  setProjectName(record.name);
+                  setProjectStartDate(record.startDate);
+                  setProjectEndDate(record.endDate);
+                  setProjectAssignees(record.assignees);
+                  setProjectSenderId(record.senderId);
+                  setProjectEmail(record.email);
+                }}
+                className="text-yellow-500 hover:text-yellow-700 cursor-pointer ml-2"
+              />
+              <Popconfirm
+                title="Are you sure you want to delete this project?"
+                onConfirm={() => handleDelete(record._id)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <DeleteOutlined
+                  className="text-red-500 hover:text-red-700 cursor-pointer ml-2"
+                />
+              </Popconfirm>
         </div>
       ),
     },
@@ -247,6 +343,185 @@ const Projects = () => {
           <Table className="mt-5" columns={columns} dataSource={projects} />
         </ConfigProvider>
       )}
+
+      {/* details modal */}
+      <ConfigProvider
+        theme={{
+          algorithm: theme.darkAlgorithm,
+          token: {
+            colorPrimary: "#08807a",
+            colorBgContainer: "#181818",
+            colorBgElevated: "#181818",
+            colorBgLayout: "#181818",
+            colorBgSpotlight: "#181818",
+            colorBgFloating: "#181818",
+            colorBgSecondary: "#181818",
+            colorBgSecondaryHover: "#181818",
+            colorBgSecondaryActive: "#181818",
+            colorBorder: "#2d2d2d",
+            colorBorderSecondary: "#2d2d2d",
+            colorBorderTertiary: "#2d2d2d",
+            colorBorderQuaternary: "#2d2d2d",
+            colorBorderHover: "#2d2d2d",
+            colorBorderActive: "#2d2d2d",
+            colorBorderSelected: "#2d2d2d",
+            colorBorderSelectedHover: "#2d2d2d",
+            colorBorderSelectedActive: "#2d2d2d",
+            colorBorderDisabled: "#2d2d2d",
+            colorBorderDisabledHover: "#2d2d2d",
+            colorBorderDisabledActive: "#2d2d2d",
+            colorText: "#ffffff",
+            colorTextSecondary: "#ffffff",
+            colorTextTertiary: "#ffffff",
+            colorTextQuaternary: "#ffffff",
+            colorTextPlaceholder: "#ffffff",
+            colorTextDisabled: "#ffffff",
+            colorTextHeading: "#ffffff",
+            colorTextTitle: "#ffffff",
+            colorTextDescription: "#ffffff",
+            colorTextLightSolid: "#ffffff",
+            colorTextLight: "#ffffff",
+            colorTextMuted: "#ffffff",
+            colorTextLighter: "#ffffff",
+          },
+        }}
+      >
+        <Modal
+          open={openDetailsModal}
+          onCancel={() => setOpenDetailsModal(false)}
+          footer={false}
+          title="Project Details"
+        >
+          <div className="flex flex-col gap-3 mt-3">
+            {selectedProject?.photo && (
+              <div className="w-32 h-32">
+                <Image
+                  src={selectedProject.photo}
+                  alt={selectedProject.name}
+                  width={128}
+                  height={128}
+                  className="rounded-md"
+                />
+              </div>
+            )}
+            <p><strong>Name:</strong> {selectedProject?.name}</p>
+            <p><strong>Start Date:</strong> {new Date(selectedProject?.startDate).toLocaleDateString()}</p>
+            <p><strong>End Date:</strong> {new Date(selectedProject?.endDate).toLocaleDateString()}</p>
+            <p><strong>Assignees:</strong> {selectedProject?.assignees?.join(', ')}</p>
+            <p><strong>Status:</strong> {selectedProject?.status}</p>
+          </div>
+        </Modal>
+      </ConfigProvider>
+
+      {/* edit modal */}
+      <ConfigProvider
+        theme={{
+          algorithm: theme.darkAlgorithm,
+          token: {
+            colorPrimary: "#08807a",
+            colorBgContainer: "#181818",
+            colorBgElevated: "#181818",
+            colorBgLayout: "#181818",
+            colorBgSpotlight: "#181818",
+            colorBgFloating: "#181818",
+            colorBgSecondary: "#181818",
+            colorBgSecondaryHover: "#181818",
+            colorBgSecondaryActive: "#181818",
+            colorBorder: "#2d2d2d",
+            colorBorderSecondary: "#2d2d2d",
+            colorBorderTertiary: "#2d2d2d",
+            colorBorderQuaternary: "#2d2d2d",
+            colorBorderHover: "#2d2d2d",
+            colorBorderActive: "#2d2d2d",
+            colorBorderSelected: "#2d2d2d",
+            colorBorderSelectedHover: "#2d2d2d",
+            colorBorderSelectedActive: "#2d2d2d",
+            colorBorderDisabled: "#2d2d2d",
+            colorBorderDisabledHover: "#2d2d2d",
+            colorBorderDisabledActive: "#2d2d2d",
+            colorText: "#ffffff",
+            colorTextSecondary: "#ffffff",
+            colorTextTertiary: "#ffffff",
+            colorTextQuaternary: "#ffffff",
+            colorTextPlaceholder: "#ffffff",
+            colorTextDisabled: "#ffffff",
+            colorTextHeading: "#ffffff",
+            colorTextTitle: "#ffffff",
+            colorTextDescription: "#ffffff",
+            colorTextLightSolid: "#ffffff",
+            colorTextLight: "#ffffff",
+            colorTextMuted: "#ffffff",
+            colorTextLighter: "#ffffff",
+          },
+        }}
+      >
+        <Modal
+          open={openEditModal}
+          onCancel={() => {
+            setOpenEditModal(false);
+            setEditing(false);
+          }}
+          footer={false}
+          title="Edit Project"
+        >
+          <div className="flex flex-col gap-3 mt-3">
+            <input
+              type="file"
+              className="bg-neutral-800 text-neutral-300 p-2 rounded-md"
+              onChange={(e) => setProjectPhoto(e.target.files[0])}
+            />
+            <input
+              type="text"
+              className="bg-neutral-800 text-neutral-300 p-2 rounded-md"
+              placeholder="Project name"
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+            />
+            <input
+              type="date"
+              className="bg-neutral-800 text-neutral-300 p-2 rounded-md"
+              value={projectStartDate}
+              onChange={(e) => setProjectStartDate(e.target.value)}
+            />
+            <input
+              type="date"
+              className="bg-neutral-800 text-neutral-300 p-2 rounded-md"
+              value={projectEndDate}
+              onChange={(e) => setProjectEndDate(e.target.value)}
+            />
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={assignMembers}
+                onChange={(e) => setAssignMembers(e.target.checked)}
+              />
+              <p>Assign project members</p>
+            </div>
+            {assignMembers && (
+              <div>
+                <Select
+                  mode="multiple"
+                  className="w-full"
+                  placeholder="Select employees"
+                  value={projectAssignees}
+                  options={employees?.map((employee) => ({
+                    value: String(employee._id),
+                    label: `${employee.firstName} ${employee.lastName}`,
+                  }))}
+                  onChange={(values) => setProjectAssignees(values)}
+                  allowClear
+                />
+              </div>
+            )}
+            <button
+              className="p-2 bg-[#f29235] rounded-lg text-white"
+              onClick={() => updateProject()}
+            >
+              {editing ? "Updating Project...." : "Update Project"}
+            </button>
+          </div>
+        </Modal>
+      </ConfigProvider>
 
       {/* add project modal */}
       <ConfigProvider

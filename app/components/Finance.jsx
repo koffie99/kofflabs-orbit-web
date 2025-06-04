@@ -167,21 +167,41 @@ const Finance = () => {
     },
     {
       title: "Status",
-      key: "status",
-      dataIndex: "status",
-      render: (_, record) => (
-        <p
-          className={`${
-            record.status === "success"
-              ? "bg-green"
-              : record.status === "pending"
-              ? "bg-orange"
-              : "bg-red"
-          }`}
-        >
-          {record.status}
-        </p>
-      ),
+      render: (_, record) => {
+        const status = record.status?.toLowerCase();
+
+        const statusStyles = {
+          success: {
+            text: "text-emerald-700",
+            bg: "bg-[rgba(5,150,105,0.1)]", // emerald-700 @ 30%
+          },
+          pending: {
+            text: "text-amber-700",
+            bg: "bg-[rgba(180,83,9,0.1)]", // amber-700 @ 30%
+          },
+          failed: {
+            text: "text-rose-700",
+            bg: "bg-[rgba(190,18,60,0.1)]", // rose-700 @ 30%
+          },
+          cancelled: {
+            text: "text-slate-600",
+            bg: "bg-[rgba(71,85,105,0.1)]", // slate-600 @ 30%
+          },
+        };
+
+        const { bg, text } = statusStyles[status] || {
+          bg: "bg-[rgba(67,56,202,0.3)]", // indigo-700 fallback
+          text: "text-indigo-700",
+        };
+
+        return (
+          <span
+            className={`inline-block px-3 py-1 rounded-full text-sm font-medium capitalize ${bg} ${text}`}
+          >
+            {status || "unknown"}
+          </span>
+        );
+      },
     },
     {
       title: "Division",

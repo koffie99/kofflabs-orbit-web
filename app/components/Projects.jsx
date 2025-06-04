@@ -414,7 +414,7 @@ const Projects = () => {
             {selectedProject?.photo && (
               <div className="w-48 h-48 mb-8">
                 <Image
-                  src={selectedProject.photo}
+                  src={selectedProject?.photo}
                   alt={selectedProject.name}
                   width={120}
                   height={120}
@@ -422,7 +422,7 @@ const Projects = () => {
                 />
               </div>
             )}
-
+            <p>Project Photo: {selectedProject?.photo}</p>
             <div className="grid grid-cols-2 gap-6">
               <div className="flex items-center gap-3">
                 <CalendarOutlined className="text-neutral-300" />

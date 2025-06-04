@@ -32,6 +32,7 @@ const Finance = () => {
   const [projectName, setProjectName] = useState("");
   const [payments, setPayments] = useState([]);
   const [payRecord, setPayRecord] = useState([]);
+  const [paymentInfo, setPaymentInfo] = useState({});
 
   // get all projects
   const getProjects = async () => {
@@ -97,6 +98,7 @@ const Finance = () => {
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "payment initiated successfully") {
+            setPaymentInfo(result);
             getPayments();
             toast.success("Payment link created successfully");
             setPaymentLink(result?.payment_url);
@@ -455,14 +457,15 @@ const Finance = () => {
           footer={false}
         >
           <p>
-            {clientName} is about to make a payment of{" "}
+            {paymentInfo?.clientName} is about to make a payment of{" "}
             <span className="font-bold text-[#F39136]">
               {" "}
-              GHS {clientAmount}
+              GHS {paymentInfo?.payment_data?.amount}
             </span>{" "}
             for{" "}
             <span className="lowercase">
-              {paymentDescription} under the {projectName} division.
+              {paymentInfo?.payment_data?.description} under the{" "}
+              {paymentInfo.projectName} division.
             </span>
           </p>
           <div className="flex items-center gap-3 mt-3">

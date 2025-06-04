@@ -729,7 +729,21 @@ const Employees = () => {
               onCancel={() => setOpenEmployeeDetailModal(false)}
             >
               {/* <Skeleton active /> */}
-              <div className="mt-5 flex flex-col gap-3">
+              <div className="mt-5 flex flex-col gap-4">
+                {selectedEmployeePhoto && (
+                  <div className="flex items-center gap-4 mb-10">
+                    <div className=" w-24 h-24">
+                      <Image
+                        src={selectedEmployeePhoto}
+                        alt={selectedEmployeeFirstName}
+                        width={300}
+                        height={300}
+                        className="rounded-lg object-cover"
+                        priority
+                      />
+                    </div>
+                  </div>
+                )}
                 <PersonaList
                   name={`${selectedEmployeeFirstName} ${selectedEmployeeLastName}`}
                   Icon={FiUser}

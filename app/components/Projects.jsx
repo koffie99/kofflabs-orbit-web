@@ -1,6 +1,20 @@
 "use client";
-import { Modal, Select, Table, ConfigProvider, theme, Popconfirm, message } from "antd";
+import {
+  Modal,
+  Select,
+  Table,
+  ConfigProvider,
+  theme,
+  Popconfirm,
+  message,
+} from "antd";
 import { EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  CalendarOutlined,
+  UserOutlined,
+  ClockCircleOutlined,
+  CheckCircleOutlined,
+} from "@ant-design/icons";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
@@ -75,10 +89,13 @@ const Projects = () => {
     try {
       const requestOptions = {
         method: "DELETE",
-        redirect: "follow"
+        redirect: "follow",
       };
 
-      await fetch(`${baseUrl}/api/v1/projects/delete/${projectId}`, requestOptions)
+      await fetch(
+        `${baseUrl}/api/v1/projects/delete/${projectId}`,
+        requestOptions
+      )
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "project deleted successfully") {
@@ -114,10 +131,13 @@ const Projects = () => {
       const requestOptions = {
         method: "PUT",
         body: formdata,
-        redirect: "follow"
+        redirect: "follow",
       };
 
-      await fetch(`${baseUrl}/api/v1/projects/update/${selectedProject._id}`, requestOptions)
+      await fetch(
+        `${baseUrl}/api/v1/projects/update/${selectedProject._id}`,
+        requestOptions
+      )
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "project updated successfully") {
@@ -202,38 +222,36 @@ const Projects = () => {
       title: "Actions",
       render: (_, record) => (
         <div className="flex items-center gap-3">
-              <EyeOutlined
-                onClick={() => {
-                  setSelectedProject(record);
-                  setOpenDetailsModal(true);
-                }}
-                className="text-blue-500 hover:text-blue-700 cursor-pointer"
-              />
-              <EditOutlined
-                onClick={() => {
-                  setSelectedProject(record);
-                  setOpenEditModal(true);
-                  setEditing(true);
-                  setProjectPhoto(record.photo);
-                  setProjectName(record.name);
-                  setProjectStartDate(record.startDate);
-                  setProjectEndDate(record.endDate);
-                  setProjectAssignees(record.assignees);
-                  setProjectSenderId(record.senderId);
-                  setProjectEmail(record.email);
-                }}
-                className="text-yellow-500 hover:text-yellow-700 cursor-pointer ml-2"
-              />
-              <Popconfirm
-                title="Are you sure you want to delete this project?"
-                onConfirm={() => handleDelete(record._id)}
-                okText="Yes"
-                cancelText="No"
-              >
-                <DeleteOutlined
-                  className="text-red-500 hover:text-red-700 cursor-pointer ml-2"
-                />
-              </Popconfirm>
+          <EyeOutlined
+            onClick={() => {
+              setSelectedProject(record);
+              setOpenDetailsModal(true);
+            }}
+            className="text-neutral-300 cursor-pointer"
+          />
+          <EditOutlined
+            onClick={() => {
+              setSelectedProject(record);
+              setOpenEditModal(true);
+              setEditing(true);
+              setProjectPhoto(record.photo);
+              setProjectName(record.name);
+              setProjectStartDate(record.startDate);
+              setProjectEndDate(record.endDate);
+              setProjectAssignees(record.assignees);
+              setProjectSenderId(record.senderId);
+              setProjectEmail(record.email);
+            }}
+            className="text-neutral-300 cursor-pointer"
+          />
+          <Popconfirm
+            title="Are you sure you want to delete this project?"
+            onConfirm={() => handleDelete(record._id)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <DeleteOutlined className="text-neutral-300 cursor-pointer ml-2" />
+          </Popconfirm>
         </div>
       ),
     },
@@ -392,23 +410,80 @@ const Projects = () => {
           footer={false}
           title="Project Details"
         >
-          <div className="flex flex-col gap-3 mt-3">
+          <div className="flex flex-col gap-6 mt-6">
             {selectedProject?.photo && (
-              <div className="w-32 h-32">
+              <div className="w-48 h-48 mb-8">
                 <Image
                   src={selectedProject.photo}
                   alt={selectedProject.name}
-                  width={128}
-                  height={128}
-                  className="rounded-md"
+                  width={120}
+                  height={120}
+                  className="rounded-lg shadow-lg"
                 />
               </div>
             )}
-            <p><strong>Name:</strong> {selectedProject?.name}</p>
-            <p><strong>Start Date:</strong> {new Date(selectedProject?.startDate).toLocaleDateString()}</p>
-            <p><strong>End Date:</strong> {new Date(selectedProject?.endDate).toLocaleDateString()}</p>
-            <p><strong>Assignees:</strong> {selectedProject?.assignees?.join(', ')}</p>
-            <p><strong>Status:</strong> {selectedProject?.status}</p>
+
+            <div className="grid grid-cols-2 gap-6">
+              <div className="flex items-center gap-3">
+                <CalendarOutlined className="text-neutral-300" />
+                <div>
+                  <span className="text-neutral-300">Start Date</span>
+                  <p className="text-white">
+                    {new Date(selectedProject?.startDate).toLocaleDateString()}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <ClockCircleOutlined className="text-neutral-300" />
+                <div>
+                  <span className="text-neutral-300">End Date</span>
+                  <p className="text-white">
+                    {new Date(selectedProject?.endDate).toLocaleDateString()}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <UserOutlined className="text-neutral-300" />
+                <div>
+                  <span className="text-neutral-300">Assignees</span>
+                  <p className="text-white">
+                    {selectedProject?.assignees?.join(", ")}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <CheckCircleOutlined
+                  className={`text-${
+                    selectedProject?.status === "completed"
+                      ? "green-500"
+                      : "yellow-500"
+                  }`}
+                />
+                <div>
+                  <span className="text-neutral-300">Status</span>
+                  <p
+                    className={`text-${
+                      selectedProject?.status === "completed"
+                        ? "green-500"
+                        : "yellow-500"
+                    }`}
+                  >
+                    {selectedProject?.status}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <CalendarOutlined className="text-neutral-300" />
+              <div>
+                <span className="text-neutral-300">Project Name</span>
+                <p className="text-white">{selectedProject?.name}</p>
+              </div>
+            </div>
           </div>
         </Modal>
       </ConfigProvider>

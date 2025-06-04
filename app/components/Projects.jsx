@@ -148,7 +148,7 @@ const Projects = () => {
     try {
       setAdding(true);
       const formdata = new FormData();
-      formdata.append("photo", fileInput.files[0], projectPhoto);
+      formdata.append("photo", projectPhoto);
       formdata.append("name", projectName.trim().toLowerCase());
       formdata.append("email", projectEmail.trim().toLowerCase());
       formdata.append("senderId", projectSenderId.trim());
@@ -166,10 +166,7 @@ const Projects = () => {
         redirect: "follow",
       };
 
-      await fetch(
-        "https://api.kofflabs.com/api/v1/projects/create",
-        requestOptions
-      )
+      await fetch(`${baseUrl}/api/v1/projects/create`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "project added successfully") {
@@ -350,7 +347,7 @@ const Projects = () => {
                   placeholder="Select employees"
                   value={projectAssignees}
                   options={employees?.map((employee) => ({
-                    value: employee.id,
+                    value: String(employee._id),
                     label: `${employee.firstName} ${employee.lastName}`,
                   }))}
                   onChange={(values) => setProjectAssignees(values)}

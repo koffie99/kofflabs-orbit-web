@@ -224,6 +224,8 @@ const Projects = () => {
         <div className="flex items-center gap-3">
           <EyeOutlined
             onClick={() => {
+              console.log("Selected project:", record);
+              console.log("Project photo:", record.photo);
               setSelectedProject(record);
               setOpenDetailsModal(true);
             }}
@@ -412,17 +414,20 @@ const Projects = () => {
         >
           <div className="flex flex-col gap-6 mt-6">
             {selectedProject?.photo && (
-              <div className="w-48 h-48 mb-8">
+              <div className="w-48 h-48 mb-8 relative">
                 <Image
-                  src={selectedProject?.photo}
-                  alt={selectedProject.name}
+                  src={selectedProject?.photo || "/placeholder-project.png"}
+                  alt={selectedProject?.name || "Project"}
                   width={120}
                   height={120}
-                  className="rounded-lg shadow-lg"
+                  className="rounded-lg shadow-lg object-cover"
+                  style={{ objectFit: "cover" }}
                 />
+                {/* {selectedProject?.photo && (
+                  <div className="absolute bottom-2 right-2 bg-green-500 rounded-full w-3 h-3 border-2 border-white"></div>
+                )} */}
               </div>
             )}
-            <p>Project Photo: {selectedProject?.photo}</p>
             <div className="grid grid-cols-2 gap-6">
               <div className="flex items-center gap-3">
                 <CalendarOutlined className="text-neutral-300" />

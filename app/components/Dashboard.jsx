@@ -21,7 +21,7 @@ const Dashboard = () => {
         redirect: "follow",
       };
 
-      await fetch(`${baseUrl}/api/v1/dashboard/stats`, requestOptions)
+      await fetch(`${baseUrl}/dashboard/stats`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           setDashboardStat(result);

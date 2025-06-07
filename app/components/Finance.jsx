@@ -42,7 +42,7 @@ const Finance = () => {
         redirect: "follow",
       };
 
-      await fetch(`${baseUrl}/api/v1/projects/all`, requestOptions)
+      await fetch(`${baseUrl}/projects/all`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           setProjects(result.projects || []);
@@ -61,7 +61,7 @@ const Finance = () => {
         redirect: "follow",
       };
 
-      await fetch(`${baseUrl}/api/v1/clients/all`, requestOptions)
+      await fetch(`${baseUrl}/clients/all`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           setClients(result.clients || []);
@@ -94,7 +94,7 @@ const Finance = () => {
         redirect: "follow",
       };
 
-      await fetch(`${baseUrl}/api/v1/hubtelPayment/takePayment`, requestOptions)
+      await fetch(`${baseUrl}/hubtelPayment/takePayment`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "payment initiated successfully") {
@@ -126,7 +126,7 @@ const Finance = () => {
         redirect: "follow",
       };
 
-      await fetch(`${baseUrl}/api/v1/hubtelPayment/allPayments`, requestOptions)
+      await fetch(`${baseUrl}/hubtelPayment/allPayments`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           setPayments(result.payments);

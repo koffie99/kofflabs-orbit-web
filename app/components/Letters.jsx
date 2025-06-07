@@ -106,7 +106,7 @@ const Letters = () => {
       };
 
       await fetch(`${baseUrl}/letters/delete/${letter_id}`, requestOptions)
-        .then((response) => (<response className="json"></response>)())
+        .then((response) => response.json())
         .then((result) => {
           if (result.msg === "letter deleted successfully") {
             getAllLetters();

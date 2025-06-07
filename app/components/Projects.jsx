@@ -232,7 +232,6 @@ const Projects = () => {
             onClick={() => {
               setSelectedProject(record);
               setOpenEditModal(true);
-              setEditing(true);
               setProjectPhoto(record.photo);
               setProjectName(record.name);
               setProjectStartDate(record.startDate);

@@ -419,7 +419,12 @@ const Letters = () => {
             {writing ? (
               "Writing letter..."
             ) : (
-              <iframe src={letterLink} className="w-full h-[90vh]"></iframe>
+              // <iframe src={letterLink} className="w-full h-[90vh]"></iframe>
+              <embed
+                src={letterLink}
+                type="application/pdf"
+                className="w-full h-[90vh]"
+              />
             )}
             {/* open in a new tab button with icon */}
             <motion.button

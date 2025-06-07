@@ -8,7 +8,7 @@ import { FiEdit3 } from "react-icons/fi";
 import { GoTrash } from "react-icons/go";
 import EntityLength from "../uibits/EntityLength";
 import { FiExternalLink } from "react-icons/fi";
-import {motion} from 'motion/react'
+import { motion } from "motion/react";
 
 const Letters = () => {
   const [letters, setLetters] = useState([]);
@@ -277,93 +277,93 @@ const Letters = () => {
           },
         }}
       >
-      <Modal
-        title="Write a letter"
-        open={openAddLetterModal}
-        onCancel={() => setOpenAddLetterModal(false)}
-        footer={null}
-      >
-        <div className="mt-4 flex flex-col gap-4">
-          <div className="w-full">
-            <p>Recipient Name</p>
-            <input
-              type="text"
-              placeholder="Recipient Name"
-              className="ring-1 ring-[#ccc] p-2 rounded-md mt-2 w-full"
-              onChange={(e) => setRecipientName(e.target.value)}
-            />
+        <Modal
+          title="Write a letter"
+          open={openAddLetterModal}
+          onCancel={() => setOpenAddLetterModal(false)}
+          footer={null}
+        >
+          <div className="mt-4 flex flex-col gap-4">
+            <div className="w-full">
+              <p>Recipient Name</p>
+              <input
+                type="text"
+                placeholder="Recipient Name"
+                className="bg-neutral-800 text-neutral-300 p-2 rounded-md mt-2 w-full"
+                onChange={(e) => setRecipientName(e.target.value)}
+              />
+            </div>
+            <div className="w-full">
+              <p>Recipient Email</p>
+              <input
+                type="text"
+                placeholder="Recipient Email"
+                className="bg-neutral-800 text-neutral-300 p-2 rounded-md mt-2 w-full"
+                onChange={(e) => setRecipientEmail(e.target.value)}
+              />
+            </div>
+            <div className="w-full">
+              <p>Recipient Role</p>
+              <input
+                type="text"
+                placeholder="Recipient Role"
+                className="bg-neutral-800 text-neutral-300 p-2 rounded-md mt-2 w-full"
+                onChange={(e) => setRecipientRole(e.target.value)}
+              />
+            </div>
+            <div className="w-full">
+              <p>Recipient Phone</p>
+              <input
+                type="text"
+                placeholder="Recipient Phone"
+                className="bg-neutral-800 text-neutral-300 p-2 rounded-md mt-2 w-full"
+                onChange={(e) => setRecipientPhone(e.target.value)}
+              />
+            </div>
+            <div className="w-full">
+              <p>Recipient Address</p>
+              <input
+                type="text"
+                placeholder="Recipient Address"
+                className="bg-neutral-800 text-neutral-300 p-2 rounded-md mt-2 w-full"
+                onChange={(e) => setRecipientAddress(e.target.value)}
+              />
+            </div>
+            <div className="w-full">
+              <p>Salutation</p>
+              <input
+                type="text"
+                placeholder="Salutation"
+                className="bg-neutral-800 text-neutral-300 p-2 rounded-md mt-2 w-full"
+                onChange={(e) => setSalutation(e.target.value)}
+              />
+            </div>
+            <div className="w-full">
+              <p>Title</p>
+              <input
+                type="text"
+                placeholder="Title"
+                className="bg-neutral-800 text-neutral-300 p-2 rounded-md mt-2 w-full"
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+            <div className="w-full">
+              <p>Body</p>
+              <input
+                type="text"
+                placeholder="Body"
+                className="bg-neutral-800 text-neutral-300 p-2 rounded-md mt-2 w-full"
+                onChange={(e) => setBody(e.target.value)}
+              />
+            </div>
+            <button
+              className="p-2 bg-[#f39136] text-white rounded-md"
+              onClick={() => writeLetter()}
+            >
+              {writing ? "Writing Letter..." : "Write Letter"}
+            </button>
           </div>
-          <div className="w-full">
-            <p>Recipient Email</p>
-            <input
-              type="text"
-              placeholder="Recipient Email"
-              className="ring-1 ring-[#ccc] p-2 rounded-md mt-2 w-full"
-              onChange={(e) => setRecipientEmail(e.target.value)}
-            />
-          </div>
-          <div className="w-full">
-            <p>Recipient Role</p>
-            <input
-              type="text"
-              placeholder="Recipient Role"
-              className="ring-1 ring-[#ccc] p-2 rounded-md mt-2 w-full"
-              onChange={(e) => setRecipientRole(e.target.value)}
-            />
-          </div>
-          <div className="w-full">
-            <p>Recipient Phone</p>
-            <input
-              type="text"
-              placeholder="Recipient Phone"
-              className="ring-1 ring-[#ccc] p-2 rounded-md mt-2 w-full"
-              onChange={(e) => setRecipientPhone(e.target.value)}
-            />
-          </div>
-          <div className="w-full">
-            <p>Recipient Address</p>
-            <input
-              type="text"
-              placeholder="Recipient Address"
-              className="ring-1 ring-[#ccc] p-2 rounded-md mt-2 w-full"
-              onChange={(e) => setRecipientAddress(e.target.value)}
-            />
-          </div>
-          <div className="w-full">
-            <p>Salutation</p>
-            <input
-              type="text"
-              placeholder="Salutation"
-              className="ring-1 ring-[#ccc] p-2 rounded-md mt-2 w-full"
-              onChange={(e) => setSalutation(e.target.value)}
-            />
-          </div>
-          <div className="w-full">
-            <p>Title</p>
-            <input
-              type="text"
-              placeholder="Title"
-              className="ring-1 ring-[#ccc] p-2 rounded-md mt-2 w-full"
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
-          <div className="w-full">
-            <p>Body</p>
-            <input
-              type="text"
-              placeholder="Body"
-              className="ring-1 ring-[#ccc] p-2 rounded-md mt-2 w-full"
-              onChange={(e) => setBody(e.target.value)}
-            />
-          </div>
-          <button
-            className="p-2 bg-[#f39136] text-white rounded-md"
-            onClick={() => writeLetter()}
-          >
-            {writing ? "Writing Letter..." : "Write Letter"}
-          </button>
-        </div>
-      </Modal>
+        </Modal>
       </ConfigProvider>
 
       {/* generated letter page */}
@@ -408,30 +408,30 @@ const Letters = () => {
           },
         }}
       >
-      <Modal
-        // title="Generated Letter"
-        open={openLetterModal}
-        onCancel={() => setOpenLetterModal(false)}
-        footer={null}
-        style={{ width: "700px" }}
-      >
-        <div className="flex flex-col gap-5 items-center">
-        {writing ? (
-          "Writing letter..."
-        ) : (
-          <iframe src={letterLink} className="w-full h-[90vh]"></iframe>
-        )}
-        {/* open in a new tab button with icon */}
-        <motion.button
-          whileTap={{ scale: 0.9 }}
-          className="p-2 bg-[#f39136] text-white rounded-md mt-5 display flex items-center gap-3"
-          onClick={() => window.open(letterLink, "_blank")}
+        <Modal
+          // title="Generated Letter"
+          open={openLetterModal}
+          onCancel={() => setOpenLetterModal(false)}
+          footer={null}
+          style={{ width: "700px" }}
         >
-          <FiExternalLink className="text-xl" />
-          Open in a new tab
-        </motion.button>
-        </div>
-      </Modal>
+          <div className="flex flex-col gap-5 items-center">
+            {writing ? (
+              "Writing letter..."
+            ) : (
+              <iframe src={letterLink} className="w-full h-[90vh]"></iframe>
+            )}
+            {/* open in a new tab button with icon */}
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              className="p-2 bg-[#f39136] text-white rounded-md mt-5 display flex items-center gap-3"
+              onClick={() => window.open(letterLink, "_blank")}
+            >
+              <FiExternalLink className="text-xl" />
+              Open in a new tab
+            </motion.button>
+          </div>
+        </Modal>
       </ConfigProvider>
 
       <Toaster />

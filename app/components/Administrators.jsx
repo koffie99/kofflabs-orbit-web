@@ -1,20 +1,20 @@
-"use client"
-import { Table, Modal, Select, Popconfirm, ConfigProvider, theme } from "antd"
-import React, { useEffect, useState } from "react"
-import { HiOutlineDotsVertical } from "react-icons/hi"
-import baseUrl from "../utils/baseUrl"
-import { Toaster, toast } from "react-hot-toast"
-import { MdOutlineVisibility } from "react-icons/md"
-import { CiEdit } from "react-icons/ci"
-import { GoTrash } from "react-icons/go"
-import EntityLength from "../uibits/EntityLength"
+"use client";
+import { Table, Modal, Select, Popconfirm, ConfigProvider, theme } from "antd";
+import React, { useEffect, useState } from "react";
+import { HiOutlineDotsVertical } from "react-icons/hi";
+import baseUrl from "../utils/baseUrl";
+import { Toaster, toast } from "react-hot-toast";
+import { MdOutlineVisibility } from "react-icons/md";
+import { CiEdit } from "react-icons/ci";
+import { GoTrash } from "react-icons/go";
+import EntityLength from "../uibits/EntityLength";
 
 const Administrators = () => {
-  const [admins, setAdmins] = useState([])
-  const [openAddModal, setOpenAddModal] = useState(false)
-  const [openEditModal, setOpenEditModal] = useState(false)
-  const [userTypes, setUserTypes] = useState([])
-  const [adding, setAdding] = useState(false)
+  const [admins, setAdmins] = useState([]);
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [userTypes, setUserTypes] = useState([]);
+  const [adding, setAdding] = useState(false);
 
   // user details
   const [userDetails, setUserDetails] = useState({
@@ -23,15 +23,15 @@ const Administrators = () => {
     email: "",
     userType: "",
     phone: "",
-  })
+  });
 
   // add staff
   const addStaff = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      setAdding(true)
-      const myHeaders = new Headers()
-      myHeaders.append("Content-Type", "application/json")
+      setAdding(true);
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
 
       const raw = JSON.stringify({
         firstName: userDetails.firstName.trim(),
@@ -39,38 +39,38 @@ const Administrators = () => {
         email: userDetails.email.trim(),
         userType: userDetails.userType,
         phone: userDetails.phone.trim(),
-      })
+      });
 
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
         body: raw,
         redirect: "follow",
-      }
+      };
 
-      await fetch(`${baseUrl}/api/v1/admins/create`, requestOptions)
+      await fetch(`${baseUrl}/admins/create`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "staff added successfully") {
-            setAdding(false)
-            toast.success("Staff added successfully")
-            setOpenAddModal(false)
+            setAdding(false);
+            toast.success("Staff added successfully");
+            setOpenAddModal(false);
             setUserDetails({
               firstName: "",
               lastName: "",
               email: "",
               userType: "",
               phone: "",
-            })
-            getAllAdmins()
+            });
+            getAllAdmins();
           }
         })
-        .catch((error) => console.error(error))
+        .catch((error) => console.error(error));
     } catch (err) {
-      setAdding(false)
-      console.log(err)
+      setAdding(false);
+      console.log(err);
     }
-  }
+  };
 
   // get all admins
   const getAllAdmins = async () => {
@@ -78,18 +78,18 @@ const Administrators = () => {
       const requestOptions = {
         method: "GET",
         redirect: "follow",
-      }
+      };
 
-      await fetch(`${baseUrl}/api/v1/admins/all`, requestOptions)
+      await fetch(`${baseUrl}/admins/all`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          setAdmins(result?.admins)
+          setAdmins(result?.admins);
         })
-        .catch((error) => console.error(error))
+        .catch((error) => console.error(error));
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   // get user types
   const getUserTypes = async () => {
@@ -97,24 +97,24 @@ const Administrators = () => {
       const requestOptions = {
         method: "GET",
         redirect: "follow",
-      }
+      };
 
-      await fetch(`${baseUrl}/api/v1/userTypes/all`, requestOptions)
+      await fetch(`${baseUrl}/userTypes/all`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          setUserTypes(result.userTypes || [])
+          setUserTypes(result.userTypes || []);
         })
-        .catch((error) => console.error(error))
+        .catch((error) => console.error(error));
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   // init
   useEffect(() => {
-    getAllAdmins()
-    getUserTypes()
-  }, [])
+    getAllAdmins();
+    getUserTypes();
+  }, []);
 
   // columns
   const columns = [
@@ -174,13 +174,16 @@ const Administrators = () => {
         </div>
       ),
     },
-  ]
+  ];
 
   return (
     <div className="bg-[#131313] w-full p-5 rounded-lg shadow">
       {/* header */}
       <div className="flex items-center justify-between">
-        <EntityLength entityName="Managing Staff" entityCount={admins?.length || 0}/>
+        <EntityLength
+          entityName="Managing Staff"
+          entityCount={admins?.length || 0}
+        />
         <button
           className="bg-[#f29235] text-white py-2 px-3 rounded-md text-sm"
           onClick={() => setOpenAddModal(true)}
@@ -191,53 +194,53 @@ const Administrators = () => {
 
       {/* content */}
       <ConfigProvider
-                                              theme={{
-                                                algorithm: theme.darkAlgorithm,
-                                                token: {
-                                                  colorPrimary: '#08807a',
-                                                  colorBgContainer: '#181818',
-                                                  colorBgElevated: '#181818',
-                                                  colorBgLayout: '#181818',
-                                                  colorBgSpotlight: '#181818',
-                                                  colorBgFloating: '#181818',
-                                                  colorBgSecondary: '#181818',
-                                                  colorBgSecondaryHover: '#181818',
-                                                  colorBgSecondaryActive: '#181818',
-                                                  colorBorder: '#2d2d2d',
-                                                  colorBorderSecondary: '#2d2d2d',
-                                                  colorBorderTertiary: '#2d2d2d',
-                                                  colorBorderQuaternary: '#2d2d2d',
-                                                  colorBorderHover: '#2d2d2d',
-                                                  colorBorderActive: '#2d2d2d',
-                                                  colorBorderSelected: '#2d2d2d',
-                                                  colorBorderSelectedHover: '#2d2d2d',
-                                                  colorBorderSelectedActive: '#2d2d2d',
-                                                  colorBorderDisabled: '#2d2d2d',
-                                                  colorBorderDisabledHover: '#2d2d2d',
-                                                  colorBorderDisabledActive: '#2d2d2d',
-                                                  colorText: '#ffffff',
-                                                  colorTextSecondary: '#ffffff',
-                                                  colorTextTertiary: '#ffffff',
-                                                  colorTextQuaternary: '#ffffff',
-                                                  colorTextPlaceholder: '#ffffff',
-                                                  colorTextDisabled: '#ffffff',
-                                                  colorTextHeading: '#ffffff',
-                                                  colorTextTitle: '#ffffff',
-                                                  colorTextDescription: '#ffffff',
-                                                  colorTextLightSolid: '#ffffff',
-                                                  colorTextLight: '#ffffff',
-                                                  colorTextMuted: '#ffffff',
-                                                  colorTextLighter: '#ffffff'
-                                                }
-                                              }}
-                                            >
-      <Table
-        className="mt-5"
-        columns={columns}
-        dataSource={admins}
-        rowKey={(record) => record._id}
-      />
-</ConfigProvider>
+        theme={{
+          algorithm: theme.darkAlgorithm,
+          token: {
+            colorPrimary: "#08807a",
+            colorBgContainer: "#181818",
+            colorBgElevated: "#181818",
+            colorBgLayout: "#181818",
+            colorBgSpotlight: "#181818",
+            colorBgFloating: "#181818",
+            colorBgSecondary: "#181818",
+            colorBgSecondaryHover: "#181818",
+            colorBgSecondaryActive: "#181818",
+            colorBorder: "#2d2d2d",
+            colorBorderSecondary: "#2d2d2d",
+            colorBorderTertiary: "#2d2d2d",
+            colorBorderQuaternary: "#2d2d2d",
+            colorBorderHover: "#2d2d2d",
+            colorBorderActive: "#2d2d2d",
+            colorBorderSelected: "#2d2d2d",
+            colorBorderSelectedHover: "#2d2d2d",
+            colorBorderSelectedActive: "#2d2d2d",
+            colorBorderDisabled: "#2d2d2d",
+            colorBorderDisabledHover: "#2d2d2d",
+            colorBorderDisabledActive: "#2d2d2d",
+            colorText: "#ffffff",
+            colorTextSecondary: "#ffffff",
+            colorTextTertiary: "#ffffff",
+            colorTextQuaternary: "#ffffff",
+            colorTextPlaceholder: "#ffffff",
+            colorTextDisabled: "#ffffff",
+            colorTextHeading: "#ffffff",
+            colorTextTitle: "#ffffff",
+            colorTextDescription: "#ffffff",
+            colorTextLightSolid: "#ffffff",
+            colorTextLight: "#ffffff",
+            colorTextMuted: "#ffffff",
+            colorTextLighter: "#ffffff",
+          },
+        }}
+      >
+        <Table
+          className="mt-5"
+          columns={columns}
+          dataSource={admins}
+          rowKey={(record) => record._id}
+        />
+      </ConfigProvider>
       <Modal
         open={openAddModal}
         onCancel={() => setOpenAddModal(false)}
@@ -308,7 +311,7 @@ const Administrators = () => {
 
       <Toaster />
     </div>
-  )
-}
+  );
+};
 
-export default Administrators
+export default Administrators;

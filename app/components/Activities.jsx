@@ -14,7 +14,7 @@ const Activities = () => {
         redirect: "follow",
       }
 
-      await fetch(`${baseUrl}/api/v1/activities/all`, requestOptions)
+      await fetch(`${baseUrl}/activities/all`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           setActivities(result.activities || [])

@@ -162,7 +162,7 @@ const Employees = () => {
       };
 
       const response = await fetch(
-        `${baseUrl}/api/v1/departments/all`,
+        `${baseUrl}/departments/all`,
         requestOptions
       );
       const result = await response.json();
@@ -183,7 +183,7 @@ const Employees = () => {
         redirect: "follow",
       };
 
-      await fetch(`${baseUrl}/api/v1/employees/all`, requestOptions)
+      await fetch(`${baseUrl}/employees/all`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           setEmployees(result.employees || []);
@@ -204,7 +204,7 @@ const Employees = () => {
       };
 
       const res = await fetch(
-        `${baseUrl}/api/v1/employees/delete/${employeeId}`,
+        `${baseUrl}/employees/delete/${employeeId}`,
         requestOptions
       );
       const result = await res.json();
@@ -244,10 +244,7 @@ const Employees = () => {
         redirect: "follow",
       };
 
-      await fetch(
-        `${baseUrl}/api/v1/hubtelPayment/directSendToMomo`,
-        requestOptions
-      )
+      await fetch(`${baseUrl}/hubtelPayment/directSendToMomo`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           if (result.status === "success") {
@@ -300,7 +297,7 @@ const Employees = () => {
       };
 
       const response = await fetch(
-        `${baseUrl}/api/v1/employees/update/${selectedEmployeeEmployeeId}`,
+        `${baseUrl}/employees/update/${selectedEmployeeEmployeeId}`,
         requestOptions
       );
       const result = await response.json();
@@ -339,7 +336,7 @@ const Employees = () => {
       };
 
       const response = await fetch(
-        `${baseUrl}/api/v1/employees/create`,
+        `${baseUrl}/employees/create`,
         requestOptions
       );
       const result = await response.json();
@@ -377,7 +374,7 @@ const Employees = () => {
         redirect: "follow",
       };
 
-      await fetch(`${baseUrl}/api/v1/hubtelSMS/sendSMS`, requestOptions)
+      await fetch(`${baseUrl}/hubtelSMS/sendSMS`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           if (result.message === "sms sent successfully") {

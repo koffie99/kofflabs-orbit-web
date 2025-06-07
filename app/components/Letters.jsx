@@ -1,37 +1,37 @@
-import { Modal, Table, Popconfirm, ConfigProvider, theme } from "antd"
-import React, { useEffect, useState } from "react"
-import { Toaster, toast } from "react-hot-toast"
-import { TfiWrite } from "react-icons/tfi"
-import baseUrl from "../utils/baseUrl"
-import { FiEye } from "react-icons/fi"
-import { FiEdit3 } from "react-icons/fi"
-import { GoTrash } from "react-icons/go"
-import EntityLength from "../uibits/EntityLength"
+import { Modal, Table, Popconfirm, ConfigProvider, theme } from "antd";
+import React, { useEffect, useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
+import { TfiWrite } from "react-icons/tfi";
+import baseUrl from "../utils/baseUrl";
+import { FiEye } from "react-icons/fi";
+import { FiEdit3 } from "react-icons/fi";
+import { GoTrash } from "react-icons/go";
+import EntityLength from "../uibits/EntityLength";
 
 const Letters = () => {
-  const [letters, setLetters] = useState([])
-  const [openAddLetterModal, setOpenAddLetterModal] = useState(false)
-  const [openLetterModal, setOpenLetterModal] = useState(false)
-  const [writing, setWriting] = useState(false)
-  const [letterLink, setLetterLink] = useState("")
+  const [letters, setLetters] = useState([]);
+  const [openAddLetterModal, setOpenAddLetterModal] = useState(false);
+  const [openLetterModal, setOpenLetterModal] = useState(false);
+  const [writing, setWriting] = useState(false);
+  const [letterLink, setLetterLink] = useState("");
 
   // data
-  const [recipientName, setRecipientName] = useState("")
-  const [recipientEmail, setRecipientEmail] = useState("")
-  const [recipientRole, setRecipientRole] = useState("")
-  const [recipientPhone, setRecipientPhone] = useState("")
-  const [recipientAddress, setRecipientAddress] = useState("")
-  const [salutation, setSalutation] = useState("")
-  const [title, setTitle] = useState("")
-  const [body, setBody] = useState("")
+  const [recipientName, setRecipientName] = useState("");
+  const [recipientEmail, setRecipientEmail] = useState("");
+  const [recipientRole, setRecipientRole] = useState("");
+  const [recipientPhone, setRecipientPhone] = useState("");
+  const [recipientAddress, setRecipientAddress] = useState("");
+  const [salutation, setSalutation] = useState("");
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
 
   // write letter
   const writeLetter = async () => {
     try {
-      setWriting(true)
-      setOpenLetterModal(true)
-      const myHeaders = new Headers()
-      myHeaders.append("Content-Type", "application/json")
+      setWriting(true);
+      setOpenLetterModal(true);
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
 
       const raw = JSON.stringify({
         recipientName: recipientName.trim(),
@@ -42,36 +42,36 @@ const Letters = () => {
         salutation: salutation,
         title: title.trim(),
         body: body.trim(),
-      })
+      });
 
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
         body: raw,
         redirect: "follow",
-      }
+      };
 
-      await fetch(`${baseUrl}/api/v1/letters/create`, requestOptions)
+      await fetch(`${baseUrl}/letters/create`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "letter created successfully") {
-            getAllLetters()
-            setLetterLink(result.pdfUrl)
-            toast.success("Letter written successfully")
+            getAllLetters();
+            setLetterLink(result.pdfUrl);
+            toast.success("Letter written successfully");
 
-            setOpenAddLetterModal(false)
-            setWriting(false)
+            setOpenAddLetterModal(false);
+            setWriting(false);
           } else {
-            toast.error("Unable to write letter")
-            setWriting(false)
+            toast.error("Unable to write letter");
+            setWriting(false);
           }
         })
-        .catch((error) => console.error(error))
+        .catch((error) => console.error(error));
     } catch (err) {
-      console.log(err)
-      setWriting(false)
+      console.log(err);
+      setWriting(false);
     }
-  }
+  };
 
   // get all letters
   const getAllLetters = async () => {
@@ -79,23 +79,23 @@ const Letters = () => {
       const requestOptions = {
         method: "GET",
         redirect: "follow",
-      }
+      };
 
-      await fetch(`${baseUrl}/api/v1/letters/all`, requestOptions)
+      await fetch(`${baseUrl}/letters/all`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          setLetters(result?.letters)
+          setLetters(result?.letters);
         })
-        .catch((error) => console.error(error))
+        .catch((error) => console.error(error));
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   // handle open write letter modal
   const handleOpenWriteLetterModal = () => {
-    setOpenAddLetterModal(true)
-  }
+    setOpenAddLetterModal(true);
+  };
 
   // delete a letter
   const deleteLetter = async (letter_id) => {
@@ -103,31 +103,28 @@ const Letters = () => {
       const requestOptions = {
         method: "DELETE",
         redirect: "follow",
-      }
+      };
 
-      await fetch(
-        `${baseUrl}/api/v1/letters/delete/67bc51bcefb2bae24e3c4ce0`,
-        requestOptions
-      )
+      await fetch(`${baseUrl}/letters/delete/${letter_id}`, requestOptions)
         .then((response) => (<response className="json"></response>)())
         .then((result) => {
           if (result.msg === "letter deleted successfully") {
-            getAllLetters()
-            toast.success("Letter deleted successfully")
+            getAllLetters();
+            toast.success("Letter deleted successfully");
           } else {
-            toast.error("Unable to delete letter")
+            toast.error("Unable to delete letter");
           }
         })
-        .catch((error) => console.error(error))
+        .catch((error) => console.error(error));
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   // init
   useEffect(() => {
-    getAllLetters()
-  }, [])
+    getAllLetters();
+  }, []);
 
   const columns = [
     {
@@ -170,13 +167,13 @@ const Letters = () => {
         </div>
       ),
     },
-  ]
+  ];
 
   return (
     <div className="bg-[#131313] w-full p-5 rounded-lg shadow">
       {/* header */}
       <div className="flex items-center justify-between">
-        <EntityLength entityName="Letters" entityCount={letters?.length || 0}/>
+        <EntityLength entityName="Letters" entityCount={letters?.length || 0} />
         <button
           className="bg-[#f29235] text-white py-2 px-3 rounded-md text-sm flex items-center gap-1"
           onClick={() => handleOpenWriteLetterModal()}
@@ -188,53 +185,53 @@ const Letters = () => {
 
       {/* content */}
       <ConfigProvider
-                                                      theme={{
-                                                        algorithm: theme.darkAlgorithm,
-                                                        token: {
-                                                          colorPrimary: '#08807a',
-                                                          colorBgContainer: '#181818',
-                                                          colorBgElevated: '#181818',
-                                                          colorBgLayout: '#181818',
-                                                          colorBgSpotlight: '#181818',
-                                                          colorBgFloating: '#181818',
-                                                          colorBgSecondary: '#181818',
-                                                          colorBgSecondaryHover: '#181818',
-                                                          colorBgSecondaryActive: '#181818',
-                                                          colorBorder: '#2d2d2d',
-                                                          colorBorderSecondary: '#2d2d2d',
-                                                          colorBorderTertiary: '#2d2d2d',
-                                                          colorBorderQuaternary: '#2d2d2d',
-                                                          colorBorderHover: '#2d2d2d',
-                                                          colorBorderActive: '#2d2d2d',
-                                                          colorBorderSelected: '#2d2d2d',
-                                                          colorBorderSelectedHover: '#2d2d2d',
-                                                          colorBorderSelectedActive: '#2d2d2d',
-                                                          colorBorderDisabled: '#2d2d2d',
-                                                          colorBorderDisabledHover: '#2d2d2d',
-                                                          colorBorderDisabledActive: '#2d2d2d',
-                                                          colorText: '#ffffff',
-                                                          colorTextSecondary: '#ffffff',
-                                                          colorTextTertiary: '#ffffff',
-                                                          colorTextQuaternary: '#ffffff',
-                                                          colorTextPlaceholder: '#ffffff',
-                                                          colorTextDisabled: '#ffffff',
-                                                          colorTextHeading: '#ffffff',
-                                                          colorTextTitle: '#ffffff',
-                                                          colorTextDescription: '#ffffff',
-                                                          colorTextLightSolid: '#ffffff',
-                                                          colorTextLight: '#ffffff',
-                                                          colorTextMuted: '#ffffff',
-                                                          colorTextLighter: '#ffffff'
-                                                        }
-                                                      }}
-                                                    >
-      <Table
-        className="mt-5"
-        columns={columns}
-        dataSource={letters}
-        pagination={{ pageSize: 5 }}
-      />
-</ConfigProvider>
+        theme={{
+          algorithm: theme.darkAlgorithm,
+          token: {
+            colorPrimary: "#08807a",
+            colorBgContainer: "#181818",
+            colorBgElevated: "#181818",
+            colorBgLayout: "#181818",
+            colorBgSpotlight: "#181818",
+            colorBgFloating: "#181818",
+            colorBgSecondary: "#181818",
+            colorBgSecondaryHover: "#181818",
+            colorBgSecondaryActive: "#181818",
+            colorBorder: "#2d2d2d",
+            colorBorderSecondary: "#2d2d2d",
+            colorBorderTertiary: "#2d2d2d",
+            colorBorderQuaternary: "#2d2d2d",
+            colorBorderHover: "#2d2d2d",
+            colorBorderActive: "#2d2d2d",
+            colorBorderSelected: "#2d2d2d",
+            colorBorderSelectedHover: "#2d2d2d",
+            colorBorderSelectedActive: "#2d2d2d",
+            colorBorderDisabled: "#2d2d2d",
+            colorBorderDisabledHover: "#2d2d2d",
+            colorBorderDisabledActive: "#2d2d2d",
+            colorText: "#ffffff",
+            colorTextSecondary: "#ffffff",
+            colorTextTertiary: "#ffffff",
+            colorTextQuaternary: "#ffffff",
+            colorTextPlaceholder: "#ffffff",
+            colorTextDisabled: "#ffffff",
+            colorTextHeading: "#ffffff",
+            colorTextTitle: "#ffffff",
+            colorTextDescription: "#ffffff",
+            colorTextLightSolid: "#ffffff",
+            colorTextLight: "#ffffff",
+            colorTextMuted: "#ffffff",
+            colorTextLighter: "#ffffff",
+          },
+        }}
+      >
+        <Table
+          className="mt-5"
+          columns={columns}
+          dataSource={letters}
+          pagination={{ pageSize: 5 }}
+        />
+      </ConfigProvider>
       {/* write letter modal */}
       <Modal
         title="Write a letter"
@@ -340,7 +337,7 @@ const Letters = () => {
 
       <Toaster />
     </div>
-  )
-}
+  );
+};
 
-export default Letters
+export default Letters;

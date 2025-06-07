@@ -58,7 +58,7 @@ const Clients = () => {
   const getAllClients = async () => {
     try {
       setLoadingClients(true);
-      const res = await fetch(`${baseUrl}/api/v1/clients/all`);
+      const res = await fetch(`${baseUrl}/clients/all`);
       const result = await res.json();
       setClients(result.clients || []);
       setLoadingClients(false);
@@ -89,10 +89,7 @@ const Clients = () => {
         redirect: "follow",
       };
 
-      const res = await fetch(
-        `${baseUrl}/api/v1/clients/create`,
-        requestOptions
-      );
+      const res = await fetch(`${baseUrl}/clients/create`, requestOptions);
 
       const result = await res.json();
 
@@ -126,10 +123,7 @@ const Clients = () => {
         redirect: "follow",
       };
 
-      await fetch(
-        `${baseUrl}/api/v1/clients/delete/${clientId}`,
-        requestOptions
-      )
+      await fetch(`${baseUrl}/clients/delete/${clientId}`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "client deleted successfully") {

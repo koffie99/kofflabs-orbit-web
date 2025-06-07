@@ -52,7 +52,7 @@ const Projects = () => {
         redirect: "follow",
       };
 
-      await fetch(`${baseUrl}/api/v1/employees/all`, requestOptions)
+      await fetch(`${baseUrl}/employees/all`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           setEmployees(result?.employees || []);
@@ -74,7 +74,7 @@ const Projects = () => {
   const getAllProjects = async () => {
     try {
       setProjectLoading(true);
-      const response = await fetch(`${baseUrl}/api/v1/projects/all`);
+      const response = await fetch(`${baseUrl}/projects/all`);
       const result = await response.json();
       setProjects(result?.projects || []);
       setProjectLoading(false);
@@ -92,10 +92,7 @@ const Projects = () => {
         redirect: "follow",
       };
 
-      await fetch(
-        `${baseUrl}/api/v1/projects/delete/${projectId}`,
-        requestOptions
-      )
+      await fetch(`${baseUrl}/projects/delete/${projectId}`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "project deleted successfully") {
@@ -135,7 +132,7 @@ const Projects = () => {
       };
 
       await fetch(
-        `${baseUrl}/api/v1/projects/update/${selectedProject._id}`,
+        `${baseUrl}/projects/update/${selectedProject._id}`,
         requestOptions
       )
         .then((response) => response.json())
@@ -282,7 +279,7 @@ const Projects = () => {
         redirect: "follow",
       };
 
-      await fetch(`${baseUrl}/api/v1/projects/create`, requestOptions)
+      await fetch(`${baseUrl}/projects/create`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "project added successfully") {
@@ -440,9 +437,14 @@ const Projects = () => {
                   <span className="text-neutral-300">Assignees</span>
                   <ul className="text-white space-y-1">
                     {selectedProject?.assignees?.map((assigneeId) => {
-                      const employee = employees?.find(emp => String(emp._id) === assigneeId);
+                      const employee = employees?.find(
+                        (emp) => String(emp._id) === assigneeId
+                      );
                       return employee ? (
-                        <li key={assigneeId} className="flex items-center gap-2">
+                        <li
+                          key={assigneeId}
+                          className="flex items-center gap-2"
+                        >
                           <span className="text-neutral-300">•</span>
                           <span>{`${employee.firstName} ${employee.lastName}`}</span>
                         </li>

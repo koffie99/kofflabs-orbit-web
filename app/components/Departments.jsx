@@ -48,7 +48,7 @@ const Departments = () => {
           redirect: "follow",
         };
 
-        await fetch(`${baseUrl}/api/v1/departments/create`, requestOptions)
+        await fetch(`${baseUrl}/departments/create`, requestOptions)
           .then((response) => response.json())
           .then((result) => {
             if (result.msg === "department created successfully") {
@@ -77,7 +77,7 @@ const Departments = () => {
         redirect: "follow",
       };
 
-      await fetch(`${baseUrl}/api/v1/departments/all`, requestOptions)
+      await fetch(`${baseUrl}/departments/all`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           setDepartments(result?.departments);
@@ -96,10 +96,7 @@ const Departments = () => {
         redirect: "follow",
       };
 
-      await fetch(
-        `${baseUrl}/api/v1/departments/delete/${deptId}`,
-        requestOptions
-      )
+      await fetch(`${baseUrl}/departments/delete/${deptId}`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "department deleted successfully") {
@@ -133,10 +130,7 @@ const Departments = () => {
         redirect: "follow",
       };
 
-      await fetch(
-        `${baseUrl}/api/v1/departments/update/${selectedDeptId}`,
-        requestOptions
-      )
+      await fetch(`${baseUrl}/departments/update/${selectedDeptId}`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "department updated successfully") {

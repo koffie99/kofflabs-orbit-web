@@ -39,7 +39,7 @@ const Login = () => {
         redirect: "follow",
       };
 
-      await fetch(`${baseUrl}/api/v1/logins/megaLogin`, requestOptions)
+      await fetch(`${baseUrl}/logins/megaLogin`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "login successful") {

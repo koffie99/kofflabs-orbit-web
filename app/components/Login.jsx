@@ -130,7 +130,7 @@ const Login = () => {
         </div>
         <motion.button
           whileTap={{ scale: 0.9 }}
-          className="bg-[#f39136] text-white p-3 rounded-md mt-7 w-full"
+          className="bg-[#30508A] text-white p-3 rounded-md mt-7 w-full"
           type="submit"
           // onClick={() => handleLogin()}
         >

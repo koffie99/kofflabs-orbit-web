@@ -9,7 +9,7 @@ const PhoneVerification = () => {
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // get current admin id 
+  // get current admin id
   let userId;
   let userType;
 
@@ -157,7 +157,7 @@ const PhoneVerification = () => {
           />
           <motion.button
             whileTap={{ scale: 0.9 }}
-            className="bg-[#f39136] mt-3 text-white p-3 rounded-md w-full"
+            className="bg-[#30508A] mt-3 text-white p-3 rounded-md w-full"
             type="submit"
             disabled={loading}
           >

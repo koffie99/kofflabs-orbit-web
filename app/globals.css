@@ -22,8 +22,8 @@ html {
 .sidenav .active {
   margin-left: 35px;
   transition: 0.5s;
-  background-color: rgba(243, 145, 54, 0.2);
-  color: #f39136;
+  background-color: #30508a;
+  color: white;
   cursor: pointer;
   pointer-events: none;
 }
@@ -37,13 +37,12 @@ html {
   margin-left: 0;
 }
 
-.employee-action-btn:hover{
+.employee-action-btn:hover {
   transition: 0.3s;
   translate: scale(0.2);
 }
 
-.person-action-btn:hover{
-  background-color: rgba(243, 145, 54, 0.2);
-  color: #f39136;
-  color: rgb(243, 145, 54);
+.person-action-btn:hover {
+  background-color: #30508a;
+  color: white;
 }

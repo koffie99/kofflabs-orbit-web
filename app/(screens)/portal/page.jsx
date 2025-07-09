@@ -30,6 +30,7 @@ import Activities from "@/app/components/Activities";
 import Administrators from "@/app/components/Administrators";
 import Departments from "@/app/components/Departments";
 import Settings from "@/app/components/Settings";
+import Invoices from "@/app/components/Invoices";
 
 const Page = () => {
   let myCurrentPage;
@@ -90,6 +91,8 @@ const Page = () => {
         return <Clients />;
       case "finance":
         return <Finance />;
+      case "invoices":
+        return <Invoices />;
       case "documents":
         return <Letters />;
       case "security":
@@ -186,6 +189,15 @@ const Page = () => {
           >
             <GrMoney />
             <p>Finance</p>
+          </div>
+          <div
+            className={`${
+              currentPage === "invoices" ? "active" : ""
+            } p-2 rounded-full pl-5 flex text-neutral-400 items-center gap-3 cursor-pointer`}
+            onClick={() => setPage("invoices")}
+          >
+            <GrMoney />
+            <p>Invoices</p>
           </div>
           <div
             className={`${

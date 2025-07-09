@@ -205,7 +205,7 @@ const Clients = () => {
       <div className="p-5 flex items-center justify-between">
         <EntityLength entityName="Clients" entityCount={clients.length} />
         <button
-          className="bg-[#30508a] text-white py-2 px-3 rounded-md text-sm"
+          className="bg-[#f39136] text-white py-2 px-3 rounded-md text-sm"
           onClick={() => setOpenAddClientModal(true)}
         >
           + Add Client

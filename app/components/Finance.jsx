@@ -242,7 +242,7 @@ const Finance = () => {
             + Add Expense
           </button>
           <button
-            className="bg-[#30508a] text-white text-sm rounded-lg px-4 py-2"
+            className="bg-[#f39136] text-white text-sm rounded-lg px-4 py-2"
             onClick={() => setOpenPaymentLinkModal(true)}
           >
             + Create Payment Link

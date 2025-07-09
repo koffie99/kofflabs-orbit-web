@@ -185,7 +185,7 @@ const Administrators = () => {
           entityCount={admins?.length || 0}
         />
         <button
-          className="bg-[#30508a] text-white py-2 px-3 rounded-md text-sm"
+          className="bg-[#f39136] text-white py-2 px-3 rounded-md text-sm"
           onClick={() => setOpenAddModal(true)}
         >
           + Add Staff Member

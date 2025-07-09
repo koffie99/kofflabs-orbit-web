@@ -177,7 +177,7 @@ const Letters = () => {
       <div className="flex items-center justify-between">
         <EntityLength entityName="Letters" entityCount={letters?.length || 0} />
         <button
-          className="bg-[#30508a] text-white py-2 px-3 rounded-md text-sm flex items-center gap-1"
+          className="bg-[#f39136] text-white py-2 px-3 rounded-md text-sm flex items-center gap-1"
           onClick={() => handleOpenWriteLetterModal()}
         >
           <TfiWrite />

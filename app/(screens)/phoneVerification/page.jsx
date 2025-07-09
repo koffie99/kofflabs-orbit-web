@@ -150,14 +150,14 @@ const PhoneVerification = () => {
           className="w-full p-7 rounded-lg shadow bg-[#131313] flex flex-col gap-3"
         >
           <input
-            type="password"
+            type="text"
             placeholder="Enter verification code"
             className="bg-neutral-800 p-3 rounded-md text-neutral-300"
             onChange={(e) => setCode(e.target.value)}
           />
           <motion.button
             whileTap={{ scale: 0.9 }}
-            className="bg-[#30508A] mt-3 text-white p-3 rounded-md w-full"
+            className="bg-[#F39136] mt-3 text-white p-3 rounded-md w-full"
             type="submit"
             disabled={loading}
           >

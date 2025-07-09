@@ -306,7 +306,7 @@ const Projects = () => {
           <EntityLength entityCount={projects?.length} entityName="Projects" />
         </div>
         <button
-          className="bg-[#f29235] text-white py-2 px-3 rounded-md text-sm"
+          className="bg-[#f39136] text-white py-2 px-3 rounded-md text-sm"
           onClick={() => setOpenAddModal(true)}
         >
           + Add Project
@@ -588,7 +588,7 @@ const Projects = () => {
               </div>
             )}
             <button
-              className="p-2 bg-[#f29235] rounded-lg text-white"
+              className="p-2 bg-[#30508a] rounded-lg text-white"
               onClick={() => updateProject()}
             >
               {editing ? "Updating Project...." : "Update Project"}
@@ -705,7 +705,7 @@ const Projects = () => {
               </div>
             )}
             <button
-              className="p-2 bg-[#f29235] rounded-lg text-white"
+              className="p-2 bg-[#30508a] rounded-lg text-white"
               onClick={() => addProject()}
             >
               {adding ? "Adding Project...." : "Add Project"}

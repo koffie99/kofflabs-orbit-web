@@ -185,7 +185,7 @@ const Administrators = () => {
           entityCount={admins?.length || 0}
         />
         <button
-          className="bg-[#f29235] text-white py-2 px-3 rounded-md text-sm"
+          className="bg-[#f39136] text-white py-2 px-3 rounded-md text-sm"
           onClick={() => setOpenAddModal(true)}
         >
           + Add Staff Member
@@ -293,7 +293,7 @@ const Administrators = () => {
           />
           <button
             type="submit"
-            className="p-2 bg-[#f39136] text-white rounded-md"
+            className="p-2 bg-[#30508a] text-white rounded-md"
           >
             {adding ? (
               <Image

@@ -237,7 +237,7 @@ const Finance = () => {
     <div className="">
       <div className="flex items-center justify-between bg-[#131313] w-full p-5 rounded-lg shadow-2xl">
         <h2 className="font-semibold text-xl text-neutral-300">Finance</h2>
-        <div className="#f29235 flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <button className="ring-1 ring-neutral-300 text-neutral-300 text-sm rounded-lg px-4 py-2 mr-0">
             + Add Expense
           </button>
@@ -397,7 +397,7 @@ const Finance = () => {
               onChange={(e) => setDescription(e.target.value)}
             />
             <button
-              className="bg-[#f29235] text-white py-2 px-3 rounded-md text-sm flex items-center justify-center"
+              className="bg-[#30508a] text-white py-2 px-3 rounded-md text-sm flex items-center justify-center"
               type="submit"
               onClick={createPaymentLink}
             >
@@ -478,7 +478,7 @@ const Finance = () => {
         >
           <p>
             {paymentInfo?.clientName} is about to make a payment of{" "}
-            <span className="font-bold text-[#F39136]">
+            <span className="font-bold text-[#30508a]">
               {" "}
               GHS {paymentInfo?.payment_data?.amount}
             </span>{" "}
@@ -490,7 +490,7 @@ const Finance = () => {
           </p>
           <div className="flex items-center gap-3 mt-3">
             <button
-              className="flex-[0.5] flex items-center justify-center hover:ring-0 gap-2 ring-1 ring-[#ccc] p-2 rounded-lg text-center hover:bg-[#F39136] hover:text-white"
+              className="flex-[0.5] flex items-center justify-center hover:ring-0 gap-2 ring-1 ring-[#ccc] p-2 rounded-lg text-center hover:bg-[#30508a] hover:text-white"
               onClick={() => copyText(paymentLink)}
             >
               <IoCopyOutline />
@@ -499,7 +499,7 @@ const Finance = () => {
             <a
               href={paymentLink}
               target="_blank"
-              className="flex-[0.5] flex items-center justify-center hover:ring-0 gap-2 ring-1 ring-[#ccc] p-2 rounded-lg text-center hover:bg-[#F39136] hover:text-white"
+              className="flex-[0.5] flex items-center justify-center hover:ring-0 gap-2 ring-1 ring-[#ccc] p-2 rounded-lg text-center hover:bg-[#30508a] hover:text-white"
             >
               <FiExternalLink />
               <p>Open payment link</p>

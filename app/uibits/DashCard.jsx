@@ -4,7 +4,7 @@ import CountUp from "react-countup";
 const DashCard = ({ Icon, color, desc, value, type }) => {
   let isMoney = type === "money";
   return (
-    <div className="bg-[#1b1b1b] flex items-center gap-3 p-6 rounded-lg shadow-2xl">
+    <div className="bg-neutral-800 flex items-center gap-3 p-6 rounded-lg shadow-2xl">
       <div>{Icon && <Icon className="text-2xl text-[#f39136]" />}</div>
       <div>
         <h3

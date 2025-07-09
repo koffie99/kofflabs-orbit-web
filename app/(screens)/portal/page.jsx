@@ -1,61 +1,60 @@
-"use client"
-import Image from "next/image"
-import dynamic from "next/dynamic"
-import React, { useEffect, useState } from "react"
-import { LuLayoutDashboard } from "react-icons/lu"
-import { LiaProjectDiagramSolid } from "react-icons/lia"
-import { GoPeople } from "react-icons/go"
-import { BsPeople } from "react-icons/bs"
-import { GrMoney } from "react-icons/gr"
-import { IoDocumentTextOutline } from "react-icons/io5"
-import { PiShieldCheck } from "react-icons/pi"
-import { BiLogOutCircle } from "react-icons/bi"
-import { AiOutlineNotification } from "react-icons/ai"
-import { FiActivity } from "react-icons/fi"
-import { IoSettingsOutline } from "react-icons/io5"
-import { TbUsersGroup } from "react-icons/tb"
-import Dashboard from "@/app/components/Dashboard"
-import Employees from "@/app/components/Employees"
-import { FaRegBuilding } from "react-icons/fa6"
-import Projects from "@/app/components/Projects"
+"use client";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+import React, { useEffect, useState } from "react";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { LiaProjectDiagramSolid } from "react-icons/lia";
+import { GoPeople } from "react-icons/go";
+import { BsPeople } from "react-icons/bs";
+import { GrMoney } from "react-icons/gr";
+import { IoDocumentTextOutline } from "react-icons/io5";
+import { PiShieldCheck } from "react-icons/pi";
+import { BiLogOutCircle } from "react-icons/bi";
+import { AiOutlineNotification } from "react-icons/ai";
+import { FiActivity } from "react-icons/fi";
+import { IoSettingsOutline } from "react-icons/io5";
+import { TbUsersGroup } from "react-icons/tb";
+import Dashboard from "@/app/components/Dashboard";
+import Employees from "@/app/components/Employees";
+import { FaRegBuilding } from "react-icons/fa6";
+import Projects from "@/app/components/Projects";
 // import Clients from "@/app/components/Clients"
 const Clients = dynamic(() => import("@/app/components/Clients"), {
   ssr: false,
-})
-import Finance from "@/app/components/Finance"
-import Letters from "@/app/components/Letters"
-import Security from "@/app/components/Security"
-import Announcement from "@/app/components/Annoucement"
-import Activities from "@/app/components/Activities"
-import Administrators from "@/app/components/Administrators"
-import Departments from "@/app/components/Departments"
-import Settings from "@/app/components/Settings"
+});
+import Finance from "@/app/components/Finance";
+import Letters from "@/app/components/Letters";
+import Security from "@/app/components/Security";
+import Announcement from "@/app/components/Annoucement";
+import Activities from "@/app/components/Activities";
+import Administrators from "@/app/components/Administrators";
+import Departments from "@/app/components/Departments";
+import Settings from "@/app/components/Settings";
 
 const Page = () => {
+  let myCurrentPage;
 
-  let myCurrentPage
-
-  if(typeof sessionStorage !== "undefined") {
-    myCurrentPage = sessionStorage.getItem("myCurrentPage") || "dashboard"
+  if (typeof sessionStorage !== "undefined") {
+    myCurrentPage = sessionStorage.getItem("myCurrentPage") || "dashboard";
   }
 
   // Load the last visited page from sessionStorage
-  const [currentPage, setCurrentPage] = useState(myCurrentPage || "dashboard")
+  const [currentPage, setCurrentPage] = useState(myCurrentPage || "dashboard");
 
   const setPage = (page) => {
-    setCurrentPage(page)
-    sessionStorage.setItem("myCurrentPage", page)
-  }
+    setCurrentPage(page);
+    sessionStorage.setItem("myCurrentPage", page);
+  };
 
   useEffect(() => {
-    const storedPage = sessionStorage.getItem("myCurrentPage") || "dashboard"
-    setCurrentPage(storedPage)
-  }, [])
+    const storedPage = sessionStorage.getItem("myCurrentPage") || "dashboard";
+    setCurrentPage(storedPage);
+  }, []);
 
-  let currentAdmin
+  let currentAdmin;
 
   if (typeof sessionStorage !== "undefined") {
-    currentAdmin = JSON.parse(sessionStorage.getItem("adminUser"))
+    currentAdmin = JSON.parse(sessionStorage.getItem("adminUser"));
   }
 
   // const [adminUser, setAdminUser] = useState(currentAdmin || [])
@@ -63,68 +62,77 @@ const Page = () => {
   // Save currentPage to sessionStorage whenever it changes
   useEffect(() => {
     if (typeof window !== "undefined") {
-      sessionStorage.setItem("myCurrentPage", currentPage)
+      sessionStorage.setItem("myCurrentPage", currentPage);
     }
-  }, [currentPage])
+  }, [currentPage]);
 
   // Handle logout
   const handleLogout = () => {
-    const res = confirm("Are you sure you want to log out?")
+    const res = confirm("Are you sure you want to log out?");
     if (res) {
-      sessionStorage.removeItem("userId")
-      location.href = "/"
+      sessionStorage.removeItem("userId");
+      location.href = "/";
     }
-  }
+  };
 
   // Render the correct component based on currentPage
   const customRender = () => {
     switch (currentPage) {
       case "dashboard":
-        return <Dashboard />
+        return <Dashboard />;
       case "employees":
-        return <Employees />
+        return <Employees />;
       case "departments":
-        return <Departments />
+        return <Departments />;
       case "projects":
-        return <Projects />
+        return <Projects />;
       case "clients":
-        return <Clients />
+        return <Clients />;
       case "finance":
-        return <Finance />
+        return <Finance />;
       case "documents":
-        return <Letters />
+        return <Letters />;
       case "security":
-        return <Security />
+        return <Security />;
       case "announcements":
-        return <Announcement />
+        return <Announcement />;
       case "activities":
-        return <Activities />
+        return <Activities />;
       case "administrators":
-        return <Administrators />
+        return <Administrators />;
       case "settings":
-        return <Settings />
+        return <Settings />;
       default:
-        return <Dashboard />
+        return <Dashboard />;
     }
-  }
+  };
 
   return (
-    <div className="flex bg-neutral-900 min-h-screen w-full" style={{backgroundImage: `radial-gradient(circle at 0.5px 0.5px, rgba(255,255,255,0.1) 0.5px, transparent 0)`, backgroundSize: "8px 8px", backgroundRepeat: "repeat"}}>
+    <div
+      className="flex bg-neutral-900 min-h-screen w-full"
+      style={{
+        backgroundImage: `radial-gradient(circle at 0.5px 0.5px, rgba(255,255,255,0.1) 0.5px, transparent 0)`,
+        backgroundSize: "8px 8px",
+        backgroundRepeat: "repeat",
+      }}
+    >
       {/* sidenav */}
       <div className="flex-[0.2] py-2 px-8 bg-[#131313] shadow h-[100vh]">
         <div className="flex items-center gap-3 mt-4">
-        <Image
-          width={30}
-          height={30}
-          src="/images/logo.png"
-          quality={100}
-          alt="logo"
-        />
-        <h2 className="font-bold text-neutral-300 text-xl">Kofflabs <span className="text-neutral-300">Orbit</span></h2>
+          <Image
+            width={30}
+            height={30}
+            src="/images/logo.png"
+            quality={100}
+            alt="logo"
+          />
+          <h2 className="font-bold text-neutral-300 text-xl">
+            Kofflabs <span className="text-neutral-300">Orbit</span>
+          </h2>
         </div>
 
         {/* nav items */}
-        <div className="flex flex-col gap-2 mt-4 sidenav">
+        <div className="flex flex-col gap-2 mt-4 sidenav ml-[-20px]">
           <div
             className={`${
               currentPage === "dashboard" ? "active" : ""
@@ -248,7 +256,7 @@ const Page = () => {
         <div className="p-6">{customRender()}</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;

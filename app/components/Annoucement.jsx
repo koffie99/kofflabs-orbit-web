@@ -8,7 +8,7 @@ const Announcement = () => {
       {/* header */}
       <div className="flex items-center justify-between">
         <EntityLength entityName="Annoucements" entityCount={0} />
-        <button className="bg-[#f29235] text-white py-2 px-3 rounded-md text-sm">
+        <button className="bg-[#f39136] text-white py-2 px-3 rounded-md text-sm">
           + Add Announcement
         </button>
       </div>

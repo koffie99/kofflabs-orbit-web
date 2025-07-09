@@ -177,7 +177,7 @@ const Letters = () => {
       <div className="flex items-center justify-between">
         <EntityLength entityName="Letters" entityCount={letters?.length || 0} />
         <button
-          className="bg-[#f29235] text-white py-2 px-3 rounded-md text-sm flex items-center gap-1"
+          className="bg-[#f39136] text-white py-2 px-3 rounded-md text-sm flex items-center gap-1"
           onClick={() => handleOpenWriteLetterModal()}
         >
           <TfiWrite />
@@ -357,7 +357,7 @@ const Letters = () => {
               />
             </div>
             <button
-              className="p-2 bg-[#f39136] text-white rounded-md"
+              className="p-2 bg-[#30508a] text-white rounded-md"
               onClick={() => writeLetter()}
             >
               {writing ? "Writing Letter..." : "Write Letter"}
@@ -429,7 +429,7 @@ const Letters = () => {
             {/* open in a new tab button with icon */}
             <motion.button
               whileTap={{ scale: 0.9 }}
-              className="p-2 bg-[#f39136] text-white rounded-md mt-5 display flex items-center gap-3"
+              className="p-2 bg-[#30508a] text-white rounded-md mt-5 display flex items-center gap-3"
               onClick={() => window.open(letterLink, "_blank")}
             >
               <FiExternalLink className="text-xl" />

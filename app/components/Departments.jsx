@@ -130,7 +130,10 @@ const Departments = () => {
         redirect: "follow",
       };
 
-      await fetch(`${baseUrl}/departments/update/${selectedDeptId}`, requestOptions)
+      await fetch(
+        `${baseUrl}/departments/update/${selectedDeptId}`,
+        requestOptions
+      )
         .then((response) => response.json())
         .then((result) => {
           if (result.msg === "department updated successfully") {
@@ -226,7 +229,7 @@ const Departments = () => {
           />
         </div>
         <button
-          className="bg-[#f29235] text-white py-2 px-3 rounded-md text-sm"
+          className="bg-[#f39136] text-white py-2 px-3 rounded-md text-sm"
           onClick={() => setOpenAddModal(true)}
         >
           + Add Department
@@ -334,7 +337,7 @@ const Departments = () => {
               onChange={(e) => setDeptName(e.target.value)}
             />
             <button
-              className="bg-[#f29235] text-white p-2 rounded-lg text flex items-center justify-center"
+              className="bg-[#30508a] text-white p-2 rounded-lg text flex items-center justify-center"
               onClick={() => addDepartment()}
             >
               {adding ? (

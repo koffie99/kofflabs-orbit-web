@@ -496,7 +496,7 @@ const Employees = () => {
       <div className="p-5 flex items-center justify-between">
         <EntityLength entityName="Employees" entityCount={employees.length} />
         <button
-          className="bg-[#f29235] text-white py-2 px-3 rounded-md text-sm"
+          className="bg-[#f39136] text-white py-2 px-3 rounded-md text-sm"
           onClick={() => setOpenAddEmployeeModal(true)}
         >
           + Add Employee
@@ -625,7 +625,7 @@ const Employees = () => {
                           setSelectedDepartment(value);
                           setFormData((prev) => ({ ...prev, [name]: value }));
                         }}
-                        className="w-full bg-neutral-800 border-none text-neutral-300 mt-1 p-2 rounded-md outline-[#f39136]"
+                        className="w-full bg-neutral-800 border-none text-neutral-300 mt-1 p-2 rounded-md outline-[#30508a]"
                       >
                         {departments.map((dept) => (
                           <Select.Option key={dept._id} value={dept._id}>
@@ -644,7 +644,7 @@ const Employees = () => {
                         name={name}
                         value={formData[name]}
                         onChange={handleChange}
-                        className="w-full bg-neutral-800 border-none text-neutral-300 mt-1 p-2 rounded-md outline-[#f39136]"
+                        className="w-full bg-neutral-800 border-none text-neutral-300 mt-1 p-2 rounded-md outline-[#30508a]"
                       />
                     </div>
                   )
@@ -694,7 +694,7 @@ const Employees = () => {
                 ></textarea>
                 <motion.button
                   whileTap={{ scale: 0.8 }}
-                  className="bg-[#f39136] text-white w-full p-2 rounded-lg mt-3"
+                  className="bg-[#30508a] text-white w-full p-2 rounded-lg mt-3"
                   onClick={() => sendSMS()}
                 >
                   {sendingMessage ? (
@@ -824,7 +824,7 @@ const Employees = () => {
                 />
                 <motion.button
                   whileTap={{ scale: 0.8 }}
-                  className="bg-[#f39136] text-white w-full p-2 rounded-lg mt-3"
+                  className="bg-[#30508a] text-white w-full p-2 rounded-lg mt-3"
                   onClick={() => setOpenMoneyModal(true)}
                 >
                   Verify
@@ -864,7 +864,7 @@ const Employees = () => {
               />
               <motion.button
                 whileTap={{ scale: 0.8 }}
-                className="bg-[#f39136] text-white w-full p-2 rounded-lg mt-3"
+                className="bg-[#30508a] text-white w-full p-2 rounded-lg mt-3"
                 onClick={() => sendMoney()}
               >
                 {sendingMoney ? (
@@ -890,7 +890,7 @@ const Employees = () => {
               footer={null}
             >
               <div className="my-6 flex flex-col items-center gap-3">
-                <BsCheck2Circle className="text-5xl text-[#f39136]" />
+                <BsCheck2Circle className="text-5xl text-[#30508a]" />
                 <h2 className="text-xl text-neutral-300 font-bold">
                   Money Sent Successfully
                 </h2>
@@ -924,7 +924,7 @@ const Employees = () => {
                 )
               }
               okButtonProps={{
-                style: { backgroundColor: "#F29235", color: "white" },
+                style: { backgroundColor: "#30508a", color: "white" },
               }}
               cancelText="Cancel"
               width={800}

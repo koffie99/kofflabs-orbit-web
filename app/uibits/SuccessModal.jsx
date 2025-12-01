@@ -61,7 +61,7 @@ const SuccessModal = ({
           transition={{ duration: 0.5 }}
         >
           <div className="flex flex-col items-center gap-3 my-6 mt-9">
-            <BsCheck2Circle className="text-5xl text-[#30508A]" />
+            <BsCheck2Circle className="text-5xl text-[#21995d]" />
             <h2 className="text-xl text-neutral-300 font-bold">
               {description}
             </h2>

@@ -13,7 +13,7 @@ const Invoices = () => {
         >
           + Add Invoice
         </button>
-      </div>
+      </div> 
     </div>
   );
 };

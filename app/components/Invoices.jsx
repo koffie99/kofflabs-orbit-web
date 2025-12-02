@@ -97,8 +97,8 @@ const Invoices = () => {
         subTotal: parseFloat(subTotal.toFixed(2)),
         tax: parseFloat(tax.toFixed(2)),
         paymentInfo: {
-          accountNumber: values.accountNumber || "",
-          accountName: values.accountName || "Kofflabs",
+          accountNumber: "6013101450",
+          accountName: "Kofflabs",
         },
         totalAmount: parseFloat(totalAmount.toFixed(2)),
       };
@@ -547,34 +547,6 @@ const Invoices = () => {
           </div>
 
           <Divider className="border-gray-600" />
-
-          <div className="grid grid-cols-1 gap-4 mb-6">
-            <h4 className="text-white">Payment Information</h4>
-            <div className="grid grid-cols-2 gap-4">
-              <Form.Item
-                name="accountName"
-                label={<span className="text-white">Account Name</span>}
-                initialValue="Kofflabs"
-              >
-                <Input
-                  placeholder="Account Name"
-                  className="bg-[#2d2d2d] border border-gray-600 text-black hover:border-gray-400 focus:border-gray-400 [&:hover]:border-gray-400 [&:focus]:border-gray-400 [&:focus]:shadow-none [&::placeholder]:text-gray-500"
-                />
-              </Form.Item>
-              <Form.Item
-                name="accountNumber"
-                label={<span className="text-white">Account Number</span>}
-                rules={[
-                  { required: true, message: "Please input account number!" },
-                ]}
-              >
-                <Input
-                  placeholder="Account Number"
-                  className="bg-[#2d2d2d] border border-gray-600 text-black hover:border-gray-400 focus:border-gray-400 [&:hover]:border-gray-400 [&:focus]:border-gray-400 [&:focus]:shadow-none [&::placeholder]:text-gray-500"
-                />
-              </Form.Item>
-            </div>
-          </div>
 
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="col-span-2"></div>

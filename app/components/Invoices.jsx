@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Table, Tag, Space, Spin, Button, ConfigProvider, theme } from "antd";
-import { EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  Table,
+  Tag,
+  Space,
+  Spin,
+  Button,
+  ConfigProvider,
+  theme,
+  message,
+} from "antd";
+import { EditOutlined, DeleteOutlined, LinkOutlined } from "@ant-design/icons";
 import { format } from "date-fns";
 import EntityLength from "../uibits/EntityLength";
 import baseUrl from "../utils/baseUrl";
@@ -13,9 +22,7 @@ const Invoices = () => {
   useEffect(() => {
     const fetchInvoices = async () => {
       try {
-        const response = await fetch(
-          `${baseUrl}/invoices/all`
-        );
+        const response = await fetch(`${baseUrl}/invoices/all`);
         if (!response.ok) {
           throw new Error("Failed to fetch invoices");
         }
@@ -88,8 +95,20 @@ const Invoices = () => {
         <div className="flex gap-x-2">
           <Button
             type="text"
-            icon={<EyeOutlined className="text-blue-400 hover:text-blue-300" />}
-            onClick={() => console.log("View", record._id)}
+            icon={
+              <LinkOutlined className="text-blue-400 hover:text-blue-300" />
+            }
+            onClick={(e) => {
+              e.preventDefault();
+              if (record.pdfUrl) {
+                window.open(record.pdfUrl, "_blank", "noopener,noreferrer");
+              } else {
+                message.warning(
+                  "This invoice does not have a PDF link available"
+                );
+              }
+            }}
+            className="flex items-center justify-center"
           />
           <Button
             type="text"

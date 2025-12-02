@@ -7,9 +7,15 @@ import {
   Button,
   ConfigProvider,
   theme,
-  message,
+  Popconfirm,
 } from "antd";
-import { EditOutlined, DeleteOutlined, LinkOutlined } from "@ant-design/icons";
+import toast from "react-hot-toast";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  LinkOutlined,
+  ExclamationCircleOutlined,
+} from "@ant-design/icons";
 import { format } from "date-fns";
 import EntityLength from "../uibits/EntityLength";
 import baseUrl from "../utils/baseUrl";
@@ -18,6 +24,36 @@ const Invoices = () => {
   const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
+
+  const handleDelete = async (id) => {
+    try {
+      setDeletingId(id);
+      const response = await fetch(`${baseUrl}/invoices/delete/${id}`, {
+        method: "DELETE",
+        redirect: "follow",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete invoice");
+      }
+
+      const result = await response.json();
+      if (result.msg === "invoice deleted successfully") {
+        toast.success("Invoice deleted successfully");
+        setInvoices((prevInvoices) =>
+          prevInvoices.filter((invoice) => invoice._id !== id)
+        );
+      } else {
+        throw new Error(result.msg || "Failed to delete invoice");
+      }
+    } catch (err) {
+      console.error("Error deleting invoice:", err);
+      toast.error(err.message || "Failed to delete invoice");
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   useEffect(() => {
     const fetchInvoices = async () => {
@@ -103,9 +139,7 @@ const Invoices = () => {
               if (record.pdfUrl) {
                 window.open(record.pdfUrl, "_blank", "noopener,noreferrer");
               } else {
-                message.warning(
-                  "This invoice does not have a PDF link available"
-                );
+                toast.error("This invoice does not have a PDF link available");
               }
             }}
             className="flex items-center justify-center"
@@ -117,13 +151,44 @@ const Invoices = () => {
             }
             onClick={() => console.log("Edit", record._id)}
           />
-          <Button
-            type="text"
-            icon={
-              <DeleteOutlined className="text-red-400 hover:text-red-300" />
+          <Popconfirm
+            title={
+              <div className="text-white">
+                <div className="mb-2 font-medium">Delete Invoice</div>
+                <p className="text-gray-300">
+                  Are you sure you want to delete this invoice?
+                </p>
+              </div>
             }
-            onClick={() => console.log("Delete", record._id)}
-          />
+            okText="Delete"
+            okButtonProps={{ danger: true }}
+            cancelText="Cancel"
+            onConfirm={() => handleDelete(record._id)}
+            // okButtonProps={{
+            //   loading: deletingId === record._id,
+            //   danger: true,
+            //   className: "bg-red-600 hover:bg-red-700",
+            // }}
+            cancelButtonProps={{
+              className: "hover:bg-gray-700",
+            }}
+            overlayClassName="[&_.ant-popover-inner]:bg-[#1e1e1e] [&_.ant-popover-arrow]:border-t-[#1e1e1e] [&_.ant-popover-arrow]:border-l-[#1e1e1e]"
+          >
+            <Button
+              type="text"
+              icon={
+                <DeleteOutlined
+                  className={`${
+                    deletingId === record._id
+                      ? "text-red-200"
+                      : "text-red-400 hover:text-red-300"
+                  }`}
+                />
+              }
+              loading={deletingId === record._id}
+              disabled={!!deletingId}
+            />
+          </Popconfirm>
         </div>
       ),
     },
